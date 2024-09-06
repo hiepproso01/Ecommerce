@@ -1,0 +1,221 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+.wrapper1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px; 
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@keyframes colorWave {
+  0% { color: #ff0000; }
+  50% { color: #007bff; }
+  75% { color: #d9ff00; }
+  100% { color: #ff0000; }
+}
+
+.wrapper1 h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  animation: colorWave 3s ease-in-out infinite;
+}
+.form-wrapper1{
+  width: 50%;
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-field1 {
+  position: relative;
+  border-bottom: 2px solid #ccc;
+  margin: 15px 0;
+  transition: 0.3s ease;
+}
+
+.input-field1 label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 18px;
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+.input-field1 input {
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+}
+
+.input-field1 input:focus~label,
+.input-field1 input:valid~label {
+  font-size: 14px;
+  color: #007bff;
+  top: 0;
+  transform: translateY(-100%);
+}
+
+.input-field1  input:focus {
+  border-bottom-color: #007bff;
+}
+
+.forget1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 25px 0 35px 0;
+  color: #333;
+}
+
+.forget1 label {
+  display: flex;
+  align-items: center;
+}
+
+.forget1 label p {
+  margin-left: 8px;
+}
+
+.wrapper1 a {
+  color: #007bff;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.wrapper1 a:hover {
+  text-decoration: underline;
+}
+
+
+  .register1 {
+  text-align: center;
+  margin-top: 30px;
+  color: #333;
+}
+
+.wrapper1 .img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* text-align: center; */
+  margin-bottom: 20px;
+}
+
+.wrapper1 .img img {
+  max-width: 150px;
+}
+
+.button-group1{
+  display: flex;
+  width: 100%;
+}
+.btn-submit1 {
+  position: relative;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  background-color: #007bff; /* Màu nền ban đầu */
+  color: #fff; /* Màu chữ ban đầu */
+  border: 1px solid #007bff; /* Đường viền ban đầu */
+  padding: 16px 20px;
+  margin-left : 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden; /* Đảm bảo hiệu ứng không vượt ra ngoài nút */
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-submit1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: #fff; /* Màu nền của hiệu ứng */
+  transition: left 0.3s ease;
+  z-index: 0; /* Đặt sau nội dung của nút */
+}
+
+.btn-submit1:hover::before {
+  left: 0;
+}
+
+.btn-submit1:hover {
+  background-color: #fff; /* Màu nền khi hover */
+  color: #007bff; /* Màu chữ khi hover */
+  border-color: #007bff; /* Đường viền khi hover */
+}
+
+.btn-submit1 span {
+  position: relative;
+  z-index: 1; /* Đặt trên hiệu ứng nền */
+}
+
+.btn-register1 {
+  position: relative;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  background-color: #12cb5c; /* Màu nền ban đầu */
+  color: #fff; /* Màu chữ ban đầu */
+  border: 1px solid #11cb5c; /* Đường viền ban đầu */
+  padding: 16px 20px;
+  margin-left : 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden; /* Đảm bảo hiệu ứng không vượt ra ngoài nút */
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-register1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100%;
+  background: #fff; /* Màu nền của hiệu ứng */
+  transition: right 0.3s ease;
+  z-index: 0; /* Đặt sau nội dung của nút */
+}
+
+.btn-register1:hover::before {
+  right: 0;
+}
+
+.btn-register1:hover {
+  background-color: #fff; /* Màu nền khi hover */
+  color: #1bc60f; /* Màu chữ khi hover */
+  border-color: #1bc60f; /* Đường viền khi hover */
+}
+
+.btn-register1 span {
+  position: relative;
+  z-index: 1; /* Đặt trên hiệu ứng nền */
+}
+

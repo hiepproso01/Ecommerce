@@ -1,0 +1,113 @@
+
+/* Sidebar styles */
+.sidebar {
+  position: fixed;
+  top: 0px;
+  left: 0;
+  height: 100%;
+  width: 16rem;
+  background-color: white;
+  color: gray;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transform: translateX(-100%);
+  opacity: 0; 
+  z-index: 0; 
+}
+
+.sidebar.shifted {
+  transform: translateX(0);
+  opacity: 1; 
+  z-index: 10;
+}
+
+/* Phần nội dung layout */
+.content-open {
+  margin-left: 16rem; /* Đẩy phần nội dung qua phải 16rem khi sidebar mở */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.content-closed {
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* Tiêu đề sidebar */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  /* background: linear-gradient(to right, rgba(255, 255, 255, 0.5), rgba(0, 0, 255, 0.5)); */
+  background-color:rgb(0, 27, 181);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo{
+  width: 100px;
+  height: 100px;
+}
+/* Định nghĩa lớp cho button */
+.button {
+  font-size: 1.5rem; /* Kích thước chữ 2xl */
+  color: #6b7280; /* Màu xám 500 */
+  transition: color 0.3s ease; 
+}
+/* Định nghĩa lớp cho hiệu ứng hover */
+.button:hover {
+  color: #374151; /* Màu xám 700 khi di chuột qua */
+}
+
+/* Lớp ẩn trên các màn hình trung bình và lớn */
+.button.md:hidden {
+  display: none; /* Ẩn button trên màn hình trung bình và lớn */
+}
+
+/* Danh sách sidebar */
+.sidebar-list {
+  margin-top: 1rem;
+  padding: 0;
+  list-style-type: none;
+}
+
+/* Mục danh sách sidebar */
+.sidebar-item, .sidebar-list-item {
+  padding: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Hiệu ứng hover cho mục danh sách */
+.sidebar-item:hover, .sidebar-list-item:hover {
+  background-color: #f0f0f0;
+}
+
+/* Liên kết trong sidebar */
+.sidebar-item > a, .sidebar-list-item > a {
+  text-decoration: none;
+  color: gray;
+  font-size: 18px;
+}
+
+/* Hiệu ứng hover cho liên kết */
+.sidebar-item > a:hover, .sidebar-list-item > a:hover {
+  color: #2962ff;
+  text-decoration: none;
+}
+
+/* Icon trong sidebar */
+.icon {
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+}
+
+/* Responsive sidebar */
+.sidebar-responsive {
+  display: inline !important;
+  position: absolute;
+  z-index: 12 !important;
+}
+

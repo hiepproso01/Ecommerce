@@ -1,0 +1,125 @@
+.page-container {
+    padding: 1rem;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  .search-add-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; 
+  }
+  
+  .search-input-1 {
+    width: 500px; 
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    font-size: 14px; 
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+  .add-button {
+    background-color: #4299e1;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    border: none;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .add-button:hover {
+    background-color: #2b6cb0;
+    transform: scale(1.05);
+  }
+  
+  .loading-text {
+    font-size: 1rem;
+  }
+  
+  .table {
+    min-width: 100%;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .table-header {
+    background-color: #f9fafb;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: medium;
+    text-align: left;
+  }
+  
+  .table-row-1 {
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    
+  }
+  
+  .table-cell {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    text-align: left;
+    color: #4b5563;
+  }
+  
+  .action-button, .delete-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #007bff; 
+    border-radius: 4px; 
+    transition: transform 0.2s ease, background-color 0.2s ease; 
+    color: white;
+  }
+  
+  .delete-button {
+    background-color: #dc3545; 
+  }
+  
+  .action-button:hover, .delete-button:hover {
+    transform: scale(1.1); 
+    background-color: #0056b3; 
+  }
+  
+  .delete-button:hover {
+    background-color: #c82333; 
+  }
+  
+  
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  
+  .pagination-button {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin: 0 0.25rem;
+  }
+  
+  .pagination-button-disabled {
+    background-color: #e2e8f0;
+    cursor: not-allowed;
+  }
+  
+  .pagination-button-active {
+    background-color: #4299e1;
+    color: white;
+  }
+  
+  .pagination-text {
+    padding: 0.5rem 0.75rem;
+  }
+  
