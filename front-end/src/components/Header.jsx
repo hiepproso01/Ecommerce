@@ -9,16 +9,17 @@ function Header({ OpenSidebar, openSidebarToggle }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
-  const [tenAdmin, setTenAdmin] = useState('');
+  const [userName, setUserName] = useState('');
 
   // const handleSearchChange = (e) => {
   //   setSearchQuery(e.target.value);
   // };
     // Lấy tenAdmin từ localStorage khi component Header render lần đầu
     useEffect(() => {
-      const storedTenAdmin = localStorage.getItem('tenAdmin');
-      if (storedTenAdmin) {
-        setTenAdmin(storedTenAdmin);
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUserName(parsedUser);
       }
     }, []);
 
@@ -33,8 +34,8 @@ function Header({ OpenSidebar, openSidebarToggle }) {
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem('token');
-        localStorage.removeItem('tenAdmin'); // Xóa tenAdmin khi đăng xuất
-        window.location.reload(); 
+        localStorage.removeItem('user'); 
+        window.location.reload
       }
     });
   };
@@ -66,30 +67,16 @@ function Header({ OpenSidebar, openSidebarToggle }) {
           onClick={OpenSidebar} 
         />
       </div>
-      {/* <div className='flex-center-expand'>
-        <form onSubmit={handleSearchSubmit} className='search-form'>
-          <input
-            type='text'
-            placeholder='Search...'
-            value={searchQuery}
-            onChange={handleSearchChange}
-            className='search-input'
-          />
-          <button type='submit' className='search-button'>
-            <BsSearch />
-          </button>
-        </form>
-      </div> */}
-      <div className='dropdown' ref={dropdownRef}>
+      <div className='user-profile'>
         <BsPersonCircle
-          className='dropdown-icon'
+          className='user-icon'
           onClick={() => setShowDropdown(!showDropdown)}
         />
-         <span className="ten-admin">{tenAdmin}</span> {/* Hiển thị tenAdmin */}
+        <span className="username">{userName}</span>
         {showDropdown && (
           <div className='dropdown-menu'>
             <button onClick={handleLogout}>
-              Logout
+              Đăng xuất
             </button>
           </div>
         )}

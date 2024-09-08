@@ -105,14 +105,23 @@ namespace back_end.Migrations
                 {
                     IDTaiKhoan = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TenDangNhap = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MatKhau = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SoDienThoai = table.Column<int>(type: "int", nullable: false),
-                    MatKhauMaHoa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TenNguoiDung = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhanQuyen = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -234,7 +243,7 @@ namespace back_end.Migrations
                     IDTaiKhoan = table.Column<int>(type: "int", nullable: false),
                     NgayDatHang = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TongTien = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TAIKHOANIDTaiKhoan = table.Column<int>(type: "int", nullable: false)
+                    TAIKHOANIDTaiKhoan = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -243,8 +252,7 @@ namespace back_end.Migrations
                         name: "FK_DONHANG_TAIKHOAN_TAIKHOANIDTaiKhoan",
                         column: x => x.TAIKHOANIDTaiKhoan,
                         principalTable: "TAIKHOAN",
-                        principalColumn: "IDTaiKhoan",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IDTaiKhoan");
                 });
 
             migrationBuilder.CreateTable(
@@ -254,7 +262,7 @@ namespace back_end.Migrations
                     IDGioHang = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IDTaiKhoan = table.Column<int>(type: "int", nullable: false),
-                    TAIKHOANIDTaiKhoan = table.Column<int>(type: "int", nullable: false)
+                    TAIKHOANIDTaiKhoan = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -263,8 +271,7 @@ namespace back_end.Migrations
                         name: "FK_GIOHANG_TAIKHOAN_TAIKHOANIDTaiKhoan",
                         column: x => x.TAIKHOANIDTaiKhoan,
                         principalTable: "TAIKHOAN",
-                        principalColumn: "IDTaiKhoan",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IDTaiKhoan");
                 });
 
             migrationBuilder.CreateTable(

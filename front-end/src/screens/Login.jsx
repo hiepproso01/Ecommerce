@@ -20,8 +20,9 @@ const Login = ({ setIsLoggedIn }) => {
         rememberMe: true 
       });
       if (response.status === 200) {
-        const { token} = response.data;
+        const { token, user } = response.data;
         localStorage.setItem('token', token); 
+        localStorage.setItem('user', JSON.stringify(user.tenAdmin));
       
         setIsLoggedIn(true);
       
@@ -54,6 +55,7 @@ const Login = ({ setIsLoggedIn }) => {
       });
     }
   }
+ 
 
   const handleRegisterRedirect = () => {
     navigate('/register');

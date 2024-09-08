@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace back_end.Controllers
 {
+ 
     [Route("api/taikhoan")]
     [ApiController]
     public class TAIKHOANController : ControllerBase

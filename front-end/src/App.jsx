@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Category from './components/CategoryProducts/CategoryProductPage.jsx';
+import HomePage from './screens/HomePage.jsx';
 // import './styles/App.css';  
 import './styles/Sidebar.css'; 
 import apiClient from './services/api.js';
@@ -80,6 +81,7 @@ function App() {
               <AuthenticatedLayout>
                 <Routes>
                   <Route path="/" element={<ProductPage />} />
+                  <Route path="/homepage" element={<HomePage />} />
                   <Route path='/product' element={<ProductPage />} />
                   <Route path="/category" element={<Category  />} />
                   <Route path="/supplier" element={<Supplier  />} />

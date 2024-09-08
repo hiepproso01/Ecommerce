@@ -9,5 +9,7 @@ namespace back_end.Models
     public class ApplicationUser:IdentityUser
     {
         public string UserType { get; set; }
+        public string TenNguoiDung { get; set; }
+        public string Position { get; set; }
     }
 }

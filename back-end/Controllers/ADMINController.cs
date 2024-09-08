@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace back_end.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class ADMINController : ControllerBase
@@ -123,7 +124,6 @@ public async Task<IActionResult> Login([FromBody] DANGNHAPADMIN dangNhapAdmin)
     return tokenHandler.WriteToken(token);
 }
 
-         [Authorize(Roles = "Admin")]
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateAdmin(int id, ADMIN admin)
         {

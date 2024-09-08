@@ -116,3 +116,29 @@
     background-color: #f0f0f0;
   }
   
+.user-profile {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.user-icon {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.username {
+  margin-right: 10px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  z-index: 1000;
+}
+

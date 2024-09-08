@@ -25,12 +25,36 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Cấu hình Identity
+// Cấu hình Identity cho ADMIN
 builder.Services.AddIdentity<ADMIN, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDBContext>()
     .AddDefaultTokenProviders();
 
+
+
 var app = builder.Build();
+// Gọi phương thức tạo vai trò tại đây
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    await CreateRoles(serviceProvider);
+}
+async Task CreateRoles(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    // Tạo vai trò Admin nếu chưa tồn tại
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+
+    // Tạo vai trò NguoiDung nếu chưa tồn tại
+    if (!await roleManager.RoleExistsAsync("NguoiDung"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("NguoiDung"));
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

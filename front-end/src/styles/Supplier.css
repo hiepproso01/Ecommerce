@@ -1,0 +1,120 @@
+/* Container cho trang */
+.supplier-page-container {
+    padding: 20px;
+  }
+  
+  /* Tiêu đề trang */
+  .supplier-page-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Container cho ô tìm kiếm và nút thêm mới */
+  .supplier-search-add-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  /* Nút thêm mới nhà cung cấp */
+  .supplier-add-button {
+    background-color: #4A90E2;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  /* Ô tìm kiếm */
+  .supplier-search-input {
+    padding: 10px;
+    border: 1px solid #4A90E2;
+    border-radius: 4px;
+    width: 300px;
+  }
+  
+  /* Văn bản khi đang tải dữ liệu */
+  .supplier-loading-text {
+    font-size: 18px;
+  }
+  
+  /* Bảng danh sách nhà cung cấp */
+  .supplier-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  /* Đầu bảng */
+  .supplier-table-header {
+    background-color: #f4f4f4;
+  }
+  
+  /* Ô của bảng */
+  .supplier-table-cell {
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Hàng chẵn của bảng */
+  .supplier-table-row tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Nút chỉnh sửa */
+  .supplier-action-button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    background-color: #4A90E2;
+  }
+  
+  /* Nút xoá */
+  .supplier-delete-button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    background-color: #d33;
+  }
+  
+  /* Container phân trang */
+  .supplier-pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  /* Nút phân trang */
+  .supplier-pagination-button {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 0 5px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Nút phân trang bị vô hiệu hóa */
+  .supplier-pagination-button-disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Nút phân trang đang hoạt động */
+  .supplier-pagination-button-active {
+    background-color: #4A90E2;
+  }
+  
+  /* Văn bản phân trang */
+  .supplier-pagination-text {
+    font-size: 16px;
+  }
+  

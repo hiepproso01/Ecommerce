@@ -57,5 +57,5 @@ namespace back_end.Data
         .HasKey(c => c.IDChiTietGioHang);
         base.OnModelCreating(modelBuilder);
     }
-        }
+         }
 }
