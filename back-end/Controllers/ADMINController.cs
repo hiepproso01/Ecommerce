@@ -55,10 +55,10 @@ public async Task<IActionResult> Register([FromBody] DANGKYADMIN dangKyAdmin)
         var user = new ADMIN
         {
             UserName = dangKyAdmin.UserName,
-            TenAdmin = dangKyAdmin.TenAdmin,
+            TenNguoiDung = dangKyAdmin.TenNguoiDung,
             // Password = dangKyAdmin.Password,
             Email = dangKyAdmin.Email,
-            Position = dangKyAdmin.Position,
+            Role = dangKyAdmin.Role,
             PhoneNumber = dangKyAdmin.PhoneNumber
             
         };
@@ -97,7 +97,8 @@ public async Task<IActionResult> Login([FromBody] DANGNHAPADMIN dangNhapAdmin)
         {
             var user = await _userManager.FindByNameAsync(dangNhapAdmin.UserName);
             var token = GenerateJwtToken(user);
-            return Ok(new { user, token, message = "Đăng nhập thành công." });
+            var roles = await _userManager.GetRolesAsync(user);
+            return Ok(new { user, token, roles, message = "Đăng nhập thành công." });
         }
 
         return Unauthorized(new { message = "Đăng nhập thất bại." });
@@ -127,7 +128,7 @@ public async Task<IActionResult> Login([FromBody] DANGNHAPADMIN dangNhapAdmin)
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateAdmin(int id, ADMIN admin)
         {
-            if (id != admin.IDAdmin)
+            if (id != admin.IDNguoiDung)
             {
                 return BadRequest();
             }
@@ -164,7 +165,7 @@ public async Task<IActionResult> Login([FromBody] DANGNHAPADMIN dangNhapAdmin)
 
         private bool ADMINExists(int id)
         {
-            return _context.ADMIN.Any(e => e.IDAdmin == id);
+            return _context.ADMIN.Any(e => e.IDNguoiDung == id);
         }
     }
 }

@@ -105,7 +105,7 @@ namespace back_end.Controllers
     {
         Subject = new ClaimsIdentity(new Claim[]
         {
-            new Claim(ClaimTypes.Name, user.UserName) // Ensure this property exists in ADMIN class
+            new Claim(ClaimTypes.Name, user.UserName)
         }),
         Expires = DateTime.UtcNow.AddHours(1),
         Issuer = _configuration["Jwt:Issuer"],

@@ -42,7 +42,7 @@ namespace back_end.Data
         .HasKey(t => t.IDTaiKhoan);
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<ADMIN>()
-        .HasKey(a => a.IDAdmin);
+        .HasKey(a => a.IDNguoiDung);
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<DONHANG>()
         .HasKey(d => d.IDDonHang);

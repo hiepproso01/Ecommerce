@@ -35,7 +35,8 @@ function Header({ OpenSidebar, openSidebarToggle }) {
       if (result.isConfirmed) {
         localStorage.removeItem('token');
         localStorage.removeItem('user'); 
-        window.location.reload
+        localStorage.removeItem('role');
+        window.location.reload();
       }
     });
   };
