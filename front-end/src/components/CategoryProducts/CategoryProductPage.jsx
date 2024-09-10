@@ -16,7 +16,7 @@ const CategoryProductsPage = () => {
       try {
         const response = await apiClient.get('/api/danhmucsp/GetAll');
         setCategoryProducts(response.data);
-        setFilteredCategoryProducts(response.data); // Set dữ liệu ban đầu cho danh sách lọc
+        setFilteredCategoryProducts(response.data);
       } catch (error) {
         console.error('Error fetching category products:', error);
       } finally {

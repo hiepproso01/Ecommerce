@@ -17,12 +17,15 @@ const ProductPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6); // Số sản phẩm trên mỗi trang
   const [selectedImage, setSelectedImage] = useState(null);
-const [showImagePopup, setShowImagePopup] = useState(false);
+  const [showImagePopup, setShowImagePopup] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     apiClient.get('api/sanpham/GetAll')
       .then(response => {
         setProducts(response.data);
+        setFilteredProducts(response.data);
       })
       .catch(error => {
         console.error("There was an error fetching the products!", error);
@@ -32,7 +35,7 @@ const [showImagePopup, setShowImagePopup] = useState(false);
   // Xử lý phân trang
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -41,10 +44,10 @@ const [showImagePopup, setShowImagePopup] = useState(false);
     setSelectedImage(imageUrl);
     setShowImagePopup(true);
   };
-  
+
   const closeImagePopup = () => setShowImagePopup(false);
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(products.length / productsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(filteredProducts.length / productsPerPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -107,8 +110,20 @@ const [showImagePopup, setShowImagePopup] = useState(false);
     minimumFractionDigits: 0,
   });
 
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+    const filtered = products.filter(
+      (product) =>
+        product.idSanPham.toLowerCase().includes(term) ||
+        product.tenSanPham.toLowerCase().includes(term)
+    );
+    setFilteredProducts(filtered);
+    setCurrentPage(1);
+  };
+
   return (
-    <div className="mx-auto p-6 bg-gray-50 rounded-lg shadow-lg bg-gradient-to-r from-white/50 to-blue-500/50">
+    <div className="mx-auto p-6 bg-gray-50 rounded-lg shadow-lg ">
       <div className="flex justify-between mb-6">
         <button
           onClick={handleAddClick}
@@ -116,6 +131,16 @@ const [showImagePopup, setShowImagePopup] = useState(false);
         >
           Nhập hàng
         </button>
+
+        <input
+          type="text"
+          placeholder="Tìm kiếm theo ID hoặc Tên sản phẩm"
+          value={searchTerm}
+          onChange={handleSearch}
+          className="search-input-1"
+        />
+
+
         <button
           onClick={() => setShowCategoryPopup(true)}
           className="bg-teal-500 text-white px-5 py-2 rounded-lg hover:bg-teal-600 transition duration-300"
@@ -123,6 +148,10 @@ const [showImagePopup, setShowImagePopup] = useState(false);
           Quản lý danh mục
         </button>
       </div>
+
+
+
+
       <Popup width="w-[auto] h-[auto]" isOpen={showCreate} onClose={closeCreatePopup}>
         <CreateProduct
           onClose={closeCreatePopup}
@@ -167,16 +196,16 @@ const [showImagePopup, setShowImagePopup] = useState(false);
         </div>
       </Popup>
       <Popup width="max-w-[40vw]" isOpen={showImagePopup} onClose={closeImagePopup}>
-  <div className="flex justify-center items-center h-full">
-    <img
-      src={selectedImage}
-      alt="Product"
-      className="max-w-full max-h-screen object-contain"
-    />
-  </div>
-</Popup>
+        <div className="flex justify-center items-center h-full">
+          <img
+            src={selectedImage}
+            alt="Product"
+            className="max-w-full max-h-screen object-contain"
+          />
+        </div>
+      </Popup>
 
-      <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md mt-6" style={{cursor: 'pointer'}}>
+      <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md mt-6" style={{ cursor: 'pointer' }}>
         <thead>
           <tr className="bg-gray-100 text-blue-600">
             {/* <th className="p-4 text-center"></th> */}
@@ -185,13 +214,13 @@ const [showImagePopup, setShowImagePopup] = useState(false);
             <th className="p-4 text-center">Tên sản phẩm</th>
             <th className="p-4 text-center">Giá nhập</th>
             <th className="p-4 text-center">Giá bán</th>
-            <th className="p-4 text-center">Số lượng tồn</th>
+            <th className="p-4 text-center">Danh mục</th>
             <th className="p-4 text-center">Đơn vị tính</th>
             <th className="p-4 text-center">Mô tả sản phẩm</th>
             <th className="p-4 text-center">Chức năng</th>
           </tr>
         </thead>
-        
+
         <tbody>
           {currentProducts.map(product => (
             <tr key={product.idSanPham} className="border-t hover:bg-blue-100 transition duration-200">
@@ -228,7 +257,7 @@ const [showImagePopup, setShowImagePopup] = useState(false);
 
               <td className="p-4 text-center">{formatter.format(product.giaNhap)}</td>
               <td className="p-4 text-center">{formatter.format(product.giaBan)}</td>
-              <td className="p-4 text-center">{product.soLuong}</td>
+              <td className="p-4 text-center">{product.tenDanhMuc}</td>
               <td className="p-4 text-center">{product.donViTinh}</td>
               <td className="p-4 text-center">
                 <button

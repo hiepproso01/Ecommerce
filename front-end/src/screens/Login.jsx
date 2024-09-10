@@ -5,59 +5,12 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import animation from "../img/Animation2.json"
 import apiClient from "../services/api";
 import Swal from "sweetalert2";
-const Login = ({ setIsLoggedIn }) => {
+const Login = ({ setIsLoggedIn, setUserRole }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null); 
   const navigate = useNavigate();
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await apiClient.post('/api/admin/login', {
-  //       username: username,
-  //       password: password,
-  //       rememberMe: true 
-  //     });
-  //     if (response.status === 200) {
-  //       const { token, user } = response.data;
-  //         // Ghi ra console để kiểm tra dữ liệu
-  //     console.log('User Data:', user);
-  //       localStorage.setItem('token', token); 
-  //       localStorage.setItem('user', JSON.stringify(user.tenNguoiDung));
-  //       localStorage.setItem('role', user.role);
-  //       setIsLoggedIn(true);
-      
-  //       Swal.fire({
-  //         icon: 'success',
-  //         title: 'Đăng nhập thành công!',
-  //         showConfirmButton: false,
-  //         timer: 1500
-  //       });
-  //        navigate('/admin');
-          
-  //       console.log("Đăng nhập thành công!");
-  //     } else {
-  //       Swal.fire({
-  //         icon: 'error',
-  //         title: 'Đăng nhập thất bại!',
-  //         showConfirmButton: false,
-  //         timer: 1500
-  //       });
-  //     }
-  //   } catch (error) {
-  //     if (error.response) {
-  //       setError(`Lỗi: ${error.response.data.message || 'Đã xảy ra lỗi. Vui lòng thử lại.'}`);
-  //     } else {
-  //       setError('Đã xảy ra lỗi. Vui lòng kiểm tra kết nối mạng.');
-  //     }
-  //     Swal.fire({
-  //       icon: 'error',
-  //       title: 'Lỗi đăng nhập',
-  //       text: error.message || 'Đã xảy ra lỗi. Vui lòng thử lại.',
-  //     });
-  //   }
-  // }
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -72,6 +25,7 @@ const Login = ({ setIsLoggedIn }) => {
         localStorage.setItem('user', JSON.stringify(user.tenNguoiDung));
         localStorage.setItem('role', user.role);
         setIsLoggedIn(true);
+        setUserRole(user.role);  // Set user role in App component state
         
         console.log("User role:", user.role); // Debugging line
   
@@ -83,7 +37,7 @@ const Login = ({ setIsLoggedIn }) => {
         });
   
         if (user.role === "Admin") {
-          navigate('/admin');
+          navigate('/product');
         } else if (user.role === "NguoiDung") {
           navigate('/homepage');
         } 

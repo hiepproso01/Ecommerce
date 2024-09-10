@@ -194,7 +194,7 @@ function CreateProduct({ onClose, onSuccess }) {
   };
 
   return (
-    <div className="p-8 bg-white rounded-lg w-[1050px] h-[auto] mx-auto">
+    <div className="p-8 bg-white rounded-lg w-[1000px] h-[auto] mx-auto">
     <h2 className="text-3xl font-bold mb-8 text-gray-900">Nhập hàng</h2>
     <form onSubmit={handleSubmit}>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
@@ -298,7 +298,7 @@ function CreateProduct({ onClose, onSuccess }) {
           >
             <option value="">Chọn danh mục</option>
             {categories.map((category) => (
-              <option key={category.idDanhMuc} value={category.idDanhMuc}>
+              <option key={category.idDanhMuc} value={category.tenDanhMuc}>
                 {category.tenDanhMuc}
               </option>
             ))}
