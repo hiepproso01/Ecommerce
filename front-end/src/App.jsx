@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Register from './screens/Register';
 import Login from './screens/Login';
 import Home from './components/Home';
+import HeaderUser from './components/UserComponents/HeaderUser';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Category from './components/CategoryProducts/CategoryProductPage.jsx';

@@ -69,7 +69,7 @@ namespace back_end.Controllers
         }
         // POST: api/SANPHAM/Create
         [HttpPost("Create")]
-        public async Task<ActionResult<SANPHAMDetailDTO>> CreateSANPHAM(SANPHAMDetailDTO sanphamdetail)
+        public async Task<ActionResult<SANPHAMDetailDTO>> CreateSANPHAM(SANPHAMDTO sanphamdetail)
         {
             var newSANPHAM = new SANPHAM
             {
@@ -80,7 +80,7 @@ namespace back_end.Controllers
                 SoLuongBan = sanphamdetail.SoLuongBan,
                 MoTa = sanphamdetail.MoTa,
                 GiaNhap = sanphamdetail.GiaNhap,
-                GiaBan = sanphamdetail.GiaBan,
+                GiaBan = sanphamdetail.GiaBan.ToString(),
                 TenDanhMuc = sanphamdetail.TenDanhMuc,
                 TenNhaCungCap = sanphamdetail.TenNhaCungCap,
                 HinhAnh = sanphamdetail.HinhAnh
@@ -96,7 +96,7 @@ namespace back_end.Controllers
                 SoLuongBan = newSANPHAM.SoLuongBan,
                 MoTa = newSANPHAM.MoTa,
                 GiaNhap = newSANPHAM.GiaNhap,
-                GiaBan = newSANPHAM.GiaBan,
+                GiaBan = newSANPHAM.GiaBan.ToString(),
                 TenDanhMuc = newSANPHAM.TenDanhMuc,
                 TenNhaCungCap = newSANPHAM.TenNhaCungCap,
                 HinhAnh = newSANPHAM.HinhAnh
@@ -122,7 +122,7 @@ namespace back_end.Controllers
             sanpham.SoLuongBan = sanphamdetailDTO.SoLuongBan;
             sanpham.MoTa = sanphamdetailDTO.MoTa;
             sanpham.GiaNhap = sanphamdetailDTO.GiaNhap;
-            sanpham.GiaBan = sanphamdetailDTO.GiaBan;
+            sanpham.GiaBan = sanphamdetailDTO.GiaBan.ToString();
             sanpham.TenDanhMuc = sanphamdetailDTO.TenDanhMuc;
             sanpham.TenNhaCungCap = sanphamdetailDTO.TenNhaCungCap;
             sanpham.HinhAnh = sanphamdetailDTO.HinhAnh;

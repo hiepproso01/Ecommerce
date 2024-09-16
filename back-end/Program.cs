@@ -106,15 +106,15 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Cấu hình Identity cho ADMIN
-builder.Services.AddIdentity<ADMIN, IdentityRole>()
+// Cấu hình Identity cho NGUOIDUNG
+builder.Services.AddIdentity<NGUOIDUNG, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDBContext>()
     .AddDefaultTokenProviders();
 
 
-    builder.Services.AddScoped<UserManager<ADMIN>>();
+    builder.Services.AddScoped<UserManager<NGUOIDUNG>>();
 
-builder.Services.AddScoped<SignInManager<ADMIN>>();
+builder.Services.AddScoped<SignInManager<NGUOIDUNG>>();
 
 
 // Cấu hình phân quyền
@@ -153,7 +153,7 @@ async Task CreateRoles(IServiceProvider serviceProvider)
 
 async Task CreateAdminAccount(IServiceProvider serviceProvider)
 {
-    var userManager = serviceProvider.GetRequiredService<UserManager<ADMIN>>();
+    var userManager = serviceProvider.GetRequiredService<UserManager<NGUOIDUNG>>();
 
     // Kiểm tra xem tài khoản ADMIN có tồn tại không
     string adminEmail = "admin@gmail.com";
@@ -163,7 +163,7 @@ async Task CreateAdminAccount(IServiceProvider serviceProvider)
     var adminUser = await userManager.FindByNameAsync(adminUserName);
     if (adminUser == null)
     {
-        var admin = new ADMIN
+        var admin = new NGUOIDUNG
         {
             UserName = adminUserName,
             Email = adminEmail,

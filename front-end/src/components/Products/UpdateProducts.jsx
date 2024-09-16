@@ -2,19 +2,15 @@ import React, { useState, useEffect,useRef  } from 'react';
 import Swal from 'sweetalert2';
 import apiClient from '../../services/api';
 
-
-// Hàm định dạng giá
 const formatCurrency = (value) => {
   return new Intl.NumberFormat('vi-VN').format(value);
 };
 
-// Hàm để loại bỏ định dạng và lấy giá nguyên gốc
 const parseCurrency = (value) => {
   return parseInt(value.replace(/\D/g, ''), 10);
 };
 
-
-function UpdateProduct({ productId, onClose, onUpdate }) {
+function UpdateProduct({idSanPham,  onClose, onUpdate }) {
   const [productName, setProductName] = useState('');
   const [unit, setUnit] = useState('');
   const [sellPrice, setSellPrice] = useState('');
@@ -25,7 +21,12 @@ function UpdateProduct({ productId, onClose, onUpdate }) {
   const [selectedCategory, setSelectedCategory] = useState('');
   const sellPriceRef = useRef(null);
   const importPriceRef = useRef(null);
-
+ const [productId, setProductId] = useState('');
+  const [selectedSupplier, setSelectedSupplier] = useState('');
+ const [suppliers, setSuppliers] = useState([]);
+ const [categoryidSanPham, setCategoryidSanPham] = useState('');
+ const [soLuongBan, setSoLuongBan] = useState('');
+ const [imageUrl, setImageUrl] = useState(''); // Thêm trạng thái để lưu URL của ảnh
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -35,18 +36,31 @@ function UpdateProduct({ productId, onClose, onUpdate }) {
         console.error("There was an error fetching the categories!", error);
       }
     };
+    const fetchSuppliers = async () => {
+      try {
+        const response = await apiClient.get('api/nhacungcap/GetAll');
+        setSuppliers(response.data);
+      } catch (error) {
+        console.error("There was an error fetching the suppliers!", error);
+      }
+    };
 
     const fetchProduct = async () => {
       try {
-        const response = await apiClient.get(`api/sanpham/GetById/${productId}`);
+        console.log(`${idSanPham}`);
+        const response = await apiClient.get(`api/sanpham/GetById/${idSanPham}`);
         const product = response.data;
+        setProductId(product.idSanPham);
         setProductName(product.tenSanPham);
         setUnit(product.donViTinh);
-        setSellPrice(formatCurrency(product.giaBan));
-        setImportPrice(formatCurrency(product.giaNhap));
+        setSellPrice(product.giaBan);
+        setImportPrice(product.giaNhap);
         setDescription(product.moTa);
         setQuantity(product.soLuong);
-        setSelectedCategory(product.idDanhMuc);
+        setSelectedCategory(product.tenDanhMuc);
+        selectedSupplier(product.tenNhaCungCap);
+        setImageUrl(product.hinhAnh); // Lưu URL của ảnh vào trạng thái
+        
       } catch (error) {
         console.error("There was an error fetching the product details!", error);
       }
@@ -54,25 +68,33 @@ function UpdateProduct({ productId, onClose, onUpdate }) {
 
     fetchCategories();
     fetchProduct();
-  }, [productId]);
+    fetchSuppliers();
+  }, [idSanPham]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await apiClient.put(`api/sanpham/Update/${productId}`, {
-        idSanPham: productId,
+      await apiClient.put(`api/sanpham/Update/${idSanPham}`, {
+        idSanPham:productId,
         tenSanPham: productName,
         donViTinh: unit,
-        giaBan: parseCurrency(sellPrice),
-        giaNhap: parseCurrency(importPrice),
+        giaBan: sellPrice.replace(/\D/g, ''), // Gửi giá bán dạng số
+        giaNhap: importPrice.replace(/\D/g, ''),
         moTa: description,
         soLuong: quantity,
-        idDanhMuc: selectedCategory
+        soLuongBan: soLuongBan,
+        idDanhMuc: categoryidSanPham,
+        tenDanhMuc: selectedCategory,
+        tenNhaCungCap: selectedSupplier,
+        hinhAnh: imageUrl, // Gửi URL của ảnh khi cập nhật sản phẩm
       });
 
-      if (onUpdate) onUpdate(); // Call onUpdate after success
-      resetForm();
+      if (onUpdate) {
+        onUpdate();
+      }    
+     
+      
       Swal.fire({
         icon: 'success',
         title: 'Product Updated',
@@ -115,7 +137,16 @@ function UpdateProduct({ productId, onClose, onUpdate }) {
       }
     }, 0);
   };
-
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageUrl(reader.result); 
+      };
+      reader.readAsDataURL(file); 
+    }
+  };
   const resetForm = () => {
     setProductName('');
     setUnit('');
@@ -124,116 +155,171 @@ function UpdateProduct({ productId, onClose, onUpdate }) {
     setDescription('');
     setQuantity('');
     setSelectedCategory('');
+    setSelectedSupplier('');
   };
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
   };
-
+    const handleSupplierChange = (e) => {
+    setSelectedSupplier(e.target.value);
+  };
+  const handleClose = () => {
+    resetForm();
+    if (onUpdate) onUpdate();
+  };
   return (
-    <div className="p-8 bg-white rounded-lg max-w-3xl mx-auto">
+    <div className="p-8 bg-white rounded-lg w-[auto] h-[auto] mx-auto">
       <h2 className="text-3xl font-bold mb-8 text-gray-900">Cập nhật sản phẩm</h2>
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+          <div className="flex flex-col">
+            <label htmlFor="productID" className="block text-gray-700 text-sm font-medium mb-2">Mã sản phẩm</label>
+            <input
+              placeholder='Nhập mã sản phẩm'
+              id="productID"
+              type="text"
+              value={productId}
+              onChange={(e) => setProductId(e.target.value)}
+              readOnly
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100"
+            />
+          </div>
           <div className="flex flex-col">
             <label htmlFor="productName" className="block text-gray-700 text-sm font-medium mb-2">Tên sản phẩm</label>
             <input
-              placeholder='Ví dụ: Tủ lạnh, Máy in, ...'
+              placeholder='Nhập tên sản phẩm'
               id="productName"
               type="text"
               value={productName}
-              readOnly
               onChange={(e) => setProductName(e.target.value)}
-              required
-              className="border border-gray-300 p-3 bg-slate-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              readOnly
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-100"
             />
           </div>
           <div className="flex flex-col">
             <label htmlFor="unit" className="block text-gray-700 text-sm font-medium mb-2">Đơn vị tính</label>
             <input
-              placeholder='Ví dụ: hộp, chai, gói, ...'
+              placeholder='Ví dụ: Cái, Cuộn, Hộp, ...'
               id="unit"
               type="text"
               value={unit}
               onChange={(e) => setUnit(e.target.value)}
               required
-              className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-          
           <div className="flex flex-col">
             <label htmlFor="importPrice" className="block text-gray-700 text-sm font-medium mb-2">Giá nhập</label>
             <input
+              placeholder='Nhập giá nhập'
               id="importPrice"
               type="text"
               value={importPrice}
               onChange={handlePriceChange(setImportPrice, importPriceRef)}
               ref={importPriceRef}
               required
-              className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="flex flex-col">
             <label htmlFor="sellPrice" className="block text-gray-700 text-sm font-medium mb-2">Giá bán</label>
             <input
+              placeholder='Nhập giá bán'
               id="sellPrice"
               type="text"
               value={sellPrice}
               onChange={handlePriceChange(setSellPrice, sellPriceRef)}
               ref={sellPriceRef}
               required
-              className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="flex flex-col">
             <label htmlFor="quantity" className="block text-gray-700 text-sm font-medium mb-2">Số lượng nhập</label>
             <input
+              placeholder='Nhập số lượng'
               id="quantity"
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
               required
-              className="border border-gray-300 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="category" className="block text-gray-700 text-sm font-medium mb-2">Mã sản phẩm</label>
-            <input
+            <label htmlFor="supplier" className="block text-gray-700 text-sm font-medium mb-2">Nhà cung cấp</label>
+            <select
+              id="supplier"
+              value={selectedSupplier}
+              onChange={handleSupplierChange}
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Chọn nhà cung cấp</option>
+              {suppliers.map((supplier) => (
+                <option key={supplier.idNhaCungCap} value={supplier.idNhaCungCap}>
+                  {supplier.tenNhaCungCap}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="category" className="block text-gray-700 text-sm font-medium mb-2">Danh mục</label>
+            <select
               id="category"
-              type="text"
               value={selectedCategory}
               onChange={handleCategoryChange}
-              placeholder='Mã sản phẩm'
-              readOnly
-              required
-              className="border border-gray-300 bg-slate-100 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+              className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Chọn danh mục</option>
+              {categories.map((category) => (
+                <option key={category.idDanhMuc} value={category.idDanhMuc}>
+                  {category.tenDanhMuc}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="col-span-4 flex gap-6">
+            <div className="flex flex-col w-1/2">
+              <label htmlFor="description" className="block text-gray-700 text-sm font-medium mb-2">Mô tả</label>
+              <textarea
+                id="description"
+                placeholder='Nhập mô tả sản phẩm'
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-full"
+              />
+            </div>
+            <div className="flex flex-col w-1/2">
+              <label htmlFor="hinhAnh" className="block text-gray-700 text-sm font-medium mb-2">Hình ảnh sản phẩm</label>
+              <input
+                id="hinhAnh"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              {imageUrl && (
+                <div className="mt-4 h-40 w-full border border-gray-300 rounded-md overflow-hidden">
+                  <img src={imageUrl} alt="Preview" className="h-full w-full object-cover" />
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        <div className="mb-6">
-          <label htmlFor="description" className="block text-gray-700 text-sm font-medium mb-2">Mô tả sản phẩm</label>
-          <textarea
-            id="description"
-            placeholder='Nhập mô tả sản phẩm (nếu có), ví dụ: Thành phần, cách sử dụng, ...'
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="border border-gray-300 p-3 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            rows="4"
-          />
-        </div>
-        <div className="flex justify-end gap-4">
+        <div className="flex justify-end">
           <button
             type="button"
-            onClick={onClose}
-            className="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-200"
+            onClick={handleClose}
+            className="bg-gray-500 text-white px-4 py-2 rounded-md mr-4"
           >
-            Hủy cập nhật
+            Hủy
           </button>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-200"
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
           >
-            Cập nhật
+            Lưu
           </button>
         </div>
       </form>
@@ -242,3 +328,4 @@ function UpdateProduct({ productId, onClose, onUpdate }) {
 }
 
 export default UpdateProduct;
+

@@ -6,7 +6,7 @@ import UpdateProduct from './UpdateProducts';
 import '../../styles/global.css';
 import Popup from '../Popup';
 import CategoryProductPage from '../CategoryProducts/CategoryProductPage';
-
+import DeleteProduct from './DeleteProducts';
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
   const [editingidSanPham, setEditingidSanPham] = useState(null);
@@ -59,38 +59,38 @@ const ProductPage = () => {
     setEditingidSanPham(idSanPham);
   };
 
-  const handleDeleteClick = (idSanPham) => {
-    Swal.fire({
-      title: 'Bạn có chắc chắn không?',
-      text: "Hành động này sẽ xóa sản phẩm!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Xóa',
-      cancelButtonText: 'Hủy'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        apiClient.delete(`api/sanpham/Delete/${idSanPham}`)
-          .then(() => {
-            setProducts(products.filter(product => product.idSanPham !== idSanPham));
-            Swal.fire(
-              'Đã xóa!',
-              'Sản phẩm đã được xóa.',
-              'success'
-            );
-          })
-          .catch(error => {
-            console.error("There was an error deleting the product!", error);
-            Swal.fire(
-              'Lỗi!',
-              'Có lỗi xảy ra khi xóa sản phẩm.',
-              'error'
-            );
-          });
-      }
-    });
-  };
+  // const handleDeleteClick = (idSanPham) => {
+  //   Swal.fire({
+  //     title: 'Bạn có chắc chắn không?',
+  //     text: "Hành động này sẽ xóa sản phẩm!",
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Xóa',
+  //     cancelButtonText: 'Hủy'
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       apiClient.delete(`api/sanpham/Delete/${idSanPham}`)
+  //         .then(() => {
+  //           setProducts(products.filter(product => product.idSanPham !== idSanPham));
+  //           Swal.fire(
+  //             'Đã xóa!',
+  //             'Sản phẩm đã được xóa.',
+  //             'success'
+  //           );
+  //         })
+  //         .catch(error => {
+  //           console.error("There was an error deleting the product!", error);
+  //           Swal.fire(
+  //             'Lỗi!',
+  //             'Có lỗi xảy ra khi xóa sản phẩm.',
+  //             'error'
+  //           );
+  //         });
+  //     }
+  //   });
+  // };
 
   const closeCreatePopup = () => setShowCreate(false);
   const closeUpdatePopup = () => setEditingidSanPham(null);
@@ -148,17 +148,17 @@ const ProductPage = () => {
           Quản lý danh mục
         </button>
       </div>
-
-
-
-
       <Popup width="w-[auto] h-[auto]" isOpen={showCreate} onClose={closeCreatePopup}>
         <CreateProduct
           onClose={closeCreatePopup}
           onSuccess={() => {
             closeCreatePopup();
+            // Gọi lại API để lấy danh sách sản phẩm mới
             apiClient.get('api/sanpham/GetAll')
-              .then(response => setProducts(response.data))
+              .then(response => {
+                setProducts(response.data);
+                setFilteredProducts(response.data); // Cập nhật danh sách lọc
+              })
               .catch(error => console.error("Error refreshing product list", error));
           }}
         />
@@ -218,6 +218,7 @@ const ProductPage = () => {
             <th className="p-4 text-center">Đơn vị tính</th>
             <th className="p-4 text-center">Mô tả sản phẩm</th>
             <th className="p-4 text-center">Chức năng</th>
+           
           </tr>
         </thead>
 
@@ -268,19 +269,34 @@ const ProductPage = () => {
                 </button>
               </td>
               <td className="p-4 text-center">
+                <DeleteProduct 
+                  productId={product.idSanPham} 
+                  onDeleteSuccess={() => {
+                    setProducts(products.filter(p => p.idSanPham !== product.idSanPham));
+                    setFilteredProducts(filteredProducts.filter(p => p.idSanPham !== product.idSanPham));
+                  }} 
+                />
                 <button
                   onClick={() => handleEditClick(product.idSanPham)}
                   className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition duration-300 mr-2"
                 >
                   Sửa
                 </button>
-                <button
+              </td>
+              {/* <td className="p-4 text-center">
+                 <button
+                  onClick={() => handleEditClick(product.idSanPham)}
+                  className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition duration-300 mr-2"
+                >
+                  Sửa
+                </button> 
+                 <button
                   onClick={() => handleDeleteClick(product.idSanPham)}
                   className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition duration-300"
                 >
                   Xóa
-                </button>
-              </td>
+                </button> 
+              </td> */}
             </tr>
           ))}
         </tbody>

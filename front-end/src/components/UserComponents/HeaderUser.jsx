@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify } from 'react-icons/bs';
+import { BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify,BsCart2 } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import '../styles/Header.css'; 
-import apiClient from '../services/api'; // Import apiClient đã cấu hình
+import '../../styles/HeaderUser.css'; 
+import apiClient from '../../services/api'; 
 
-function Header({ OpenSidebar, openSidebarToggle }) {
+const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const [userName, setUserName] = useState('');
-
     useEffect(() => {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
@@ -57,21 +56,19 @@ function Header({ OpenSidebar, openSidebarToggle }) {
   }, []);
 
   return (
-    <header className={`header ${openSidebarToggle ? 'shifted' : ''}`}>
-      <div className='flex-center'>
-        <BsJustify 
-          className='header-icon' 
-          onClick={OpenSidebar} 
-        />
-      </div>
+    <header className={`header1 ${openSidebarToggle ? 'shifted' : ''}`}>
       <div className='user-profile'>
+      <BsCart2 />
         <BsPersonCircle
           className='user-icon'
           onClick={() => setShowDropdown(!showDropdown)}
         />
         <span className="username">{userName}</span>
         {showDropdown && (
-          <div className='dropdown-menu'>
+          <div className='dropdown-menu1'>
+            <button onClick={handleLogout}>
+             Chỉnh sửa thông tin
+            </button>
             <button onClick={handleLogout}>
               Đăng xuất
             </button>
@@ -82,4 +79,4 @@ function Header({ OpenSidebar, openSidebarToggle }) {
   );
 }
 
-export default Header;
+export default HeaderUser;

@@ -14,7 +14,7 @@ const Login = ({ setIsLoggedIn, setUserRole }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await apiClient.post('/api/admin/login', {
+      const response = await apiClient.post('/api/nguoidung/login', {
         username: username,
         password: password,
         rememberMe: true 

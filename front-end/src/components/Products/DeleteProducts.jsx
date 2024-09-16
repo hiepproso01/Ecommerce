@@ -2,7 +2,7 @@ import React from 'react';
 import Swal from 'sweetalert2';
 import apiClient from '../../services/api';
 
-function DeleteProduct({ productId }) {
+const DeleteProduct = ({ productId, onDeleteSuccess }) => { // Thêm onDeleteSuccess vào props
 
   const handleDelete = async () => {
     try {
@@ -22,12 +22,16 @@ function DeleteProduct({ productId }) {
         // Nếu người dùng xác nhận, thực hiện xóa sản phẩm
         await apiClient.delete(`api/sanpham/Delete/${productId}`);
 
+        // Gọi hàm onDeleteSuccess để cập nhật danh sách sản phẩm
+        onDeleteSuccess();
+
         // Hiển thị thông báo thành công
         Swal.fire(
           'Đã xóa!',
           'Sản phẩm đã được xóa.',
           'success'
         );
+       console.log(`${productId} đã được xóa!`);
       }
     } catch (error) {
       console.error("Có lỗi xảy ra khi xóa sản phẩm!", error);
@@ -42,8 +46,8 @@ function DeleteProduct({ productId }) {
   };
 
   return (
-    <button onClick={handleDelete}>
-      Xóa Sản Phẩm
+    <button onClick={handleDelete} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition duration-300">
+      Xóa
     </button>
   );
 }

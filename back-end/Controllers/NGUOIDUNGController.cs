@@ -16,15 +16,15 @@ namespace back_end.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class ADMINController : ControllerBase
+    public class NGUOIDUNGController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
-        private readonly UserManager<ADMIN> _userManager;
-        private readonly SignInManager<ADMIN> _signInManager;
+        private readonly UserManager<NGUOIDUNG> _userManager;
+        private readonly SignInManager<NGUOIDUNG> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
 
-        public ADMINController(ApplicationDBContext context, UserManager<ADMIN> userManager, SignInManager<ADMIN> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public NGUOIDUNGController(ApplicationDBContext context, UserManager<NGUOIDUNG> userManager, SignInManager<NGUOIDUNG> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             _context = context;
             _userManager = userManager;
@@ -33,14 +33,14 @@ namespace back_end.Controllers
             _configuration = configuration;
         }
         [HttpGet("GetAll")]
-        public async Task<ActionResult<IEnumerable<ADMIN>>> GetAdmin()
+        public async Task<ActionResult<IEnumerable<NGUOIDUNG>>> GetAdmin()
         {
-            return await _context.ADMIN.ToListAsync();
+            return await _context.NGUOIDUNG.ToListAsync();
         }
         [HttpPost("GetbyId/{id}")]
-        public async Task<ActionResult<ADMIN>> GetAdminById(string id)
+        public async Task<ActionResult<NGUOIDUNG>> GetAdminById(string id)
         {
-            var admin = await _context.ADMIN.FindAsync(id);
+            var admin = await _context.NGUOIDUNG.FindAsync(id);
             if (admin == null)
             {
                 return NotFound();
@@ -52,7 +52,7 @@ public async Task<IActionResult> Register([FromBody] DANGKYADMIN dangKyAdmin)
 {
     if(ModelState.IsValid)
     {
-        var user = new ADMIN
+        var user = new NGUOIDUNG
         {
             UserName = dangKyAdmin.UserName,
             TenNguoiDung = dangKyAdmin.TenNguoiDung,
@@ -106,7 +106,7 @@ public async Task<IActionResult> Login([FromBody] DANGNHAPADMIN dangNhapAdmin)
     return BadRequest(ModelState); // Ensure a return value in all code paths
 }
     
-        private string GenerateJwtToken(ADMIN user)
+        private string GenerateJwtToken(NGUOIDUNG user)
 {
     var tokenHandler = new JwtSecurityTokenHandler();
     var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
@@ -126,7 +126,7 @@ public async Task<IActionResult> Login([FromBody] DANGNHAPADMIN dangNhapAdmin)
 }
 
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> UpdateAdmin(int id, ADMIN admin)
+        public async Task<IActionResult> UpdateAdmin(int id, NGUOIDUNG admin)
         {
             if (id != admin.IDNguoiDung)
             {
@@ -153,19 +153,19 @@ public async Task<IActionResult> Login([FromBody] DANGNHAPADMIN dangNhapAdmin)
          [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteAdmin(int id)
         {
-            var admin = await _context.ADMIN.FindAsync(id);
+            var admin = await _context.NGUOIDUNG.FindAsync(id);
             if (admin == null)
             {
                 return NotFound();
             }
-            _context.ADMIN.Remove(admin);
+            _context.NGUOIDUNG.Remove(admin);
             await _context.SaveChangesAsync();
             return NoContent();
         }
 
         private bool ADMINExists(int id)
         {
-            return _context.ADMIN.Any(e => e.IDNguoiDung == id);
+            return _context.NGUOIDUNG.Any(e => e.IDNguoiDung == id);
         }
     }
 }

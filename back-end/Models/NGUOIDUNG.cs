@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace back_end.Models
 {
-    public class ADMIN : IdentityUser
+    public class NGUOIDUNG : IdentityUser
     {
     
     public int IDNguoiDung { get; set; }

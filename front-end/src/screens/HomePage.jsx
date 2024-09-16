@@ -1,9 +1,9 @@
 import React from 'react'
-import Header from '../components/Header'
+import HeaderUser from '../components/UserComponents/HeaderUser'
 const HomePage = () => {
   return (
     <div>
-      <Header />
+      <HeaderUser />
     </div>
   )
 }

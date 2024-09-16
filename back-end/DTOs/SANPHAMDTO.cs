@@ -7,6 +7,7 @@ namespace back_end.DTOs
 {
     public class SANPHAMDTO
     {
+        public string IDSanPham {get;set;}
         public string TenSanPham { get; set; }
         public string DonViTinh { get; set; }
         public int SoLuongNhap { get; set; }

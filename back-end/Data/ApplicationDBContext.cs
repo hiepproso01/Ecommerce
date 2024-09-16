@@ -10,7 +10,7 @@ using back_end.Models;
 
 namespace back_end.Data
 {
-    public class ApplicationDBContext : IdentityDbContext<ADMIN>
+    public class ApplicationDBContext : IdentityDbContext<NGUOIDUNG>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
@@ -21,7 +21,7 @@ namespace back_end.Data
         public DbSet<NHACUNGCAP> NHACUNGCAP { get; set; }
         public DbSet<SANPHAM> SANPHAM { get; set; }
         public DbSet<TAIKHOAN> TAIKHOAN { get; set; }
-        public DbSet<ADMIN> ADMIN { get; set; }
+        public DbSet<NGUOIDUNG> NGUOIDUNG { get; set; }
         public DbSet<DONHANG> DONHANG { get; set; }
         public DbSet<CHITIETDONHANG> CHITIETDONHANG { get; set; }
         public DbSet<GIOHANG> GIOHANG { get; set; }
@@ -41,7 +41,7 @@ namespace back_end.Data
         modelBuilder.Entity<TAIKHOAN>()
         .HasKey(t => t.IDTaiKhoan);
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<ADMIN>()
+        modelBuilder.Entity<NGUOIDUNG>()
         .HasKey(a => a.IDNguoiDung);
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<DONHANG>()
