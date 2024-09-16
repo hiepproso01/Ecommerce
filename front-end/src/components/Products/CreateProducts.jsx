@@ -18,6 +18,7 @@ function CreateProduct({ onClose, onSuccess }) {
   const [hinhAnh, setHinhAnh] = useState('');
   const [soLuongBan, setSoLuongBan] = useState('');
   const importPriceRef = useRef(null);
+  const[tenDanhMuc, setTenDanhMuc] = useState('');
   const sellPriceRef = useRef(null);
 
   useEffect(() => {
@@ -79,7 +80,6 @@ function CreateProduct({ onClose, onSuccess }) {
   
     let idDanhMuc = selectedCategory;
     let idNhaCungCap = selectedSupplier;
-  
     if (!idDanhMuc) {
       Swal.fire({
         icon: 'error',
@@ -102,9 +102,9 @@ function CreateProduct({ onClose, onSuccess }) {
   
     if (categoryInput && !selectedCategory) {
       try {
-        // Tạo danh mục mới nếu nó không tồn tại
+        
         const response = await apiClient.post('api/danhmucsp/Create', {
-          // productID,
+     
           tenDanhMuc: categoryInput
         });
         idDanhMuc = response.data.idDanhMuc;

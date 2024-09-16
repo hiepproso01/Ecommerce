@@ -79,7 +79,7 @@ function UpdateProduct({idSanPham,  onClose, onUpdate }) {
         idSanPham:productId,
         tenSanPham: productName,
         donViTinh: unit,
-        giaBan: sellPrice.replace(/\D/g, ''), // Gửi giá bán dạng số
+        giaBan: sellPrice.replace(/\D/g, ''), 
         giaNhap: importPrice.replace(/\D/g, ''),
         moTa: description,
         soLuong: quantity,
@@ -158,6 +158,7 @@ function UpdateProduct({idSanPham,  onClose, onUpdate }) {
     setSelectedSupplier('');
   };
 
+  
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
   };
@@ -257,7 +258,7 @@ function UpdateProduct({idSanPham,  onClose, onUpdate }) {
             >
               <option value="">Chọn nhà cung cấp</option>
               {suppliers.map((supplier) => (
-                <option key={supplier.idNhaCungCap} value={supplier.idNhaCungCap}>
+                <option key={supplier.idNhaCungCap} value={supplier.tenNhaCungCap}>
                   {supplier.tenNhaCungCap}
                 </option>
               ))}
@@ -273,7 +274,7 @@ function UpdateProduct({idSanPham,  onClose, onUpdate }) {
             >
               <option value="">Chọn danh mục</option>
               {categories.map((category) => (
-                <option key={category.idDanhMuc} value={category.idDanhMuc}>
+                <option key={category.idDanhMuc} value={category.tenDanhMuc}>
                   {category.tenDanhMuc}
                 </option>
               ))}

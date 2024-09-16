@@ -92,6 +92,16 @@ const ProductPage = () => {
   //   });
   // };
 
+  //Hàm lấy danh sách sản phẩm sau khi update
+  const updateProductList = () => {
+    apiClient.get('api/sanpham/GetAll')
+      .then(response => {
+        setProducts(response.data);
+        setFilteredProducts(response.data);
+      })
+      .catch(error => console.error("Error refreshing product list", error));
+  };
+
   const closeCreatePopup = () => setShowCreate(false);
   const closeUpdatePopup = () => setEditingidSanPham(null);
   const closeCategoryPopup = () => setShowCategoryPopup(false);
@@ -168,9 +178,10 @@ const ProductPage = () => {
           idSanPham={editingidSanPham}
           onUpdate={() => {
             closeUpdatePopup();
-            apiClient.get('api/sanpham/GetAll')
-              .then(response => setProducts(response.data))
-              .catch(error => console.error("Error refreshing product list", error));
+            updateProductList();
+            // apiClient.get('api/sanpham/GetAll')
+            //   .then(response => setProducts(response.data))
+            //   .catch(error => console.error("Error refreshing product list", error));
           }}
         />
       </Popup>
