@@ -59,7 +59,12 @@ public async Task<IActionResult> Register([FromBody] DANGKYADMIN dangKyAdmin)
             // Password = dangKyAdmin.Password,
             Email = dangKyAdmin.Email,
             Role = dangKyAdmin.Role,
-            PhoneNumber = dangKyAdmin.PhoneNumber
+            PhoneNumber = dangKyAdmin.PhoneNumber,
+            Address = dangKyAdmin.Address,
+            // Birthday = dangKyAdmin.Birthday,
+            // Gender = dangKyAdmin.Gender,
+            // Avatar = dangKyAdmin.Avatar,
+            // Status = dangKyAdmin.Status,
             
         };
         var result = await _userManager.CreateAsync(user, dangKyAdmin.Password);

@@ -11,6 +11,7 @@ const Register = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [tenAdmin, setTenAdmin] = useState('');
   const [position, setPosition] = useState('');
+  const [address, setAddress] = useState('');
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -22,6 +23,7 @@ const Register = () => {
         email: email,
         tenAdmin: tenAdmin,
         position: position,
+        address: address,
         phoneNumber: phoneNumber,
       });
       if (response.status === 200) {
@@ -104,10 +106,10 @@ const Register = () => {
           <input 
             type="text" 
             required 
-            value={position} 
-            onChange={(e) => setPosition(e.target.value)} 
+            value={address} 
+            onChange={(e) => setAddress(e.target.value)} 
           />
-          <label htmlFor="position" className="input-label" style={{fontWeight:'bold'}}>Vị trí</label>
+          <label htmlFor="address" className="input-label" style={{fontWeight:'bold'}}>Địa chỉ</label>
         </div>
         <div className="button-group" style={{ display: 'flex', justifyContent: 'space-between' }}>
           <button type="submit" className="btn-submit">

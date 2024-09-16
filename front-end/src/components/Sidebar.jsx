@@ -29,7 +29,7 @@ const Sidebar = ({ openSidebarToggle }) => {
           </Link>
         </li>
         <li className='sidebar-item'>
-          <Link to="" className='flex-center1'>
+          <Link to="/customer" className='flex-center1'>
             <BsPeopleFill className='icon' /> Quản lý khách hàng
           </Link>
         </li>

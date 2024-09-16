@@ -12,7 +12,7 @@ import './styles/Sidebar.css';
 import apiClient from './services/api.js';
 import ProductPage from './components/Products/ProductsPage.jsx';
 import Supplier from './components/Supplier/Supplier.jsx';
-
+import Customer from './components/Customer.jsx';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -78,6 +78,7 @@ function App() {
                   <Route path='/product' element={<ProductPage />} />
                   <Route path="/category" element={<Category />} />
                   <Route path="/supplier" element={<Supplier />} />
+                  <Route path="/customer" element={<Customer />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </AuthenticatedLayout>

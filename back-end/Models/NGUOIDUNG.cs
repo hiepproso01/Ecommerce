@@ -15,6 +15,8 @@ namespace back_end.Models
     
     [DefaultValue("NguoiDung")]
     public required string Role { get; set; } 
+    public string Address { get; set; }
+    public string PhoneNumber { get; set; }
    
     }
 }
