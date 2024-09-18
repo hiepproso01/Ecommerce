@@ -31,6 +31,7 @@ const ProductPage = () => {
         console.error("There was an error fetching the products!", error);
       });
   }, []);
+  
 
   // Xử lý phân trang
   const indexOfLastProduct = currentPage * productsPerPage;

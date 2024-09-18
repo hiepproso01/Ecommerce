@@ -4,12 +4,13 @@ import "../styles/Register.css";
 import { Player } from '@lottiefiles/react-lottie-player';
 import animation from "../img/Animation.json"
 import apiClient from "../services/api";
+import Swal from "sweetalert2";
 const Register = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [tenAdmin, setTenAdmin] = useState('');
+  const [tenNguoiDung, setTenNguoiDung] = useState('');
   const [position, setPosition] = useState('');
   const [address, setAddress] = useState('');
   const navigate = useNavigate();
@@ -17,14 +18,14 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await apiClient.post('/api/admin/register', {
+      const response = await apiClient.post('/api/nguoidung/register', {
         username: username,
         password: password,
         email: email,
-        tenAdmin: tenAdmin,
-        position: position,
-        address: address,
+        tenNguoiDung: tenNguoiDung,
         phoneNumber: phoneNumber,
+        role: "NguoiDung",
+        address: address,
       });
       if (response.status === 200) {
         Swal.fire({
@@ -97,8 +98,8 @@ const Register = () => {
           <input 
             type="text" 
             required 
-            value={tenAdmin} 
-            onChange={(e) => setTenAdmin(e.target.value)} 
+            value={tenNguoiDung} 
+            onChange={(e) => setTenNguoiDung(e.target.value)} 
           />
           <label htmlFor="tenAdmin" className="input-label" style={{fontWeight:'bold'}}>Họ và tên</label>
         </div>

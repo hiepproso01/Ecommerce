@@ -13,12 +13,16 @@ import apiClient from './services/api.js';
 import ProductPage from './components/Products/ProductsPage.jsx';
 import Supplier from './components/Supplier/Supplier.jsx';
 import Customer from './components/Customer.jsx';
+import CategoryUser from './components/UserComponents/CategoryUser.jsx';
+import ProductsUser from './components/UserComponents/ProductsUser.jsx';
+// import { ProductProvider } from './Context/ProductContext';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [userRole, setUserRole] = useState(null);
-
+  const [products, setProducts] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
   useEffect(() => {
     const token = localStorage.getItem('token');
     const role = localStorage.getItem('role');
@@ -36,6 +40,16 @@ function App() {
         console.error("There was an error fetching the products!", error);
       });
   }, []);
+  useEffect(() =>{
+    apiClient.get('api/danhmucsp/GetAll')
+    .then(response => {
+      setProducts(response.data);
+      setFilteredProducts(response.data);
+    })
+    .catch(error => {
+      console.error("There was an error fetching the products!", error);
+    });
+},[]);
 
   if (!isInitialized) return <div>Loading...</div>;
 
@@ -60,6 +74,7 @@ function App() {
   );
 
   return (
+    // <ProductProvider>
     <Router>
       <Routes>
         {!isLoggedIn ? (
@@ -87,11 +102,15 @@ function App() {
         ) : (
           <>
             <Route path="/homepage" element={<HomePage />} />
+            <Route path="/categoryuser" element={<CategoryUser />} />
+            <Route path="/productsuser" element={<ProductsUser />} />
             <Route path="*" element={<Navigate to="/homepage" replace />} />
+          
           </>
         )}
       </Routes>
     </Router>
+    // </ProductProvider>
   );
 }
 

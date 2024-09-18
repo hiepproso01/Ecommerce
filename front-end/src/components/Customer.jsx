@@ -42,7 +42,7 @@ const Customer = () => {
 
     return (
         <div >
-            <h1>Customer</h1>
+            <h2 className="text-3xl font-bold text-center">Danh sách khách hàng</h2>
             {loading ? (
                 <p>Loading...</p>
             ) : (
@@ -54,6 +54,7 @@ const Customer = () => {
                                 <th className='p-4 text-center'>Tên người dùng</th>
                                 <th className='p-4 text-center'>Email</th>
                                 <th className='p-4 text-center'>SĐT</th>
+                                <th className='p-4 text-center'>Địa chỉ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,6 +64,7 @@ const Customer = () => {
                                     <td>{customer.tenNguoiDung}</td>
                                     <td>{customer.email}</td>
                                     <td>{customer.phoneNumber}</td>
+                                    <td>{customer.address}</td>
                                 </tr>
                             ))}
                         </tbody>

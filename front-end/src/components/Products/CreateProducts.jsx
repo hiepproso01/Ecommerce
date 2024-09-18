@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Swal from 'sweetalert2';
 import apiClient from '../../services/api';
-
 function CreateProduct({ onClose, onSuccess }) {
   const [productID, setProductID] = useState('');
   const [productName, setProductName] = useState('');
