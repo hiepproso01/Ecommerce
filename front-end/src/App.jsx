@@ -16,6 +16,7 @@ import Customer from './components/Customer.jsx';
 import CategoryUser from './components/UserComponents/CategoryUser.jsx';
 import ProductsUser from './components/UserComponents/ProductsUser.jsx';
 // import { ProductProvider } from './Context/ProductContext';
+import ProductDetail from './components/UserComponents/ProductDetail.jsx';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -104,6 +105,7 @@ function App() {
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/categoryuser" element={<CategoryUser />} />
             <Route path="/productsuser" element={<ProductsUser />} />
+            <Route path="/product/:idSanPham" element={<ProductDetail />} />
             <Route path="*" element={<Navigate to="/homepage" replace />} />
           
           </>

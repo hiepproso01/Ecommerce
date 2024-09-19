@@ -1,0 +1,157 @@
+.product-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.product-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.main-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.product-thumbnails {
+    display: flex;
+    margin-top: 10px;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.product-details-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.product-details {
+    margin-bottom: 20px;
+}
+
+.product-details h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 20px;
+    color: #e74c3c;
+    margin-bottom: 20px;
+}
+
+.product-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.product-options {
+    margin-top: 20px;
+}
+
+.product-options label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.product-options select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+    max-width: 200px;
+}
+
+.btn-add-to-cart,
+.btn-buy-now {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.btn-add-to-cart:hover,
+.btn-buy-now:hover {
+    background-color: #2980b9;
+}
+
+.product-tabs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.tab {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.tab input[type="radio"] {
+    display: none;
+}
+
+.tab label {
+    display: block;
+    padding: 10px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tab-content {
+    display: none;
+    padding: 10px;
+    background-color: #fff;
+}
+
+.tab input[type="radio"]:checked + label {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.tab input[type="radio"]:checked + label + .tab-content {
+    display: block;
+}
