@@ -1,0 +1,6 @@
+.content-container {
+    display: flex;
+    margin-left: 250px; /* Đẩy phần content sang phải để chừa chỗ cho sidebar */
+    padding: 20px;
+  }
+  

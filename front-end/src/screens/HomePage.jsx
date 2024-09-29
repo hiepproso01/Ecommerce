@@ -1,24 +1,44 @@
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
+// import HeaderUser from '../components/UserComponents/HeaderUser';
+// import CategoryUser from '../components/UserComponents/CategoryUser';
+// import ProductsUser from '../components/UserComponents/ProductsUser';
+// // import { ProductProvider } from '../Context/ProductContext';
+// const HomePage = () => {
+//   const [products, setProducts] = useState([]);
+
+
+
+//   return (
+   
+//     <div>
+//       <HeaderUser />
+//       <CategoryUser />
+//       <ProductsUser />
+//     </div>
+//   )
+// }
+
+// export default HomePage
+
+import React, { useState } from 'react';
 import HeaderUser from '../components/UserComponents/HeaderUser';
 import CategoryUser from '../components/UserComponents/CategoryUser';
 import ProductsUser from '../components/UserComponents/ProductsUser';
-// import { ProductProvider } from '../Context/ProductContext';
+import '../styles/HomePage.css'; // Thêm file CSS cho HomePage nếu cần
+
 const HomePage = () => {
   const [products, setProducts] = useState([]);
 
-
-
   return (
-    // <ProductProvider>
     <div>
-
       <HeaderUser />
-      <CategoryUser />
-      <ProductsUser />
-
+      {/* Đặt Sidebar vào layout bên trái */}
+      <div className="content-container">
+        <CategoryUser />
+        <ProductsUser />
+      </div>
     </div>
-    // </ProductProvider>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

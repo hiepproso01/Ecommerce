@@ -1,97 +1,89 @@
 import React, { useState, useEffect } from "react";
 import apiClient from '../../services/api';
-import { useParams } from 'react-router-dom';
-import HeaderUser from './HeaderUser';
+import { useParams,Link } from 'react-router-dom';
 import '../../styles/ProductDetail.css';
-
+import HeaderUser from './HeaderUser';
+import { IoIosArrowBack } from "react-icons/io";
 const ProductDetail = () => {
-    const { idSanPham } = useParams(); 
+    const { idSanPham } = useParams();
     const [product, setProduct] = useState(null);
-
+    const [cartItems, setCartItems] = useState(0);
+  
     useEffect(() => {
         apiClient.get(`api/sanpham/GetById/${idSanPham}`)
-        .then(response => {
-            setProduct(response.data);
-        })
-        .catch(error => {
-            console.error("Error fetching product details!", error);
-        });
+            .then(response => {
+                setProduct(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching product details!", error);
+            });
     }, [idSanPham]);
 
     if (!product) {
         return <p>Loading product details...</p>;
     }
 
+    const handleAddToCart = () => {
+        setCartItems(cartItems + 1);
+    };
+    const handleBack = () => {
+        navigate(-1);
+    };
+    const handleBuyNow = () => {
+        // Logic for buying the product
+        console.log("Buying product:", product.tenSanPham);
+    };
+
     return (
         <div>
-             <HeaderUser />
-        <div className="product-detail-container">
+            <HeaderUser />
+          
+            <div className="container mx-auto px-4 py-8">
            
-            <main className="product-main">
-                <section className="product-info">
-                    <div className="product-images">
-                        <img src={product.hinhAnh} alt={product.tenSanPham} className="main-image" />
-                        <div className="product-thumbnails">
-                            {/* Add product thumbnails here */}
-                            <img src={product.hinhAnh} alt="variation" className="thumbnail" />
-                        </div>
+                <header className="header-user">
+                <Link to="/homepage" className="back-button"><div className="back-container"><IoIosArrowBack/>Trở về trang chủ</div>
+            </Link>
+                </header>
+
+                <div className="flex flex-col md:flex-row">
+
+                    <div className="md:w-1/2 mb-8 md:mb-0">
+                        <img
+                            src={product.hinhAnh}
+                            alt={product.tenSanPham}
+                            className="w-4/5 h-auto object-cover rounded-lg shadow-lg"
+                        />
                     </div>
 
-                    <div className="product-details">
-                        <h2>{product.tenSanPham}</h2>
-                        <p className="product-price">
+
+                    <div className="md:w-1/2 md:pl-8">
+                        <h1 className="text-3xl font-bold mb-4">{product.tenSanPham}</h1>
+                        <p className="text-2xl font-semibold mb-6">
                             {parseInt(product.giaBan).toLocaleString('vi-VN')} VND
                         </p>
-                        {/* <div className="product-rating">★ ★ ★ ★ ☆ (77 reviews)</div> */}
-                        <p className="product-description">
-                            {product.moTa}
-                        </p>
 
-                        <div className="product-options">
-                            {/* <label htmlFor="size">Size</label>
-                            <select id="size">
-                                <option>Small</option>
-                                <option>Medium</option>
-                                <option>Large</option>
-                            </select> */}
+                        <p className="mb-6">{product.moTa}</p>
 
-                            <button className="btn-add-to-cart">Add to Cart</button>
-                            <button className="btn-buy-now">Buy Now</button>
-                        </div>
-                    </div>
-                </section>
 
-                {/* Product Tabs */}
-                {/* <section className="product-tabs">
-                    <div className="tab">
-                        <input type="radio" id="tab1" name="tab" defaultChecked />
-                        <label htmlFor="tab1">Detail</label>
-                        <div className="tab-content">
-                            <p>SKU: {product.sku}</p>
-                            <p>Upper Material: Leather</p>
-                            <p>Sole Material: Synthetic</p>
+                        <div className="flex space-x-4 mb-6">
+                            <button
+                                onClick={handleBuyNow}
+                                className="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors"
+                            >
+                                Mua ngay
+                            </button>
+                            <button
+                                onClick={handleAddToCart}
+                                className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors"
+                            >
+                                Thêm vào giỏ hàng
+                            </button>
                         </div>
                     </div>
-                    <div className="tab">
-                        <input type="radio" id="tab2" name="tab" />
-                        <label htmlFor="tab2">Return Policy</label>
-                        <div className="tab-content">
-                            <p>30-day return policy.</p>
-                        </div>
-                    </div>
-                    <div className="tab">
-                        <input type="radio" id="tab3" name="tab" />
-                        <label htmlFor="tab3">Delivery Info</label>
-                        <div className="tab-content">
-                            <p>Free delivery for orders over 500,000 VND.</p>
-                        </div>
-                    </div>
-                </section> */}
-            </main>
-        </div>
+                </div>
+            </div>
         </div>
     );
 };
 
 export default ProductDetail;
-

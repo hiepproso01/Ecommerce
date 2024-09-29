@@ -122,6 +122,7 @@
     margin-top: 20px;
 }
 
+
 .tab {
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -154,4 +155,34 @@
 
 .tab input[type="radio"]:checked + label + .tab-content {
     display: block;
+}
+.back-button{ 
+    padding: 10px 15px;
+    border-radius: 5px;
+   
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    cursor: pointer;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+    transition: background-color 0.3s;
+}
+
+
+.back-container {
+    width: 200px;
+    height:50px;
+    display: flex; /* Đặt icon và văn bản cùng trên một dòng */
+    align-items: center; /* Canh giữa icon với văn bản */
+    border-radius: 0.5rem;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+.back-container:hover {
+    background-color: #3947df;
+    color:white;
+}
+.back-container svg {
+    margin-right: 8px; /* Khoảng cách giữa icon và chữ */
+    font-size: 20px; /* Điều chỉnh kích thước của icon */
 }

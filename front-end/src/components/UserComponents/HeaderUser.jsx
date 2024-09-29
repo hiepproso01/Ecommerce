@@ -10,6 +10,7 @@ const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const [userName, setUserName] = useState('');
+  const navigate = useNavigate();
     useEffect(() => {
       const storedUser = localStorage.getItem('user');
       if (storedUser) {
@@ -41,7 +42,9 @@ const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
     e.preventDefault();
     console.log('Searching for:', searchQuery);
   };
-
+  const handleCartClick = () => {
+    navigate('/cart'); // Điều hướng đến trang giỏ hàng (URL: /cart)
+  };
   // Xử lý click ngoài dropdown để đóng
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -56,9 +59,12 @@ const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
   }, []);
 
   return (
+    <div className='header0'>
     <header className={`header1 ${openSidebarToggle ? 'shifted' : ''}`}>
       <div className='user-profile'>
-      <BsCart2 />
+     <div style={{marginRight:15}}>
+     <BsCart2   onClick={handleCartClick} style={{ cursor: 'pointer' }}/>
+     </div>
         <BsPersonCircle
           className='user-icon'
           onClick={() => setShowDropdown(!showDropdown)}
@@ -76,6 +82,7 @@ const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
         )}
       </div>
     </header>
+    </div>
   );
 }
 

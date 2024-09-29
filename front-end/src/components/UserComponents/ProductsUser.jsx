@@ -32,6 +32,7 @@ const ProductsUser = () => {
     };
     
     return (
+           <div>
            <div className="products-container">
             {products.length > 0 ? (
                 products.map(product => (
@@ -44,6 +45,21 @@ const ProductsUser = () => {
             ) : (
                 <p>Không có sản phẩm nào.</p>
             )}
+        </div>
+        <div className='img'></div>
+        <div className="products-container">
+            {products.length > 0 ? (
+                products.map(product => (
+                    <div key={product.idSanPham} className="product-card" onClick={() => handleProductClick(product.idSanPham)}>
+                        <img src={product.hinhAnh} alt={product.tenSanPham} className="product-image" />
+                        <h3 className="product-name">{product.tenSanPham}</h3>
+                        <p className="product-price">Giá: {parseInt(product.giaBan).toLocaleString('vi-VN')} VND</p>
+                    </div>
+                ))
+            ) : (
+                <p>Không có sản phẩm nào.</p>
+            )}
+        </div>
         </div>
     );
 }

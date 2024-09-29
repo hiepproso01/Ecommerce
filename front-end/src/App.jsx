@@ -15,6 +15,7 @@ import Supplier from './components/Supplier/Supplier.jsx';
 import Customer from './components/Customer.jsx';
 import CategoryUser from './components/UserComponents/CategoryUser.jsx';
 import ProductsUser from './components/UserComponents/ProductsUser.jsx';
+import Cart from './components/UserComponents/Cart.jsx';
 // import { ProductProvider } from './Context/ProductContext';
 import ProductDetail from './components/UserComponents/ProductDetail.jsx';
 function App() {
@@ -105,6 +106,7 @@ function App() {
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/categoryuser" element={<CategoryUser />} />
             <Route path="/productsuser" element={<ProductsUser />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/product/:idSanPham" element={<ProductDetail />} />
             <Route path="*" element={<Navigate to="/homepage" replace />} />
           
