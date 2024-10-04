@@ -10,26 +10,32 @@ const CategoryProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPage = 5; // Số danh mục hiển thị trên mỗi trang
-  const [categoryGroups, setCategoryGroups] = useState([]);
+  const [nhomDanhMucList, setNhomDanhMucList] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCategoryProducts = async () => {
       try {
-        const [categoryProductsResponse, categoryGroupsResponse] = await Promise.all([
-          apiClient.get('/api/danhmucsp/GetAll'),
-          apiClient.get('/api/nhomdanhmuc/GetAll')
-        ]);
-        setCategoryProducts(categoryProductsResponse.data);
-        setFilteredCategoryProducts(categoryProductsResponse.data);
-        setCategoryGroups(categoryGroupsResponse.data);
+        const response = await apiClient.get('/api/danhmucsp/GetAll');
+        setCategoryProducts(response.data);
+        setFilteredCategoryProducts(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching category products:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    const fetchNhomDanhMuc = async () => {
+      try {
+        const response = await apiClient.get('/api/nhomdanhmuc/GetAll');
+        setNhomDanhMucList(response.data);
+      } catch (error) {
+        console.error('Error fetching nhom danh muc:', error);
+      }
+    };
+
+    fetchCategoryProducts();
+    fetchNhomDanhMuc();
   }, []);
 
   const handleDelete = async (id) => {
@@ -64,11 +70,19 @@ const CategoryProductsPage = () => {
     }
   };
 
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
 
   const handleEditOrAdd = async (id = null) => {
     const categoryProduct = id
       ? categoryProducts.find(cp => cp.idDanhMuc === id)
-      : { tenDanhMuc: '', idDanhMuc: '', nhomDanhMuc: '' }; // Thêm thuộc tính nhóm danh mục
+      : { tenDanhMuc: '', idDanhMuc: '', idNhomDanhMuc: '', tenNhomDanhMuc: '', hinhAnhDanhMuc: '' };
   
     const { value: formValues } = await Swal.fire({
       title: `<h2 style="color:#4A90E2;">${id ? 'Chỉnh sửa danh mục' : 'Thêm mới danh mục'}</h2>`,
@@ -86,14 +100,20 @@ const CategoryProductsPage = () => {
             placeholder="Tên danh mục" 
             value="${categoryProduct?.tenDanhMuc || ''}" 
             style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
-          <select id="nhomDanhMuc" class="swal2-input" style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
+          <select id="idNhomDanhMuc" class="swal2-select" style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
             <option value="">Chọn nhóm danh mục</option>
-            ${categoryGroups.map(group => `
-              <option value="${group.idNhomDanhMuc}" ${categoryProduct?.nhomDanhMuc === group.idNhomDanhMuc ? 'selected' : ''}>
-                ${group.tenNhomDanhMuc}
+            ${nhomDanhMucList.map(nhom => `
+              <option value="${nhom.idNhomDanhMuc}" ${categoryProduct?.idNhomDanhMuc === nhom.idNhomDanhMuc ? 'selected' : ''}>
+                ${nhom.tenNhomDanhMuc}
               </option>
             `).join('')}
           </select>
+          <input 
+            id="hinhAnhDanhMuc" 
+            type="file" 
+            accept="image/*"
+            class="swal2-file" 
+            style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
         </div>
       `,
       showCancelButton: true,
@@ -101,16 +121,28 @@ const CategoryProductsPage = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: id ? 'Cập nhật' : 'Thêm mới',
       cancelButtonText: 'Huỷ',
-      preConfirm: () => {
+      preConfirm: async () => {
+        const file = document.getElementById('hinhAnhDanhMuc').files[0];
+        let hinhAnhBase64 = categoryProduct?.hinhAnhDanhMuc || '';
+        if (file) {
+          hinhAnhBase64 = await convertToBase64(file);
+        }
+        const idNhomDanhMuc = document.getElementById('idNhomDanhMuc').value;
+        const selectedNhomDanhMuc = nhomDanhMucList.find(nhom => nhom.idNhomDanhMuc === idNhomDanhMuc);
         return {
           idDanhMuc: id ? id : document.getElementById('idDanhMuc').value,
           tenDanhMuc: document.getElementById('tenDanhMuc').value,
-          nhomDanhMuc: document.getElementById('nhomDanhMuc').value // Lấy giá trị nhóm danh mục
+          idNhomDanhMuc: idNhomDanhMuc,
+          tenNhomDanhMuc: selectedNhomDanhMuc ? selectedNhomDanhMuc.tenNhomDanhMuc : '',
+          hinhAnhDanhMuc: hinhAnhBase64
         };
       }
     });
   
     if (formValues) {
+      // Log dữ liệu của các trường vào console
+      console.log('Dữ liệu các trường:', formValues);
+
       try {
         if (id) {
           await apiClient.put(`/api/danhmucsp/Update/${id}`, formValues);
@@ -120,11 +152,7 @@ const CategoryProductsPage = () => {
             'success'
           );
         } else {
-          await apiClient.post('/api/danhmucsp/Create', {
-            idDanhMuc: formValues.idDanhMuc,
-            tenDanhMuc: formValues.tenDanhMuc,
-            nhomDanhMuc: formValues.nhomDanhMuc // Thêm nhóm danh mục vào dữ liệu gửi
-          });
+          await apiClient.post('/api/danhmucsp/Create', formValues);
           Swal.fire(
             'Đã thêm!',
             'Danh mục đã được thêm mới thành công.',
@@ -135,7 +163,7 @@ const CategoryProductsPage = () => {
         // Refresh category list
         const response = await apiClient.get('/api/danhmucsp/GetAll');
         setCategoryProducts(response.data);
-        setFilteredCategoryProducts(response.data); // Cập nhật danh sách lọc
+        setFilteredCategoryProducts(response.data);
       } catch (error) {
         console.error('Lỗi khi lưu danh mục:', error);
         Swal.fire(
@@ -167,102 +195,21 @@ const CategoryProductsPage = () => {
   // Tính tổng số trang
   const totalPages = Math.ceil(filteredCategoryProducts.length / itemsPerPage);
 
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
-  const handleAddCategoryGroup = async () => {
-    const { value: formValues } = await Swal.fire({
-      title: '<h2 style="color:#4A90E2;">Thêm mới nhóm danh mục</h2>',
-      html: `
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <input 
-            id="idNhomDanhMuc" 
-            class="swal2-input" 
-            placeholder="ID Nhóm Danh mục" 
-            style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
-          <input 
-            id="tenNhomDanhMuc" 
-            class="swal2-input" 
-            placeholder="Tên Nhóm Danh mục" 
-            style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
-          <input 
-            type="file" 
-            id="hinhAnhNhomDanhMuc" 
-            accept="image/*"
-            style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
-        </div>
-      `,
-      showCancelButton: true,
-      confirmButtonColor: '#4A90E2',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Thêm mới',
-      cancelButtonText: 'Huỷ',
-      preConfirm: async () => {
-        const file = document.getElementById('hinhAnhNhomDanhMuc').files[0];
-        let hinhAnhBase64 = '';
-        if (file) {
-          hinhAnhBase64 = await convertToBase64(file);
-        }
-        return {
-          idNhomDanhMuc: document.getElementById('idNhomDanhMuc').value,
-          tenNhomDanhMuc: document.getElementById('tenNhomDanhMuc').value,
-          hinhAnhNhomDanhMuc: hinhAnhBase64
-        };
-      }
-    });
-
-    if (formValues) {
-      try {
-        await apiClient.post('/api/nhomdanhmuc/Create', formValues);
-        Swal.fire(
-          'Đã thêm!',
-          'Nhóm danh mục đã được thêm mới thành công.',
-          'success'
-        );
-        // Refresh the category groups list if needed
-      } catch (error) {
-        console.error('Lỗi khi thêm nhóm danh mục:', error);
-        Swal.fire(
-          'Lỗi!',
-          'Đã có lỗi xảy ra khi thêm nhóm danh mục.',
-          'error'
-        );
-      }
-    }
-  };
-
   return (
     <div className="page-container">
       <h1 className="page-title">Danh mục sản phẩm</h1>
       <div className="search-add-container">
-        <button
-          onClick={() => handleEditOrAdd()}
-          className="add-button"
-        >
-          Thêm mới danh mục
-        </button>
-        <button
-          onClick={handleAddCategoryGroup}
-          className="add-button"
-          style={{ marginLeft: '10px' }}
-        >
-          Thêm nhóm danh mục
-        </button>
-        <input
-          type="text"
-          placeholder="Tìm kiếm theo ID hoặc Tên danh mục"
-          value={searchTerm}
-          onChange={handleSearch}
+      <button
+        onClick={() => handleEditOrAdd()}
+        className="add-button"
+      >
+        Thêm mới danh mục
+      </button>
+      <input
+        type="text"
+        placeholder="Tìm kiếm theo ID hoặc Tên danh mục"
+        value={searchTerm}
+        onChange={handleSearch}
           className="search-input-1"
         />
       </div>
@@ -273,8 +220,10 @@ const CategoryProductsPage = () => {
           <table className="table">
             <thead className="table-header">
               <tr>
+              <th className="table-cell">Hình ảnh danh mục</th>
                 <th className="table-cell">Mã danh mục</th>
                 <th className="table-cell">Tên danh mục</th>
+                <th className='table-cell'>Mã nhóm danh mục</th>
                 <th className="table-cell">Nhóm danh mục</th>
                 <th className="table-cell">Tùy chỉnh</th>
               </tr>
@@ -282,9 +231,23 @@ const CategoryProductsPage = () => {
             <tbody className="table-row-1">
               {currentItems.map((categoryProduct) => (
                 <tr key={categoryProduct.idDanhMuc}>
+                    <td className="table-cell">
+                    {categoryProduct.hinhAnhDanhMuc && (
+                      <img 
+                        src={categoryProduct.hinhAnhDanhMuc} 
+                        alt={categoryProduct.tenDanhMuc} 
+                        style={{ width: '50px', height: '50px', objectFit: 'cover' }} 
+                      />
+                    )}
+                  </td>
                   <td className="table-cell">{categoryProduct.idDanhMuc}</td>
                   <td className="table-cell">{categoryProduct.tenDanhMuc}</td>
-                  <td className="table-cell">{categoryProduct.nhomDanhMuc}</td>
+                  <td className="table-cell">{categoryProduct.idNhomDanhMuc}</td>
+                  <td className="table-cell">{categoryProduct.tenNhomDanhMuc}</td>
+                  {/* <td className="table-cell">
+                    {nhomDanhMucList.find(nhom => nhom.idNhomDanhMuc === categoryProduct.idNhomDanhMuc)?.tenNhomDanhMuc || ''}
+                  </td> */}
+                
                   <td className="table-cell">
                     <div
                       onClick={() => handleEditOrAdd(categoryProduct.idDanhMuc)}

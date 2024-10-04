@@ -15,6 +15,7 @@ import Supplier from './components/Supplier/Supplier.jsx';
 import Customer from './components/Customer.jsx';
 import CategoryUser from './components/UserComponents/CategoryUser.jsx';
 import ProductsUser from './components/UserComponents/ProductsUser.jsx';
+import CategogyGroupPage from './components/CategoryProducts/CategogyGroupPage.jsx';
 import Cart from './components/UserComponents/Cart.jsx';
 // import { ProductProvider } from './Context/ProductContext';
 import ProductDetail from './components/UserComponents/ProductDetail.jsx';
@@ -96,6 +97,7 @@ function App() {
                   <Route path="/category" element={<Category />} />
                   <Route path="/supplier" element={<Supplier />} />
                   <Route path="/customer" element={<Customer />} />
+                  <Route path="/categorygroup" element={<CategogyGroupPage />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </AuthenticatedLayout>

@@ -29,6 +29,11 @@ const Sidebar = ({ openSidebarToggle }) => {
           </Link>
         </li>
         <li className='sidebar-item'>
+          <Link to="/categorygroup" className='flex-center1'>
+            <BsFillGrid3X3GapFill className='icon' /> Quản lý nhóm danh mục
+          </Link>
+        </li>
+        <li className='sidebar-item'>
           <Link to="/customer" className='flex-center1'>
             <BsPeopleFill className='icon' /> Quản lý khách hàng
           </Link>

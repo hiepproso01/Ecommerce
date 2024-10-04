@@ -31,7 +31,7 @@ namespace back_end.Controllers
                 IDDanhMuc = danhmuc.IDDanhMuc,
                 TenDanhMuc = danhmuc.TenDanhMuc,
                 SoLuongSanPham = danhmuc.SoLuongSanPham,
-                
+                IDNhomDanhMuc = danhmuc.IDNhomDanhMuc,
                 TenNhomDanhMuc = danhmuc.TenNhomDanhMuc,
                HinhAnhDanhMuc = danhmuc.HinhAnhDanhMuc
             })
@@ -48,6 +48,7 @@ namespace back_end.Controllers
                     IDDanhMuc = danhmuc.IDDanhMuc,
                     TenDanhMuc = danhmuc.TenDanhMuc,
                     SoLuongSanPham = danhmuc.SoLuongSanPham,
+                    IDNhomDanhMuc = danhmuc.IDNhomDanhMuc,
                     TenNhomDanhMuc = danhmuc.TenNhomDanhMuc,
                 HinhAnhDanhMuc = danhmuc.HinhAnhDanhMuc
                 })
@@ -74,6 +75,7 @@ namespace back_end.Controllers
                 IDDanhMuc = danhmucspdetail.IDDanhMuc,
                 TenDanhMuc = danhmucspdetail.TenDanhMuc,
                 SoLuongSanPham = danhmucspdetail.SoLuongSanPham,
+                IDNhomDanhMuc = danhmucspdetail.IDNhomDanhMuc,
                 TenNhomDanhMuc = danhmucspdetail.TenNhomDanhMuc,
                 
                 HinhAnhDanhMuc = danhmucspdetail.HinhAnhDanhMuc
@@ -85,7 +87,8 @@ namespace back_end.Controllers
                 IDDanhMuc = newDANHMUCSP.IDDanhMuc,
                 TenDanhMuc = newDANHMUCSP.TenDanhMuc,
                 SoLuongSanPham = newDANHMUCSP.SoLuongSanPham,
-                 TenNhomDanhMuc = newDANHMUCSP.TenNhomDanhMuc,
+                IDNhomDanhMuc = newDANHMUCSP.IDNhomDanhMuc,
+                TenNhomDanhMuc = newDANHMUCSP.TenNhomDanhMuc,
                 HinhAnhDanhMuc = newDANHMUCSP.HinhAnhDanhMuc
             };
             return CreatedAtAction(nameof(GetDANHMUCSPByID), new { id = result.IDDanhMuc }, result);
@@ -107,6 +110,7 @@ namespace back_end.Controllers
 
             danhmucsp.TenDanhMuc = danhmucspdetailDTO.TenDanhMuc;
             danhmucsp.SoLuongSanPham = danhmucspdetailDTO.SoLuongSanPham;
+            danhmucsp.IDNhomDanhMuc = danhmucspdetailDTO.IDNhomDanhMuc;
             danhmucsp.TenNhomDanhMuc = danhmucspdetailDTO.TenNhomDanhMuc;
             danhmucsp.HinhAnhDanhMuc = danhmucspdetailDTO.HinhAnhDanhMuc; 
             _context.Entry(danhmucsp).State = EntityState.Modified;
