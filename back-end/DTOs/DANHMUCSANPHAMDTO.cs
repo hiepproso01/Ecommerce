@@ -10,5 +10,8 @@ namespace back_end.DOTs
         
         public string TenDanhMuc { get; set; }
         public int SoLuongSanPham { get; set; }
+        public string TenNhomDanhMuc { get; set; }
+        public string IDNhomDanhMuc { get; set; }
+        public string HinhAnhDanhMuc { get; set; }
     }
 }

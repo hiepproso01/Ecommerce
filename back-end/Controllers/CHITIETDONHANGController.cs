@@ -24,15 +24,17 @@ namespace back_end.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<IEnumerable<CHITIETDONHANG>>> GetCHITIETDONHANG()
         {
-            return await _context.CHITIETDONHANG.Include(od => od.DONHANG)
-                                          .ToListAsync();
+            // return await _context.CHITIETDONHANG.Include(od => od.DONHANG)
+            //                               .ToListAsync();
+             return await _context.CHITIETDONHANG.ToListAsync();
         }
         [HttpGet("GetbyId/{id}")]
-        public async Task<ActionResult<CHITIETDONHANG>> GetCHITIETDONHANGById(int id)
+        public async Task<ActionResult<CHITIETDONHANG>> GetCHITIETDONHANGById(string id)
         {
-            var orderDetail = await _context.CHITIETDONHANG.Include(od => od.SANPHAM)
-                                                         .Include(od => od.DONHANG)
-                                                         .FirstOrDefaultAsync(od => od.IDChiTietDonHang == id);
+            // var orderDetail = await _context.CHITIETDONHANG.Include(od => od.SANPHAM)
+            //                                              .Include(od => od.DONHANG)
+            //                                              .FirstOrDefaultAsync(od => od.IDChiTietDonHang == id);
+             var orderDetail = await _context.CHITIETDONHANG.FirstOrDefaultAsync(od => od.IDChiTietDonHang == id);
             if (orderDetail == null)
             {
                 return NotFound();
@@ -47,7 +49,7 @@ namespace back_end.Controllers
             return CreatedAtAction(nameof(GetCHITIETDONHANG), new { id = CHITIETDONHANG.IDChiTietDonHang }, CHITIETDONHANG);
         }
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> UpdateCHITIETDONHANG(int id, CHITIETDONHANG CHITIETDONHANG)
+        public async Task<IActionResult> UpdateCHITIETDONHANG(string id, CHITIETDONHANG CHITIETDONHANG)
         {
             if (id != CHITIETDONHANG.IDChiTietDonHang)
             {
@@ -83,7 +85,7 @@ namespace back_end.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
-        private bool CHITIETDONHANGExists(int id)
+        private bool CHITIETDONHANGExists(string id)
         {
 
             return _context.CHITIETDONHANG.Any(e => e.IDChiTietDonHang == id);

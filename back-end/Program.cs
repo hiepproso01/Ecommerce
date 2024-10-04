@@ -89,7 +89,9 @@ async Task CreateAdminAccount(IServiceProvider serviceProvider)
             Email = adminEmail,
             TenNguoiDung = "Admin",
             Role = "Admin",
-            PhoneNumber = "0123456789"
+            PhoneNumber = "0123456789",
+            Address = "Hồ Chí Minh"
+            
         };
 
         var createAdminResult = await userManager.CreateAsync(admin, adminPassword);

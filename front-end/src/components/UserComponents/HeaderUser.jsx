@@ -43,7 +43,7 @@ const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
     console.log('Searching for:', searchQuery);
   };
   const handleCartClick = () => {
-    navigate('/cart'); // Điều hướng đến trang giỏ hàng (URL: /cart)
+    navigate('/cart'); // Điều hướng đến trang giỏ hàng 
   };
   // Xử lý click ngoài dropdown để đóng
   useEffect(() => {

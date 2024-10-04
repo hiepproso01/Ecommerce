@@ -7,8 +7,8 @@ namespace back_end.DTOs
 {
     public class CHITIETGIOHANGDetailDTO
     {
-        public int IDGioHang { get; set; }
-        public int IDTaiKhoan { get; set; }
+        public string IDGioHang { get; set; }
+        public string IDTaiKhoan { get; set; }
         // public required TAIKHOAN TAIKHOAN { get; set; }
         // public required List<CHITIETGIOHANG> CHITIETGIOHANG { get; set; }
     }

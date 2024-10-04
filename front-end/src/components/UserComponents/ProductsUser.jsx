@@ -33,7 +33,7 @@ const ProductsUser = () => {
     
     return (
            <div>
-           <div className="products-container">
+           <div className="products-container1">
             {products.length > 0 ? (
                 products.map(product => (
                     <div key={product.idSanPham} className="product-card" onClick={() => handleProductClick(product.idSanPham)}>
@@ -46,8 +46,8 @@ const ProductsUser = () => {
                 <p>Không có sản phẩm nào.</p>
             )}
         </div>
-        <div className='img'></div>
-        <div className="products-container">
+        <div className='img123'></div>
+        <div className="products-container1">
             {products.length > 0 ? (
                 products.map(product => (
                     <div key={product.idSanPham} className="product-card" onClick={() => handleProductClick(product.idSanPham)}>

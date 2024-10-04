@@ -27,7 +27,7 @@ namespace back_end.Controllers
     }
        
          [HttpGet("GetbyId/{id}")]
-    public async Task<ActionResult<DONHANG>> GetDONHANGById(int id)
+    public async Task<ActionResult<DONHANG>> GetDONHANGById(string id)
     {
         var order = await _context.DONHANG.Include(o => o.CHITIETDONHANG)
                                          .FirstOrDefaultAsync(o => o.IDDonHang == id);
@@ -45,7 +45,7 @@ namespace back_end.Controllers
         return CreatedAtAction(nameof(GetDONHANGById), new { id = donhang.IDDonHang }, donhang);
     }
      [HttpPut("Update/{id}")]
-    public async Task<IActionResult> UpdateDONHANG(int id, DONHANG donhang)
+    public async Task<IActionResult> UpdateDONHANG(string id, DONHANG donhang)
     {
         if (id != donhang.IDDonHang)
         {
@@ -81,7 +81,7 @@ namespace back_end.Controllers
         await _context.SaveChangesAsync();
         return NoContent();
     }
-     private bool DONHANGExists(int id)
+     private bool DONHANGExists(string id)
     {
         return _context.DONHANG.Any(e => e.IDDonHang == id);
     }

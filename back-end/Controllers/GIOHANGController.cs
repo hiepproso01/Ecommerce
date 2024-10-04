@@ -29,7 +29,7 @@ namespace back_end.Controllers
         return await _context.GIOHANG.Include(o => o.CHITIETGIOHANG).ToListAsync();
     }
         [HttpGet("GetbyId/{id}")]
-    public async Task<ActionResult<GIOHANG>> GetGIOHANGById(int id)
+    public async Task<ActionResult<GIOHANG>> GetGIOHANGById(string id)
     {
         var order = await _context.GIOHANG.Include(o => o.CHITIETGIOHANG)
                                          .FirstOrDefaultAsync(o => o.IDGioHang == id);
@@ -39,15 +39,38 @@ namespace back_end.Controllers
         }
         return order;
     }
-    [HttpPost("Create")]
-     public async Task<ActionResult<GIOHANG>> CreateGIOHANG(GIOHANG giohang)
-    {
-        _context.GIOHANG.Add(giohang);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetGIOHANGById), new { id = giohang.IDGioHang }, giohang);
-    }
+    // [HttpPost("Create")]
+    //  public async Task<ActionResult<GIOHANG>> CreateGIOHANG(GIOHANG giohang)
+    // {
+    //     _context.GIOHANG.Add(giohang);
+    //     await _context.SaveChangesAsync();
+    //     return CreatedAtAction(nameof(GetGIOHANGById), new { id = giohang.IDGioHang }, giohang);
+    // }
+      [HttpPost("AddToCart")]
+        public async Task<ActionResult<CHITIETGIOHANG>> AddToCart(CHITIETGIOHANG chiTietGioHang)
+        {
+            // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+            var existingItem = await _context.CHITIETGIOHANG
+                .FirstOrDefaultAsync(c => c.IDGioHang == chiTietGioHang.IDGioHang && c.IDSanPham == chiTietGioHang.IDSanPham);
+
+            if (existingItem != null)
+            {
+                // Nếu sản phẩm đã có trong giỏ, tăng số lượng
+                existingItem.SoLuong += chiTietGioHang.SoLuong;
+                _context.Entry(existingItem).State = EntityState.Modified;
+            }
+            else
+            {
+                // Nếu sản phẩm chưa có, thêm sản phẩm mới vào giỏ hàng
+                _context.CHITIETGIOHANG.Add(chiTietGioHang);
+            }
+
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetGIOHANGById), new { id = chiTietGioHang.IDChiTietGioHang }, chiTietGioHang);
+        }
+
      [HttpPut("Update/{id}")]
-    public async Task<IActionResult> UpdateGIOHANG(int id, GIOHANG giohang)
+    public async Task<IActionResult> UpdateGIOHANG(string id, GIOHANG giohang)
     {
         if (id != giohang.IDGioHang)
         {
@@ -83,7 +106,7 @@ namespace back_end.Controllers
         await _context.SaveChangesAsync();
         return NoContent();
     }
-     private bool GIOHANGExists(int id)
+     private bool GIOHANGExists(string id)
     {
         return _context.GIOHANG.Any(e => e.IDGioHang == id);
     }

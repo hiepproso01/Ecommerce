@@ -31,11 +31,11 @@
     position: fixed; 
     width: 100%;
     z-index: 40; 
+    height: 100px;
   }
   .header0{
     position: relative;
-    height:50px;  
-    /* border: 1px solid black;  */
+    height:70px;  
   }
   .header.shifted {
     margin-left: 16rem; 
@@ -156,4 +156,58 @@
     z-index: 1000;
   }
   
-  
+  .search-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+  }
+
+  .search-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: white;
+    color: #333;
+    font-size: 14px;
+  }
+
+  .search-container input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+
+  .product-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+
+  .product-suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    color: #333;
+  }
+
+  .product-suggestions li:hover {
+    background-color: #f0f0f0;
+  }
+
+  .user-profile {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-left: auto; 
+  }

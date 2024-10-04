@@ -10,21 +10,26 @@ const CategoryProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPage = 5; // Số danh mục hiển thị trên mỗi trang
+  const [categoryGroups, setCategoryGroups] = useState([]);
 
   useEffect(() => {
-    const fetchCategoryProducts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await apiClient.get('/api/danhmucsp/GetAll');
-        setCategoryProducts(response.data);
-        setFilteredCategoryProducts(response.data);
+        const [categoryProductsResponse, categoryGroupsResponse] = await Promise.all([
+          apiClient.get('/api/danhmucsp/GetAll'),
+          apiClient.get('/api/nhomdanhmuc/GetAll')
+        ]);
+        setCategoryProducts(categoryProductsResponse.data);
+        setFilteredCategoryProducts(categoryProductsResponse.data);
+        setCategoryGroups(categoryGroupsResponse.data);
       } catch (error) {
-        console.error('Error fetching category products:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCategoryProducts();
+    fetchData();
   }, []);
 
   const handleDelete = async (id) => {
@@ -59,27 +64,36 @@ const CategoryProductsPage = () => {
     }
   };
 
+
   const handleEditOrAdd = async (id = null) => {
     const categoryProduct = id
       ? categoryProducts.find(cp => cp.idDanhMuc === id)
-      : { tenDanhMuc: '', idDanhMuc: '' };
-
+      : { tenDanhMuc: '', idDanhMuc: '', nhomDanhMuc: '' }; // Thêm thuộc tính nhóm danh mục
+  
     const { value: formValues } = await Swal.fire({
       title: `<h2 style="color:#4A90E2;">${id ? 'Chỉnh sửa danh mục' : 'Thêm mới danh mục'}</h2>`,
       html: `
         <div style="display: flex; flex-direction: column; gap: 10px;">
-         <input 
-          id="idDanhMuc" 
-          class="swal2-input" 
-          placeholder="ID Danh mục" 
-          value="${categoryProduct?.idDanhMuc || ''}" 
-          style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
+          <input 
+            id="idDanhMuc" 
+            class="swal2-input" 
+            placeholder="ID Danh mục" 
+            value="${categoryProduct?.idDanhMuc || ''}" 
+            style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
           <input 
             id="tenDanhMuc" 
             class="swal2-input" 
             placeholder="Tên danh mục" 
             value="${categoryProduct?.tenDanhMuc || ''}" 
             style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
+          <select id="nhomDanhMuc" class="swal2-input" style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
+            <option value="">Chọn nhóm danh mục</option>
+            ${categoryGroups.map(group => `
+              <option value="${group.idNhomDanhMuc}" ${categoryProduct?.nhomDanhMuc === group.idNhomDanhMuc ? 'selected' : ''}>
+                ${group.tenNhomDanhMuc}
+              </option>
+            `).join('')}
+          </select>
         </div>
       `,
       showCancelButton: true,
@@ -90,11 +104,12 @@ const CategoryProductsPage = () => {
       preConfirm: () => {
         return {
           idDanhMuc: id ? id : document.getElementById('idDanhMuc').value,
-          tenDanhMuc: document.getElementById('tenDanhMuc').value
+          tenDanhMuc: document.getElementById('tenDanhMuc').value,
+          nhomDanhMuc: document.getElementById('nhomDanhMuc').value // Lấy giá trị nhóm danh mục
         };
       }
     });
-
+  
     if (formValues) {
       try {
         if (id) {
@@ -107,7 +122,8 @@ const CategoryProductsPage = () => {
         } else {
           await apiClient.post('/api/danhmucsp/Create', {
             idDanhMuc: formValues.idDanhMuc,
-            tenDanhMuc: formValues.tenDanhMuc
+            tenDanhMuc: formValues.tenDanhMuc,
+            nhomDanhMuc: formValues.nhomDanhMuc // Thêm nhóm danh mục vào dữ liệu gửi
           });
           Swal.fire(
             'Đã thêm!',
@@ -115,7 +131,7 @@ const CategoryProductsPage = () => {
             'success'
           );
         }
-
+  
         // Refresh category list
         const response = await apiClient.get('/api/danhmucsp/GetAll');
         setCategoryProducts(response.data);
@@ -130,6 +146,7 @@ const CategoryProductsPage = () => {
       }
     }
   };
+  
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -150,21 +167,102 @@ const CategoryProductsPage = () => {
   // Tính tổng số trang
   const totalPages = Math.ceil(filteredCategoryProducts.length / itemsPerPage);
 
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const handleAddCategoryGroup = async () => {
+    const { value: formValues } = await Swal.fire({
+      title: '<h2 style="color:#4A90E2;">Thêm mới nhóm danh mục</h2>',
+      html: `
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <input 
+            id="idNhomDanhMuc" 
+            class="swal2-input" 
+            placeholder="ID Nhóm Danh mục" 
+            style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
+          <input 
+            id="tenNhomDanhMuc" 
+            class="swal2-input" 
+            placeholder="Tên Nhóm Danh mục" 
+            style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
+          <input 
+            type="file" 
+            id="hinhAnhNhomDanhMuc" 
+            accept="image/*"
+            style="border: 1px solid #4A90E2; border-radius: 4px; padding: 10px;">
+        </div>
+      `,
+      showCancelButton: true,
+      confirmButtonColor: '#4A90E2',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Thêm mới',
+      cancelButtonText: 'Huỷ',
+      preConfirm: async () => {
+        const file = document.getElementById('hinhAnhNhomDanhMuc').files[0];
+        let hinhAnhBase64 = '';
+        if (file) {
+          hinhAnhBase64 = await convertToBase64(file);
+        }
+        return {
+          idNhomDanhMuc: document.getElementById('idNhomDanhMuc').value,
+          tenNhomDanhMuc: document.getElementById('tenNhomDanhMuc').value,
+          hinhAnhNhomDanhMuc: hinhAnhBase64
+        };
+      }
+    });
+
+    if (formValues) {
+      try {
+        await apiClient.post('/api/nhomdanhmuc/Create', formValues);
+        Swal.fire(
+          'Đã thêm!',
+          'Nhóm danh mục đã được thêm mới thành công.',
+          'success'
+        );
+        // Refresh the category groups list if needed
+      } catch (error) {
+        console.error('Lỗi khi thêm nhóm danh mục:', error);
+        Swal.fire(
+          'Lỗi!',
+          'Đã có lỗi xảy ra khi thêm nhóm danh mục.',
+          'error'
+        );
+      }
+    }
+  };
+
   return (
     <div className="page-container">
       <h1 className="page-title">Danh mục sản phẩm</h1>
       <div className="search-add-container">
-      <button
-        onClick={() => handleEditOrAdd()}
-        className="add-button"
-      >
-        Thêm mới danh mục
-      </button>
-      <input
-        type="text"
-        placeholder="Tìm kiếm theo ID hoặc Tên danh mục"
-        value={searchTerm}
-        onChange={handleSearch}
+        <button
+          onClick={() => handleEditOrAdd()}
+          className="add-button"
+        >
+          Thêm mới danh mục
+        </button>
+        <button
+          onClick={handleAddCategoryGroup}
+          className="add-button"
+          style={{ marginLeft: '10px' }}
+        >
+          Thêm nhóm danh mục
+        </button>
+        <input
+          type="text"
+          placeholder="Tìm kiếm theo ID hoặc Tên danh mục"
+          value={searchTerm}
+          onChange={handleSearch}
           className="search-input-1"
         />
       </div>
@@ -177,6 +275,7 @@ const CategoryProductsPage = () => {
               <tr>
                 <th className="table-cell">Mã danh mục</th>
                 <th className="table-cell">Tên danh mục</th>
+                <th className="table-cell">Nhóm danh mục</th>
                 <th className="table-cell">Tùy chỉnh</th>
               </tr>
             </thead>
@@ -185,6 +284,7 @@ const CategoryProductsPage = () => {
                 <tr key={categoryProduct.idDanhMuc}>
                   <td className="table-cell">{categoryProduct.idDanhMuc}</td>
                   <td className="table-cell">{categoryProduct.tenDanhMuc}</td>
+                  <td className="table-cell">{categoryProduct.nhomDanhMuc}</td>
                   <td className="table-cell">
                     <div
                       onClick={() => handleEditOrAdd(categoryProduct.idDanhMuc)}

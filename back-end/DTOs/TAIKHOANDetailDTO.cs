@@ -7,7 +7,7 @@ namespace back_end.DTOs
 {
     public class TAIKHOANDetailDTO
     {
-        public int IDTaiKhoan { get; set; }
+        public string IDTaiKhoan { get; set; }
         public string TenDangNhap { get; set; }
         public string MatKhau { get; set; }
         public string Email { get; set; }

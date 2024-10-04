@@ -9,7 +9,7 @@ namespace back_end.Models
     public class TAIKHOAN : IdentityUser
     {
        
-        public int IDTaiKhoan { get; set; }
+        public string IDTaiKhoan { get; set; }
         public string TenNguoiDung { get; set; }
         public string Address { get; set; }
       

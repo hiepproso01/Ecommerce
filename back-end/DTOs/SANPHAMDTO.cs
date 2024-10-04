@@ -17,6 +17,7 @@ namespace back_end.DTOs
         public string GiaBan { get; set; }
         public string TenDanhMuc { get; set; }
         public string TenNhaCungCap { get; set; }
+        public string IDNhaCungCap { get; set; }
         public string IDDanhMuc { get; set; }
         public string HinhAnh { get; set; }
     }

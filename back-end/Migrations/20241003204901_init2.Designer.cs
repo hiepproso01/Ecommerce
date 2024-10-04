@@ -12,8 +12,8 @@ using back_end.Data;
 namespace back_end.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240915174224_init1")]
-    partial class init1
+    [Migration("20241003204901_init2")]
+    partial class init2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,26 +160,20 @@ namespace back_end.Migrations
 
             modelBuilder.Entity("back_end.Models.CHITIETDONHANG", b =>
                 {
-                    b.Property<int>("IDChiTietDonHang")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDChiTietDonHang"));
-
-                    b.Property<int>("DONHANGIDDonHang")
-                        .HasColumnType("int");
+                    b.Property<string>("IDChiTietDonHang")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("DonGia")
                         .HasColumnType("float");
 
-                    b.Property<int>("IDDonHang")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IDSanPham")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SANPHAMIDSanPham")
+                    b.Property<string>("IDDonHang")
                         .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("IDSanPham")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("SoLuong")
@@ -190,35 +184,28 @@ namespace back_end.Migrations
 
                     b.HasKey("IDChiTietDonHang");
 
-                    b.HasIndex("DONHANGIDDonHang");
+                    b.HasIndex("IDDonHang");
 
-                    b.HasIndex("SANPHAMIDSanPham");
+                    b.HasIndex("IDSanPham");
 
                     b.ToTable("CHITIETDONHANG");
                 });
 
             modelBuilder.Entity("back_end.Models.CHITIETGIOHANG", b =>
                 {
-                    b.Property<int>("IDChiTietGioHang")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDChiTietGioHang"));
+                    b.Property<string>("IDChiTietGioHang")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("DonGia")
                         .HasColumnType("float");
 
-                    b.Property<int>("GIOHANGIDGioHang")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IDGioHang")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IDSanPham")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SANPHAMIDSanPham")
+                    b.Property<string>("IDGioHang")
                         .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("IDSanPham")
+                        .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("SoLuong")
@@ -229,9 +216,9 @@ namespace back_end.Migrations
 
                     b.HasKey("IDChiTietGioHang");
 
-                    b.HasIndex("GIOHANGIDGioHang");
+                    b.HasIndex("IDGioHang");
 
-                    b.HasIndex("SANPHAMIDSanPham");
+                    b.HasIndex("IDSanPham");
 
                     b.ToTable("CHITIETGIOHANG");
                 });
@@ -241,6 +228,14 @@ namespace back_end.Migrations
                     b.Property<string>("IDDanhMuc")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("HinhAnhDanhMuc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IDNhomDanhMuc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("SoLuongSanPham")
                         .HasColumnType("int");
 
@@ -248,55 +243,51 @@ namespace back_end.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TenNhomDanhMuc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("IDDanhMuc");
+
+                    b.HasIndex("IDNhomDanhMuc");
 
                     b.ToTable("DANHMUCSANPHAM");
                 });
 
             modelBuilder.Entity("back_end.Models.DONHANG", b =>
                 {
-                    b.Property<int>("IDDonHang")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("IDDonHang")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDDonHang"));
-
-                    b.Property<int>("IDTaiKhoan")
-                        .HasColumnType("int");
+                    b.Property<string>("IDTaiKhoan")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("NgayDatHang")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("TAIKHOANIDTaiKhoan")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("TongTien")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IDDonHang");
 
-                    b.HasIndex("TAIKHOANIDTaiKhoan");
+                    b.HasIndex("IDTaiKhoan");
 
                     b.ToTable("DONHANG");
                 });
 
             modelBuilder.Entity("back_end.Models.GIOHANG", b =>
                 {
-                    b.Property<int>("IDGioHang")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("IDGioHang")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDGioHang"));
-
-                    b.Property<int>("IDTaiKhoan")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TAIKHOANIDTaiKhoan")
-                        .HasColumnType("int");
+                    b.Property<string>("IDTaiKhoan")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IDGioHang");
 
-                    b.HasIndex("TAIKHOANIDTaiKhoan");
+                    b.HasIndex("IDTaiKhoan");
 
                     b.ToTable("GIOHANG");
                 });
@@ -308,6 +299,10 @@ namespace back_end.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -341,6 +336,7 @@ namespace back_end.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
@@ -391,6 +387,25 @@ namespace back_end.Migrations
                     b.ToTable("NHACUNGCAP");
                 });
 
+            modelBuilder.Entity("back_end.Models.NHOMDANHMUC", b =>
+                {
+                    b.Property<string>("IDNhomDanhMuc")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("HinhAnhNhomDanhMuc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenNhomDanhMuc")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("IDNhomDanhMuc");
+
+                    b.ToTable("NHOMDANHMUC");
+                });
+
             modelBuilder.Entity("back_end.Models.SANPHAM", b =>
                 {
                     b.Property<string>("IDSanPham")
@@ -412,11 +427,17 @@ namespace back_end.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MoTa")
+                    b.Property<string>("IDDanhMuc")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("SoLuongBan")
+                    b.Property<string>("IDNhaCungCap")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MoTa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -437,16 +458,17 @@ namespace back_end.Migrations
 
                     b.HasKey("IDSanPham");
 
+                    b.HasIndex("IDDanhMuc");
+
+                    b.HasIndex("IDNhaCungCap");
+
                     b.ToTable("SANPHAM");
                 });
 
             modelBuilder.Entity("back_end.Models.TAIKHOAN", b =>
                 {
-                    b.Property<int>("IDTaiKhoan")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDTaiKhoan"));
+                    b.Property<string>("IDTaiKhoan")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -559,58 +581,78 @@ namespace back_end.Migrations
 
             modelBuilder.Entity("back_end.Models.CHITIETDONHANG", b =>
                 {
-                    b.HasOne("back_end.Models.DONHANG", "DONHANG")
+                    b.HasOne("back_end.Models.DONHANG", "DonHang")
                         .WithMany("CHITIETDONHANG")
-                        .HasForeignKey("DONHANGIDDonHang")
+                        .HasForeignKey("IDDonHang")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("back_end.Models.SANPHAM", "SANPHAM")
+                    b.HasOne("back_end.Models.SANPHAM", null)
                         .WithMany()
-                        .HasForeignKey("SANPHAMIDSanPham")
+                        .HasForeignKey("IDSanPham")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DONHANG");
-
-                    b.Navigation("SANPHAM");
+                    b.Navigation("DonHang");
                 });
 
             modelBuilder.Entity("back_end.Models.CHITIETGIOHANG", b =>
                 {
-                    b.HasOne("back_end.Models.GIOHANG", "GIOHANG")
+                    b.HasOne("back_end.Models.GIOHANG", "GioHang")
                         .WithMany("CHITIETGIOHANG")
-                        .HasForeignKey("GIOHANGIDGioHang")
+                        .HasForeignKey("IDGioHang")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("back_end.Models.SANPHAM", "SANPHAM")
+                    b.HasOne("back_end.Models.SANPHAM", null)
                         .WithMany()
-                        .HasForeignKey("SANPHAMIDSanPham")
+                        .HasForeignKey("IDSanPham")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GIOHANG");
+                    b.Navigation("GioHang");
+                });
 
-                    b.Navigation("SANPHAM");
+            modelBuilder.Entity("back_end.Models.DANHMUCSANPHAM", b =>
+                {
+                    b.HasOne("back_end.Models.NHOMDANHMUC", null)
+                        .WithMany()
+                        .HasForeignKey("IDNhomDanhMuc")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("back_end.Models.DONHANG", b =>
                 {
-                    b.HasOne("back_end.Models.TAIKHOAN", "TAIKHOAN")
+                    b.HasOne("back_end.Models.TAIKHOAN", null)
                         .WithMany()
-                        .HasForeignKey("TAIKHOANIDTaiKhoan");
-
-                    b.Navigation("TAIKHOAN");
+                        .HasForeignKey("IDTaiKhoan")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("back_end.Models.GIOHANG", b =>
                 {
-                    b.HasOne("back_end.Models.TAIKHOAN", "TAIKHOAN")
+                    b.HasOne("back_end.Models.TAIKHOAN", null)
                         .WithMany()
-                        .HasForeignKey("TAIKHOANIDTaiKhoan");
+                        .HasForeignKey("IDTaiKhoan")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Navigation("TAIKHOAN");
+            modelBuilder.Entity("back_end.Models.SANPHAM", b =>
+                {
+                    b.HasOne("back_end.Models.DANHMUCSANPHAM", null)
+                        .WithMany()
+                        .HasForeignKey("IDDanhMuc")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("back_end.Models.NHACUNGCAP", null)
+                        .WithMany()
+                        .HasForeignKey("IDNhaCungCap")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("back_end.Models.DONHANG", b =>

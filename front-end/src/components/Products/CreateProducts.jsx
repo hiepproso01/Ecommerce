@@ -19,7 +19,8 @@ function CreateProduct({ onClose, onSuccess }) {
   const importPriceRef = useRef(null);
   const[tenDanhMuc, setTenDanhMuc] = useState('');
   const sellPriceRef = useRef(null);
-
+  const [IDNhaCungCap, setIDNhaCungCap] = useState('');
+  const [IDDanhMuc, setIDDanhMuc] = useState('');
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -47,11 +48,19 @@ function CreateProduct({ onClose, onSuccess }) {
   }, []);
 
   const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
+    const selectedCategory = categories.find(cat => cat.tenDanhMuc === e.target.value);
+    if (selectedCategory) {
+      setSelectedCategory(e.target.value);
+      setIDDanhMuc(selectedCategory.idDanhMuc);
+    }
   };
 
   const handleSupplierChange = (e) => {
-    setSelectedSupplier(e.target.value);
+    const selectedSupplier = suppliers.find(sup => sup.tenNhaCungCap === e.target.value);
+    if (selectedSupplier) {
+      setSelectedSupplier(e.target.value);
+      setIDNhaCungCap(selectedSupplier.idNhaCungCap);
+    }
   };
 
   const formatCurrency = (value) => {
@@ -76,79 +85,57 @@ function CreateProduct({ onClose, onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    let idDanhMuc = selectedCategory;
-    let idNhaCungCap = selectedSupplier;
-    if (!idDanhMuc) {
+
+    if (!IDDanhMuc) {
       Swal.fire({
         icon: 'error',
         title: 'Lỗi',
-        text: 'Trường TenDanhMuc là bắt buộc.',
+        text: 'Vui lòng chọn danh mục sản phẩm.',
         confirmButtonColor: '#d33',
       });
       return;
     }
-  
-    if (!idNhaCungCap) {
+
+    if (!IDNhaCungCap) {
       Swal.fire({
         icon: 'error',
         title: 'Lỗi',
-        text: 'Trường TenNhaCungCap là bắt buộc.',
+        text: 'Vui lòng chọn nhà cung cấp.',
         confirmButtonColor: '#d33',
       });
       return;
     }
-  
-    if (categoryInput && !selectedCategory) {
-      try {
-        
-        const response = await apiClient.post('api/danhmucsp/Create', {
-     
-          tenDanhMuc: categoryInput
-        });
-        idDanhMuc = response.data.idDanhMuc;
-      } catch (error) {
-        console.error("Có lỗi xảy ra khi tạo danh mục!", error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Lỗi',
-          text: 'Có lỗi xảy ra khi tạo danh mục!',
-          confirmButtonColor: '#d33',
-        });
-        return;
-      }
-    }
-  
+
     try {
       await apiClient.post('api/sanpham/Create', {
-        idSanPham:productID, // Dựa trên logic tạo ID của bạn
+        idSanPham: productID,
         tenSanPham: productName,
         donViTinh: unit,
         giaBan: sellPrice.replace(/\D/g, ''),
         giaNhap: importPrice.replace(/\D/g, ''),
         moTa: description,
         soLuong: quantity,
-        idDanhMuc: idDanhMuc,
-        idNhaCungCap: idNhaCungCap,
+        idDanhMuc: IDDanhMuc,
+        idNhaCungCap: IDNhaCungCap,
         hinhAnh: hinhAnh,
         soLuongBan: soLuongBan,
         tenNhaCungCap: selectedSupplier,
         tenDanhMuc: selectedCategory,
       });
-  
+
       if (onSuccess) onSuccess();
       resetForm();
-  
+
       Swal.fire({
         icon: 'success',
         title: 'Sản phẩm đã được tạo',
         text: 'Sản phẩm đã được tạo thành công!',
         confirmButtonColor: '#3085d6',
       });
-  
+
     } catch (error) {
       console.error("Có lỗi xảy ra khi tạo sản phẩm!", error);
-  
+
       let errorMessage = 'Có lỗi xảy ra khi tạo sản phẩm!';
       if (error.response && error.response.data) {
         if (typeof error.response.data === 'string') {
@@ -157,7 +144,7 @@ function CreateProduct({ onClose, onSuccess }) {
           errorMessage = JSON.stringify(error.response.data, null, 2);
         }
       }
-  
+
       Swal.fire({
         icon: 'error',
         title: 'Lỗi',
@@ -191,6 +178,8 @@ function CreateProduct({ onClose, onSuccess }) {
     setSelectedSupplier('');
     setHinhAnh('');
     setSoLuongBan('');
+    setIDDanhMuc('');
+    setIDNhaCungCap('');
   };
 
   return (
@@ -282,11 +271,21 @@ function CreateProduct({ onClose, onSuccess }) {
           >
             <option value="">Chọn nhà cung cấp</option>
             {suppliers.map((supplier) => (
-              <option key={supplier.idNhaCungCap} value={supplier.idNhaCungCap}>
+              <option key={supplier.idNhaCungCap} value={supplier.tenNhaCungCap}>
                 {supplier.tenNhaCungCap}
               </option>
             ))}
           </select>
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="IDNhaCungCap" className="block text-gray-700 text-sm font-medium mb-2">ID Nhà cung cấp</label>
+          <input
+            id="IDNhaCungCap"
+            type="text"
+            value={IDNhaCungCap}
+            readOnly
+            className="border border-gray-300 p-2 rounded-md bg-gray-100"
+          />
         </div>
         <div className="flex flex-col">
           <label htmlFor="category" className="block text-gray-700 text-sm font-medium mb-2">Danh mục</label>
@@ -303,6 +302,16 @@ function CreateProduct({ onClose, onSuccess }) {
               </option>
             ))}
           </select>
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="IDDanhMuc" className="block text-gray-700 text-sm font-medium mb-2">ID Danh mục</label>
+          <input
+            id="IDDanhMuc"
+            type="text"
+            value={IDDanhMuc}
+            readOnly
+            className="border border-gray-300 p-2 rounded-md bg-gray-100"
+          />
         </div>
         <div className="col-span-4 flex gap-6">
         <div className="flex flex-col w-1/2">

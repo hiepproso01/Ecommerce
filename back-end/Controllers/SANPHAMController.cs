@@ -31,13 +31,15 @@ namespace back_end.Controllers
                 TenSanPham = sanpham.TenSanPham,
                 DonViTinh = sanpham.DonViTinh,
                 SoLuongNhap = sanpham.SoLuongNhap,
-                SoLuongBan = sanpham.SoLuongBan,
+                // SoLuongBan = sanpham.SoLuongBan,
                 MoTa = sanpham.MoTa,
                 GiaNhap = sanpham.GiaNhap,
                 GiaBan = sanpham.GiaBan,
                 TenDanhMuc = sanpham.TenDanhMuc,
                 TenNhaCungCap = sanpham.TenNhaCungCap,
-                HinhAnh = sanpham.HinhAnh
+                HinhAnh = sanpham.HinhAnh,
+                IDDanhMuc = sanpham.IDDanhMuc,
+                IDNhaCungCap = sanpham.IDNhaCungCap,
             })
             .ToListAsync();
         }
@@ -51,14 +53,15 @@ namespace back_end.Controllers
                 TenSanPham = sanpham.TenSanPham,
                 DonViTinh = sanpham.DonViTinh,
                 SoLuongNhap = sanpham.SoLuongNhap,
-                SoLuongBan = sanpham.SoLuongBan,
+                // SoLuongBan = sanpham.SoLuongBan,
                 MoTa = sanpham.MoTa,
                 GiaNhap = sanpham.GiaNhap,
                 GiaBan = sanpham.GiaBan,
                 TenDanhMuc = sanpham.TenDanhMuc,
                 TenNhaCungCap = sanpham.TenNhaCungCap,
-                HinhAnh = sanpham.HinhAnh
-
+                HinhAnh = sanpham.HinhAnh,
+                IDDanhMuc = sanpham.IDDanhMuc,
+                IDNhaCungCap = sanpham.IDNhaCungCap,
             })
             .FirstOrDefaultAsync(sanpham => sanpham.IDSanPham == id);
             if (sanpham == null)
@@ -77,11 +80,13 @@ namespace back_end.Controllers
                 TenSanPham = sanphamdetail.TenSanPham,
                 DonViTinh = sanphamdetail.DonViTinh,
                 SoLuongNhap = sanphamdetail.SoLuongNhap,
-                SoLuongBan = sanphamdetail.SoLuongBan,
+                // SoLuongBan = sanphamdetail.SoLuongBan,
                 MoTa = sanphamdetail.MoTa,
                 GiaNhap = sanphamdetail.GiaNhap,
-                GiaBan = sanphamdetail.GiaBan.ToString(),
+                GiaBan = sanphamdetail.GiaBan,
+                IDDanhMuc = sanphamdetail.IDDanhMuc,
                 TenDanhMuc = sanphamdetail.TenDanhMuc,
+                IDNhaCungCap = sanphamdetail.IDNhaCungCap,
                 TenNhaCungCap = sanphamdetail.TenNhaCungCap,
                 HinhAnh = sanphamdetail.HinhAnh
             };
@@ -93,11 +98,13 @@ namespace back_end.Controllers
                 TenSanPham = newSANPHAM.TenSanPham,
                 DonViTinh = newSANPHAM.DonViTinh,
                 SoLuongNhap = newSANPHAM.SoLuongNhap,
-                SoLuongBan = newSANPHAM.SoLuongBan,
+                // SoLuongBan = newSANPHAM.SoLuongBan,
                 MoTa = newSANPHAM.MoTa,
                 GiaNhap = newSANPHAM.GiaNhap,
                 GiaBan = newSANPHAM.GiaBan.ToString(),
                 TenDanhMuc = newSANPHAM.TenDanhMuc,
+                IDDanhMuc = newSANPHAM.IDDanhMuc,
+                IDNhaCungCap = newSANPHAM.IDNhaCungCap,
                 TenNhaCungCap = newSANPHAM.TenNhaCungCap,
                 HinhAnh = newSANPHAM.HinhAnh
             };
@@ -119,7 +126,7 @@ namespace back_end.Controllers
             sanpham.TenSanPham = sanphamdetailDTO.TenSanPham;
             sanpham.DonViTinh = sanphamdetailDTO.DonViTinh;
             sanpham.SoLuongNhap = sanphamdetailDTO.SoLuongNhap;
-            sanpham.SoLuongBan = sanphamdetailDTO.SoLuongBan;
+            // sanpham.SoLuongBan = sanphamdetailDTO.SoLuongBan;
             sanpham.MoTa = sanphamdetailDTO.MoTa;
             sanpham.GiaNhap = sanphamdetailDTO.GiaNhap;
             sanpham.GiaBan = sanphamdetailDTO.GiaBan.ToString();

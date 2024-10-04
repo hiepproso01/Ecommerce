@@ -117,7 +117,7 @@ namespace back_end.Controllers
 }
 [Authorize(Roles = "NguoiDung")]
 [HttpPut("Update/{id}")]
-public async Task<IActionResult> UpdateNguoiDung(int id, TAIKHOAN nguoiDung)
+public async Task<IActionResult> UpdateNguoiDung(string id, TAIKHOAN nguoiDung)
 {
     if (id != nguoiDung.IDTaiKhoan)
     {
@@ -155,7 +155,7 @@ public async Task<IActionResult> UpdateNguoiDung(int id, TAIKHOAN nguoiDung)
             await _context.SaveChangesAsync();
             return NoContent();
         }
- private bool NguoiDungExists(int id)
+ private bool NguoiDungExists(string id)
         {
             return _context.TAIKHOAN.Any(e => e.IDTaiKhoan == id);
         }

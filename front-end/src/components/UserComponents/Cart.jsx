@@ -9,7 +9,7 @@ const Cart = () => {
 
   useEffect(() => {
     // Gọi API để lấy danh sách giỏ hàng từ server
-    apiClient.get('api/giohang/GetAll')
+    apiClient.get('api/CHITIETGIOHANG/GetAll')
       .then(response => {
         setCart(response.data); // Lưu dữ liệu vào state cart
       })
