@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../styles/HeaderUser.css'; 
 import apiClient from '../../services/api'; 
-
+import logo from "../../img/logo.png";
 const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
@@ -61,6 +61,21 @@ const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
   return (
     <div className='header0'>
     <header className={`header1 ${openSidebarToggle ? 'shifted' : ''}`}>
+    <div className="logo-container">
+          <img src={logo} alt="Logo" className="logo" />
+        </div>
+        <form className="search-form" onSubmit={handleSearchSubmit}>
+          <input
+            type="text"
+            placeholder="Tìm kiếm sản phẩm..."
+            className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button type="submit" className="search-button">
+            <BsSearch />
+          </button>
+        </form>
       <div className='user-profile'>
      <div style={{marginRight:15}}>
      <BsCart2   onClick={handleCartClick} style={{ cursor: 'pointer' }}/>

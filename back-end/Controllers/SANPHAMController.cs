@@ -74,6 +74,9 @@ namespace back_end.Controllers
         [HttpPost("Create")]
         public async Task<ActionResult<SANPHAMDetailDTO>> CreateSANPHAM(SANPHAMDTO sanphamdetail)
         {
+            byte[] imageBytes = null;
+
+            
             var newSANPHAM = new SANPHAM
             {
                 IDSanPham = sanphamdetail.IDSanPham,
@@ -88,7 +91,7 @@ namespace back_end.Controllers
                 TenDanhMuc = sanphamdetail.TenDanhMuc,
                 IDNhaCungCap = sanphamdetail.IDNhaCungCap,
                 TenNhaCungCap = sanphamdetail.TenNhaCungCap,
-                HinhAnh = sanphamdetail.HinhAnh
+                HinhAnh = sanphamdetail.HinhAnh,
             };
             _context.SANPHAM.Add(newSANPHAM);
             await _context.SaveChangesAsync();
@@ -163,9 +166,60 @@ namespace back_end.Controllers
             await _context.SaveChangesAsync();
             return NoContent();
         }
+           [HttpPost("UploadImageProduct")]
+        public async Task<ActionResult<string>> UploadImage(IFormFile file)
+        {
+            try
+            {
+                if (file == null || file.Length == 0)
+                    return BadRequest("File is empty");
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imageProduct", fileName);
+
+                // Đảm bảo thư mục tồn tại
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                var url = $"/images/{fileName}";
+                return Ok(url);
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi
+                Console.WriteLine($"Error in UploadImage: {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        // GET: api/nhomdanhmuc/getimage/{fileName}
+        [HttpGet("images/{fileName}")]
+        public IActionResult GetImage(string fileName)
+        {
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imageProduct", fileName);
+
+            if (!System.IO.File.Exists(imagePath))
+            {
+                return NotFound("Image not found");
+            }
+
+            var imageFileStream = System.IO.File.OpenRead(imagePath);
+            return File(imageFileStream, "image/jpeg"); // Adjust content type if needed
+        }
         private bool SANPHAMExists(string id)
         {
             return _context.SANPHAM.Any(e => e.IDSanPham == id);
         }
+        [HttpGet("GetByDanhMuc/{idDanhMuc}")]
+public IActionResult GetByDanhMuc(string idDanhMuc)
+        {
+            var products = _context.SANPHAM.Where(sp => sp.IDDanhMuc == idDanhMuc).ToList();
+            return Ok(products);
+        }
+
     }
 }

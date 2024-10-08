@@ -258,3 +258,4 @@ D:\Visual Studio Code\Ecommerce\back-end\bin\Debug\net8.0\Microsoft.Extensions.I
 D:\Visual Studio Code\Ecommerce\back-end\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
 D:\Visual Studio Code\Ecommerce\back-end\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
 D:\Visual Studio Code\Ecommerce\back-end\obj\Debug\net8.0\back-end.sourcelink.json
+D:\Visual Studio Code\Ecommerce\back-end\bin\Debug\net8.0\back-end.staticwebassets.runtime.json

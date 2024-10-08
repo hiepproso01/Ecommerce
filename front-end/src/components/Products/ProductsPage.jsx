@@ -106,6 +106,10 @@ const ProductPage = () => {
   const closeCreatePopup = () => setShowCreate(false);
   const closeUpdatePopup = () => setEditingidSanPham(null);
   const closeCategoryPopup = () => setShowCategoryPopup(false);
+  const getFullImageUrl = (fileName) => {
+    if (!fileName) return null;
+    return `http://localhost:5222/api/sanpham${fileName}`;
+  };
 
   const handleDescriptionView = (idSanPham) => {
     const product = products.find(p => p.idSanPham === idSanPham);
@@ -243,10 +247,10 @@ const ProductPage = () => {
               <td className="p-4 text-center">
                 {product.hinhAnh ? (
                   <img
-                    src={product.hinhAnh}
+                    src={getFullImageUrl(product.hinhAnh)}
                     alt={product.tenSanPham}
                     className="w-16 h-16 object-cover rounded"
-                    onClick={() => handleImageClick(product.hinhAnh)}
+                    onClick={() => handleImageClick(getFullImageUrl(product.hinhAnh))}
                   />
                 ) : (
                   <span>Chưa có ảnh</span>

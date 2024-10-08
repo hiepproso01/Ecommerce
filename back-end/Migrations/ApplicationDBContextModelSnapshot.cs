@@ -227,7 +227,8 @@ namespace back_end.Migrations
 
                     b.Property<string>("HinhAnhDanhMuc")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("IDNhomDanhMuc")
                         .IsRequired()
@@ -391,7 +392,8 @@ namespace back_end.Migrations
 
                     b.Property<string>("HinhAnhNhomDanhMuc")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("TenNhomDanhMuc")
                         .IsRequired()
@@ -422,7 +424,8 @@ namespace back_end.Migrations
 
                     b.Property<string>("HinhAnh")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<string>("IDDanhMuc")
                         .IsRequired()

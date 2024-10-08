@@ -13,8 +13,13 @@ namespace back_end.Models
         public string IDNhomDanhMuc { get; set; }
          [StringLength(450)]
         public string  TenNhomDanhMuc { get; set; }
+               // Khai báo biến private cho thuộc tính HinhAnhNhomDanhMuc
        
+        // public byte[] HinhAnhNhomDanhMuc  {get;set;}
+
+        [StringLength(1000)] // Đủ dài để chứa URL hoặc đường dẫn file
         public string HinhAnhNhomDanhMuc { get; set; }
+         
         // public string IDDanhMuc { get; set; }
         // [ForeignKey("IDDanhMuc")]
         // public virtual DANHMUCSANPHAM DanhMuc { get; set; }

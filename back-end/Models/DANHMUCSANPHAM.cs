@@ -19,6 +19,7 @@ namespace back_end.Models
         // [ForeignKey("IDNhomDanhMuc")]
         // public virtual NHOMDANHMUC NhomDanhMuc { get; set; }
         public string TenNhomDanhMuc { get; set; }
+        [StringLength(1000)]
         public string HinhAnhDanhMuc { get; set; }
     }
 }

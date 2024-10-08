@@ -17,6 +17,7 @@ import CategoryUser from './components/UserComponents/CategoryUser.jsx';
 import ProductsUser from './components/UserComponents/ProductsUser.jsx';
 import CategogyGroupPage from './components/CategoryProducts/CategogyGroupPage.jsx';
 import Cart from './components/UserComponents/Cart.jsx';
+import ProductFilter from './components/UserComponents/ProductFilter.jsx';
 // import { ProductProvider } from './Context/ProductContext';
 import ProductDetail from './components/UserComponents/ProductDetail.jsx';
 function App() {
@@ -110,6 +111,7 @@ function App() {
             <Route path="/productsuser" element={<ProductsUser />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/product/:idSanPham" element={<ProductDetail />} />
+            <Route path="/productfilter" element={<ProductFilter />} />
             <Route path="*" element={<Navigate to="/homepage" replace />} />
           
           </>

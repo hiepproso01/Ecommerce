@@ -4,7 +4,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import '../../styles/ProductDetail.css';
 import HeaderUser from './HeaderUser';
 import { IoIosArrowBack } from "react-icons/io";
-import Swal from 'sweetalert2'; // Nhập SweetAlert
+import Swal from 'sweetalert2'; 
 
 const ProductDetail = () => {
     const { idSanPham } = useParams();
@@ -90,6 +90,11 @@ const ProductDetail = () => {
             });
     };
     
+    const getFullImageUrl = (fileName) => {
+        if (!fileName) return null;
+        return `http://localhost:5222/api/sanpham${fileName}`;
+    };
+
     return (
         <div>
             <HeaderUser />
@@ -104,7 +109,7 @@ const ProductDetail = () => {
                 <div className="flex flex-col md:flex-row">
                     <div className="md:w-1/2 mb-8 md:mb-0">
                         <img
-                            src={product.hinhAnh}
+                            src={getFullImageUrl(product.hinhAnh)}
                             alt={product.tenSanPham}
                             className="w-4/5 h-auto object-cover rounded-lg shadow-lg"
                         />

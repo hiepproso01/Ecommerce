@@ -21,6 +21,7 @@ function CreateProduct({ onClose, onSuccess }) {
   const sellPriceRef = useRef(null);
   const [IDNhaCungCap, setIDNhaCungCap] = useState('');
   const [IDDanhMuc, setIDDanhMuc] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -154,14 +155,28 @@ function CreateProduct({ onClose, onSuccess }) {
     }
   };
 
-  const handleImageChange = (e) => {
+  const getFullImageUrl = (fileName) => {
+    if (!fileName) return null;
+    return `http://localhost:5222/api/sanpham${fileName}`;
+  };
+
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setHinhAnh(reader.result); // Lưu Base64 string vào trạng thái
-      };
-      reader.readAsDataURL(file); // Chuyển đổi hình ảnh sang Base64
+      const formData = new FormData();
+      formData.append('file', file);
+      try {
+        const response = await apiClient.post('/api/sanpham/UploadImageProduct', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        setHinhAnh(response.data);
+        setImagePreview(getFullImageUrl(response.data));
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        Swal.fire('Lỗi!', 'Đã có lỗi xảy ra khi tải lên hình ảnh.', 'error');
+      }
     }
   };
   
@@ -333,9 +348,9 @@ function CreateProduct({ onClose, onSuccess }) {
             onChange={handleImageChange}
             className="border border-gray-300 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          {hinhAnh && (
+          {imagePreview && (
             <div className="mt-4 h-40 w-full border border-gray-300 rounded-md overflow-hidden">
-              <img src={hinhAnh} alt="Preview" className="h-full w-full object-cover" />
+              <img src={imagePreview} alt="Preview" className="h-full w-full object-cover" />
             </div>
           )}
         </div>

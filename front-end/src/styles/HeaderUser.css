@@ -21,9 +21,9 @@
   .header1 {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 1rem;
-    background-color:rgb(29, 66, 213);
+    background: radial-gradient(159.85% 367.97% at 150% 123.85%, #5947ff 0, #176cae 38.76%, #468e9c 59.65%, #080071 100%);
     backdrop-filter: blur(10px);
     color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -31,11 +31,11 @@
     position: fixed; 
     width: 100%;
     z-index: 40; 
-    height: 100px;
+    height: 70px;
   }
   .header0{
     position: relative;
-    height:70px;  
+    height:25px;  
   }
   .header.shifted {
     margin-left: 16rem; 
@@ -211,3 +211,13 @@
     position: relative;
     margin-left: auto; 
   }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  img.logo  {
+   width: 80px;
+   height: 80px;
+ }
+

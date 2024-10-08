@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,6 +20,7 @@ namespace back_end.DTOs
         public string TenNhaCungCap { get; set; }
         public string IDNhaCungCap { get; set; }
         public string IDDanhMuc { get; set; }
+               [StringLength(1000)]
         public string HinhAnh { get; set; }
     }
 }

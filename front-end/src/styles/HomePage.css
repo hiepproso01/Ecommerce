@@ -1,6 +1,23 @@
+.home-page {
+  position: relative;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  /* margin-top: 60px;  */
+}
+
+.sidebar1 {
+  width: auto;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
 .content-container {
-    display: flex;
-    margin-left: 250px; /* Đẩy phần content sang phải để chừa chỗ cho sidebar */
-    padding: 20px;
-  }
-  
+  width: 100%;
+  padding: 20px;
+  margin-top: 60px;
+  z-index: 1;
+}

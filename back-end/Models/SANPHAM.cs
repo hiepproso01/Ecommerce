@@ -23,6 +23,7 @@ namespace back_end.Models
         [StringLength(450)]
         public string IDNhaCungCap { get; set; }
         public string TenNhaCungCap { get; set; }
+        [StringLength(1000)]
         public string HinhAnh { get; set; }
     }
 }

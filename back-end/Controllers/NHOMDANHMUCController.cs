@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using back_end.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using back_end.Data;
 using back_end.DTOs;
 using back_end.Models;
+using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace back_end.Controllers
 {
     [Route("api/nhomdanhmuc")]
     [ApiController]
-    public class NHOMDANHMUCController : Controller
+    public class NHOMDANHMUCController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
 
@@ -28,13 +29,13 @@ namespace back_end.Controllers
         public async Task<ActionResult<IEnumerable<NHOMDANHMUCDetailDTO>>> GetNHOMDANHMUC()
         {
             return await _context.NHOMDANHMUC
-            .Select(nhom => new NHOMDANHMUCDetailDTO
-            {
-                IDNhomDanhMuc = nhom.IDNhomDanhMuc,
-                TenNhomDanhMuc = nhom.TenNhomDanhMuc,
-                HinhAnhNhomDanhMuc = nhom.HinhAnhNhomDanhMuc
-            })
-            .ToListAsync();
+                .Select(nhom => new NHOMDANHMUCDetailDTO
+                {
+                    IDNhomDanhMuc = nhom.IDNhomDanhMuc,
+                    TenNhomDanhMuc = nhom.TenNhomDanhMuc,
+                    HinhAnhNhomDanhMuc = nhom.HinhAnhNhomDanhMuc // Trả về byte[]
+                })
+                .ToListAsync();
         }
 
         // GET: api/nhomdanhmuc/getbyid/5
@@ -44,9 +45,9 @@ namespace back_end.Controllers
             var nhom = await _context.NHOMDANHMUC
                 .Select(nhom => new NHOMDANHMUCDetailDTO
                 {
-                   IDNhomDanhMuc = nhom.IDNhomDanhMuc,
+                    IDNhomDanhMuc = nhom.IDNhomDanhMuc,
                     TenNhomDanhMuc = nhom.TenNhomDanhMuc,
-                    HinhAnhNhomDanhMuc = nhom.HinhAnhNhomDanhMuc
+                    HinhAnhNhomDanhMuc = nhom.HinhAnhNhomDanhMuc // Trả về byte[]
                 })
                 .FirstOrDefaultAsync(nhom => nhom.IDNhomDanhMuc == id);
 
@@ -66,7 +67,7 @@ namespace back_end.Controllers
             {
                 IDNhomDanhMuc = nhomDetail.IDNhomDanhMuc,
                 TenNhomDanhMuc = nhomDetail.TenNhomDanhMuc,
-                HinhAnhNhomDanhMuc = nhomDetail.HinhAnhNhomDanhMuc
+                HinhAnhNhomDanhMuc = nhomDetail.HinhAnhNhomDanhMuc // Bây giờ là URL hoặc đường dẫn
             };
             _context.NHOMDANHMUC.Add(newNHOMDANHMUC);
             await _context.SaveChangesAsync();
@@ -75,7 +76,7 @@ namespace back_end.Controllers
             {
                 IDNhomDanhMuc = newNHOMDANHMUC.IDNhomDanhMuc,
                 TenNhomDanhMuc = newNHOMDANHMUC.TenNhomDanhMuc,
-                HinhAnhNhomDanhMuc = newNHOMDANHMUC.HinhAnhNhomDanhMuc
+                HinhAnhNhomDanhMuc = newNHOMDANHMUC.HinhAnhNhomDanhMuc // Trả về byte[]
             };
 
             return CreatedAtAction(nameof(GetNHOMDANHMUCByID), new { id = result.IDNhomDanhMuc }, result);
@@ -97,7 +98,13 @@ namespace back_end.Controllers
             }
 
             nhom.TenNhomDanhMuc = nhomDetailDTO.TenNhomDanhMuc;
-            nhom.HinhAnhNhomDanhMuc = nhomDetailDTO.HinhAnhNhomDanhMuc; 
+
+            // Chuyển đổi chuỗi hình ảnh sang byte[]
+            if (nhomDetailDTO.HinhAnhNhomDanhMuc != null)
+            {
+                nhom.HinhAnhNhomDanhMuc = nhomDetailDTO.HinhAnhNhomDanhMuc; // Lưu ảnh dưới dạng nhị phân
+            }
+
             _context.Entry(nhom).State = EntityState.Modified;
 
             try
@@ -139,6 +146,52 @@ namespace back_end.Controllers
         private bool NHOMDANHMUCExists(string id)
         {
             return _context.NHOMDANHMUC.Any(e => e.IDNhomDanhMuc == id);
+        }
+
+        // Upload image
+        [HttpPost("UploadImage")]
+        public async Task<ActionResult<string>> UploadImage(IFormFile file)
+        {
+            try
+            {
+                if (file == null || file.Length == 0)
+                    return BadRequest("File is empty");
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+
+                // Đảm bảo thư mục tồn tại
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                var url = $"/images/{fileName}";
+                return Ok(url);
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi
+                Console.WriteLine($"Error in UploadImage: {ex.Message}");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        // GET: api/nhomdanhmuc/getimage/{fileName}
+        [HttpGet("images/{fileName}")]
+        public IActionResult GetImage(string fileName)
+        {
+            var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", fileName);
+
+            if (!System.IO.File.Exists(imagePath))
+            {
+                return NotFound("Image not found");
+            }
+
+            var imageFileStream = System.IO.File.OpenRead(imagePath);
+            return File(imageFileStream, "image/jpeg"); // Adjust content type if needed
         }
     }
 }

@@ -70,14 +70,7 @@ const CategoryProductsPage = () => {
     }
   };
 
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
+
 
   const handleEditOrAdd = async (id = null) => {
     const categoryProduct = id
@@ -123,9 +116,24 @@ const CategoryProductsPage = () => {
       cancelButtonText: 'Huỷ',
       preConfirm: async () => {
         const file = document.getElementById('hinhAnhDanhMuc').files[0];
-        let hinhAnhBase64 = categoryProduct?.hinhAnhDanhMuc || '';
+        let imageUrl = categoryProduct?.hinhAnhDanhMuc;
+
         if (file) {
-          hinhAnhBase64 = await convertToBase64(file);
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            try {
+              const response = await apiClient.post('/api/danhmucsp/ImageUpload', formData, {
+                  headers: {
+                      'Content-Type': 'multipart/form-data'
+                  }
+              });
+              imageUrl = response.data;
+          } catch (error) {
+              console.error('Error uploading image:', error);
+              Swal.showValidationMessage(`Upload failed: ${error}`);
+              return false;
+          }
         }
         const idNhomDanhMuc = document.getElementById('idNhomDanhMuc').value;
         const selectedNhomDanhMuc = nhomDanhMucList.find(nhom => nhom.idNhomDanhMuc === idNhomDanhMuc);
@@ -134,13 +142,13 @@ const CategoryProductsPage = () => {
           tenDanhMuc: document.getElementById('tenDanhMuc').value,
           idNhomDanhMuc: idNhomDanhMuc,
           tenNhomDanhMuc: selectedNhomDanhMuc ? selectedNhomDanhMuc.tenNhomDanhMuc : '',
-          hinhAnhDanhMuc: hinhAnhBase64
+          hinhAnhDanhMuc: imageUrl
         };
-      }
+    }
     });
   
     if (formValues) {
-      // Log dữ liệu của các trường vào console
+      
       console.log('Dữ liệu các trường:', formValues);
 
       try {
@@ -175,6 +183,10 @@ const CategoryProductsPage = () => {
     }
   };
   
+  const getFullImageUrl = (fileName) => {
+    if (!fileName) return null;
+    return `http://localhost:5222/api/danhmucsp${fileName}`;
+};
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -234,7 +246,7 @@ const CategoryProductsPage = () => {
                     <td className="table-cell">
                     {categoryProduct.hinhAnhDanhMuc && (
                       <img 
-                        src={categoryProduct.hinhAnhDanhMuc} 
+                      src={getFullImageUrl(categoryProduct.hinhAnhDanhMuc)}
                         alt={categoryProduct.tenDanhMuc} 
                         style={{ width: '50px', height: '50px', objectFit: 'cover' }} 
                       />
