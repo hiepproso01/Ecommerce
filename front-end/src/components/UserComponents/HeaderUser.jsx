@@ -62,7 +62,7 @@ const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
     <div className='header0'>
     <header className={`header1 ${openSidebarToggle ? 'shifted' : ''}`}>
     <div className="logo-container">
-          <img src={logo} alt="Logo" className="logo" />
+          <img src={logo} alt="Logo" className="logo" onClick={() => navigate('/')}/>
         </div>
         <form className="search-form" onSubmit={handleSearchSubmit}>
           <input

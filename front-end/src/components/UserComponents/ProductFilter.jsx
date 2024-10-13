@@ -208,8 +208,10 @@ const ProductFilter = ({ selectedDanhMuc }) => {
               ) : (
                 <div className="no-image">Không có hình ảnh</div> // Hiển thị khi không có hình ảnh
               )}
-                <span className="product-name">{product.tenSanPham}</span>
-                <span className="product-price">{product.giaBan} VND</span>
+                <div className="product-content">
+    <span className="product-name">{product.tenSanPham}</span>
+                <span className="product-price">{parseInt(product.giaBan).toLocaleString('vi-VN')} VND</span>
+              </div>
               </div>
             </li>
           ))
