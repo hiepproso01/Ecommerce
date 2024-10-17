@@ -1,0 +1,124 @@
+/* Basic page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Table styling */
+ .table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .table  table th, table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .table table th {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .table  table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .table  table tr:hover {
+    background-color: #f1f1f1;
+  }
+  .table{
+    border:none;
+  }
+.btn-watch button, .btn-close button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+.btn-watch button:hover {
+    background-color: #218838;
+  }
+  
+  /* modal1 styling */
+  .modal1 {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-width: 800px;
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .modal1 h2 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .modal1 h3 {
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+  .modal1 table {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .modal1 table th, .modal1 table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .modal1 img {
+    max-width: 50px;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  .modal1 .btn-close button {
+    background-color: #dc3545;
+    margin-top: 20px;
+  }
+  
+  .modal1 .btn-close button:hover {
+    background-color: #c82333;
+  }
+  
+  /* Overlay for modal1 background */
+  .modal1-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    table, .modal1 table {
+      font-size: 14px;
+    }
+    
+    .modal1 {
+      max-width: 90%;
+    }
+  }
+  

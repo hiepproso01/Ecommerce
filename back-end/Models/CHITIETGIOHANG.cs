@@ -9,18 +9,20 @@ namespace back_end.Models
 {
     public class CHITIETGIOHANG
     {
+        [Key]
         public string IDChiTietGioHang { get; set; }
-        public string IDGioHang { get; set; }
-      [ForeignKey("IDGioHang")]
-        public virtual GIOHANG GioHang { get; set; }
-        // public required GIOHANG GIOHANG { get; set; }
-        [StringLength(450)]
         public string IDSanPham { get; set; }
-        
-        
-        // public required SANPHAM SANPHAM { get; set; }
+        public string TenSanPham { get; set; }
         public int SoLuong { get; set; }
-        public double DonGia { get; set; }
-        public double ThanhTien { get; set; }
+        public string IDNguoiDung { get; set; }
+        public string TenNguoiDung { get; set; }
+        public string Address { get; set; }
+        public string PhoneNumber { get; set; }
+        public string IDGioHang { get; set; }
+        public string GiaBan { get; set; }
+        public string HinhAnh { get; set; }
+
+        // [ForeignKey("IDGioHang")]
+        // public virtual GIOHANG GioHang { get; set; }
     }
 }

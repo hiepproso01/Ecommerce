@@ -53,14 +53,7 @@ const ProductsUser = () => {
         autoplay: true,
         autoplaySpeed: 2000,
         arrows: true,
-        // responsive: [
-        //     {
-        //         breakpoint: 600,
-        //         settings: {
-        //             arrows: false
-        //         }
-        //     }
-        // ]
+      
       };
     return (
      <div style={{display:'flex',justifyContent:'center',padding:0,margin:0,flexDirection:'column',alignItems:'center'}}>

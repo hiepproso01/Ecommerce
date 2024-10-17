@@ -160,28 +160,35 @@ namespace back_end.Migrations
                     b.Property<string>("IDChiTietDonHang")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double>("DonGia")
-                        .HasColumnType("float");
+                    b.Property<string>("DONHANGIDDonHang")
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("IDDonHang")
+                    b.Property<string>("GiaBan")
                         .IsRequired()
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HinhAnh")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IDSanPham")
                         .IsRequired()
-                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
 
-                    b.Property<double>("ThanhTien")
-                        .HasColumnType("float");
+                    b.Property<string>("TenSanPham")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ThanhTien")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IDChiTietDonHang");
 
-                    b.HasIndex("IDDonHang");
+                    b.HasIndex("DONHANGIDDonHang");
 
                     b.HasIndex("IDSanPham");
 
@@ -193,27 +200,51 @@ namespace back_end.Migrations
                     b.Property<string>("IDChiTietGioHang")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<double>("DonGia")
-                        .HasColumnType("float");
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GIOHANGIDGioHang")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("GiaBan")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HinhAnh")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IDGioHang")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IDNguoiDung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IDSanPham")
                         .IsRequired()
-                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
 
-                    b.Property<double>("ThanhTien")
-                        .HasColumnType("float");
+                    b.Property<string>("TenNguoiDung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenSanPham")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IDChiTietGioHang");
 
-                    b.HasIndex("IDGioHang");
+                    b.HasIndex("GIOHANGIDGioHang");
 
                     b.HasIndex("IDSanPham");
 
@@ -255,21 +286,39 @@ namespace back_end.Migrations
             modelBuilder.Entity("back_end.Models.DONHANG", b =>
                 {
                     b.Property<string>("IDDonHang")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("IDTaiKhoan")
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IDNguoiDung")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("NgayDatHang")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("TongTien")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenNguoiDung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TongTien")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrangThai")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IDDonHang");
 
-                    b.HasIndex("IDTaiKhoan");
+                    b.HasIndex("IDNguoiDung");
 
                     b.ToTable("DONHANG");
                 });
@@ -279,13 +328,13 @@ namespace back_end.Migrations
                     b.Property<string>("IDGioHang")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("IDTaiKhoan")
+                    b.Property<string>("IDNguoiDung")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IDGioHang");
 
-                    b.HasIndex("IDTaiKhoan");
+                    b.HasIndex("IDNguoiDung");
 
                     b.ToTable("GIOHANG");
                 });
@@ -312,6 +361,11 @@ namespace back_end.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("IDGioHang")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("IDNguoiDung")
                         .HasColumnType("int");
@@ -581,36 +635,28 @@ namespace back_end.Migrations
 
             modelBuilder.Entity("back_end.Models.CHITIETDONHANG", b =>
                 {
-                    b.HasOne("back_end.Models.DONHANG", "DonHang")
+                    b.HasOne("back_end.Models.DONHANG", null)
                         .WithMany("CHITIETDONHANG")
-                        .HasForeignKey("IDDonHang")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DONHANGIDDonHang");
 
                     b.HasOne("back_end.Models.SANPHAM", null)
                         .WithMany()
                         .HasForeignKey("IDSanPham")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("DonHang");
                 });
 
             modelBuilder.Entity("back_end.Models.CHITIETGIOHANG", b =>
                 {
-                    b.HasOne("back_end.Models.GIOHANG", "GioHang")
-                        .WithMany("CHITIETGIOHANG")
-                        .HasForeignKey("IDGioHang")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("back_end.Models.GIOHANG", null)
+                        .WithMany("ChiTietGioHang")
+                        .HasForeignKey("GIOHANGIDGioHang");
 
                     b.HasOne("back_end.Models.SANPHAM", null)
                         .WithMany()
                         .HasForeignKey("IDSanPham")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("GioHang");
                 });
 
             modelBuilder.Entity("back_end.Models.DANHMUCSANPHAM", b =>
@@ -624,18 +670,18 @@ namespace back_end.Migrations
 
             modelBuilder.Entity("back_end.Models.DONHANG", b =>
                 {
-                    b.HasOne("back_end.Models.TAIKHOAN", null)
+                    b.HasOne("back_end.Models.NGUOIDUNG", null)
                         .WithMany()
-                        .HasForeignKey("IDTaiKhoan")
+                        .HasForeignKey("IDNguoiDung")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("back_end.Models.GIOHANG", b =>
                 {
-                    b.HasOne("back_end.Models.TAIKHOAN", null)
+                    b.HasOne("back_end.Models.NGUOIDUNG", null)
                         .WithMany()
-                        .HasForeignKey("IDTaiKhoan")
+                        .HasForeignKey("IDNguoiDung")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -662,7 +708,7 @@ namespace back_end.Migrations
 
             modelBuilder.Entity("back_end.Models.GIOHANG", b =>
                 {
-                    b.Navigation("CHITIETGIOHANG");
+                    b.Navigation("ChiTietGioHang");
                 });
 #pragma warning restore 612, 618
         }

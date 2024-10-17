@@ -23,7 +23,10 @@ namespace back_end.Controllers
         private readonly SignInManager<NGUOIDUNG> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-
+ protected string GetCurrentUserId()
+    {
+        return User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    }
         public NGUOIDUNGController(ApplicationDBContext context, UserManager<NGUOIDUNG> userManager, SignInManager<NGUOIDUNG> signInManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             _context = context;
@@ -47,6 +50,15 @@ namespace back_end.Controllers
             }
             return admin;
         }
+        // Thêm phương thức này vào cuối của lớp NGUOIDUNGController
+private string GenerateUniqueCartId()
+{
+    return Guid.NewGuid().ToString().Substring(0, 20);
+}
+// private string GenerateUniquePaymentId()
+// {
+//     return Guid.NewGuid().ToString().Substring(0, 20);
+// }
        [HttpPost("Register")]
 public async Task<IActionResult> Register([FromBody] DANGKYADMIN dangKyAdmin)
 {
@@ -61,11 +73,8 @@ public async Task<IActionResult> Register([FromBody] DANGKYADMIN dangKyAdmin)
             Role = dangKyAdmin.Role,
             PhoneNumber = dangKyAdmin.PhoneNumber,
             Address = dangKyAdmin.Address,
-            // Birthday = dangKyAdmin.Birthday,
-            // Gender = dangKyAdmin.Gender,
-            // Avatar = dangKyAdmin.Avatar,
-            // Status = dangKyAdmin.Status,
-            
+            IDGioHang = GenerateUniqueCartId(),
+            // IDDonHang = GenerateUniquePaymentId()
         };
         var result = await _userManager.CreateAsync(user, dangKyAdmin.Password);
         if (result.Succeeded)
@@ -103,6 +112,8 @@ public async Task<IActionResult> Login([FromBody] DANGNHAPADMIN dangNhapAdmin)
             var user = await _userManager.FindByNameAsync(dangNhapAdmin.UserName);
             var token = GenerateJwtToken(user);
             var roles = await _userManager.GetRolesAsync(user);
+           
+    
             return Ok(new { user, token, roles, message = "Đăng nhập thành công." });
         }
 

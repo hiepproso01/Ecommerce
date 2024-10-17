@@ -39,7 +39,7 @@ const Sidebar = ({ openSidebarToggle }) => {
           </Link>
         </li>
         <li className='sidebar-item'>
-          <Link to="" className='flex-center1'>
+          <Link to="/order" className='flex-center1'>
             <BsListCheck className='icon' /> Quản lý đơn hàng
           </Link>
         </li>

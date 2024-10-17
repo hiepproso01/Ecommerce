@@ -81,7 +81,7 @@
 }
 
 .category-item:hover {
-  background-color: #5947ff;
+  background-color: #d1e8e2;
   transform: scale(1.1);
   z-index: 2; /* Khi hover, item sẽ nổi lên trên */
 }
@@ -111,7 +111,7 @@
   top: 100%;
   left: 0;
   width: 100%;
-  background-color: #5947ff;
+  background-color: #d1e8e2;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   opacity: 0;
   visibility: hidden;

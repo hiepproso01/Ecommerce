@@ -1,0 +1,239 @@
+.payment-container{
+ width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+.payment-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.order-info, .payment-info {
+    flex: 1;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.order-info {
+    flex: 2;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+.product-list {
+    margin-bottom: 20px;
+}
+
+.product-header, .product-item2 {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.product-header {
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-info img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.product-item img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.product-item22 {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.product-item22 img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-details p {
+    margin: 0;
+}
+
+.order-total {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.discount-code {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.discount-code input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.discount-code button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.discount-code button:hover {
+    background-color: #0056b3;
+}
+
+.payment-info input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.confirm-payment {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.confirm-payment:hover {
+    background-color: #218838;
+}
+
+.product-list-container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.product-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+.product-list {
+    max-height: 300px; /* Đặt chiều cao tối đa cho danh sách sản phẩm */
+    overflow-y: auto; /* Thêm thanh cuộn dọc khi cần thiết */
+}
+
+.product-item2 {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.product-item2:last-child {
+    border-bottom: none;
+}
+
+.product-item2 img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Tùy chỉnh thanh cuộn */
+.product-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.product-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.product-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.product-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.payment-method {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.payment-option {
+    margin-right: 40px; /* Khoảng cách giữa các payment-option */
+    /* border: 1px solid #000000; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-method label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.payment-method input[type="radio"] {
+    margin-right: 10px; /* Khoảng cách giữa radio button và icon */
+    order: 1; /* Radio button trước icon */
+}
+
+.payment-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    vertical-align: middle;
+    order: 2; /* Icon sau radio button */
+}
+
+/* Loại bỏ khoảng cách mặc định xung quanh hình ảnh */
+.payment-icon {
+    display: block;
+    margin: 0;
+}

@@ -20,6 +20,8 @@ import Cart from './components/UserComponents/Cart.jsx';
 import ProductFilter from './components/UserComponents/ProductFilter.jsx';
 // import { ProductProvider } from './Context/ProductContext';
 import ProductDetail from './components/UserComponents/ProductDetail.jsx';
+import PaymentPage from './components/UserComponents/PaymentPage.jsx';
+import OrderPage from './components/UserComponents/OrderPage.jsx';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -99,6 +101,7 @@ function App() {
                   <Route path="/supplier" element={<Supplier />} />
                   <Route path="/customer" element={<Customer />} />
                   <Route path="/categorygroup" element={<CategogyGroupPage />} />
+                  <Route path="/order" element={<OrderPage />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </AuthenticatedLayout>
@@ -113,6 +116,7 @@ function App() {
             <Route path="/product/:idSanPham" element={<ProductDetail />} />
             <Route path="/productfilter" element={<ProductFilter />} />
             <Route path="*" element={<Navigate to="/homepage" replace />} />
+            <Route path="/payment" element={<PaymentPage />} />
           
           </>
         )}

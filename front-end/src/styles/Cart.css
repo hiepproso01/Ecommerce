@@ -10,11 +10,13 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    border: none; /* Remove table border */
   }
   
   .cart-table th, .cart-table td {
     padding: 12px;
-    border: 1px solid #ddd;
+    border: none; /* Remove cell borders */
+    vertical-align: middle; /* Align content vertically in the middle */
   }
   
   .cart-table th {
@@ -26,4 +28,37 @@
     color: #ff0000;
     margin-top: 20px;
   }
-  
+
+/* Add new styles for images */
+.cart-table img {
+  width: 80px; /* Set a fixed width */
+  height: 80px; /* Set a fixed height */
+  object-fit: cover; /* Maintain aspect ratio and cover the area */
+  display: block; /* Remove any extra space below the image */
+  margin: 0 auto; /* Center the image horizontally */
+}
+
+.payment-button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px 0;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.payment-button:hover {
+  background-color: #45a049;
+}
+
+/* Adjust the cart-total style */
+.cart-total {
+  margin-top: 20px;
+  font-size: 18px;
+}

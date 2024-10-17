@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,10 +8,18 @@ namespace back_end.DTOs
 {
     public class DONHANGDTO
     {
-        public string IDTaiKhoan { get; set; }
-        public string NgayDatHang { get; set; }
+     
+         [Key]
+        [StringLength(20)]
+        public string IDDonHang { get; set; }
+
+        public string IDNguoiDung { get; set; }
+        public string TenNguoiDung { get; set; }
+        public string Address { get; set; }
+        public string PhoneNumber { get; set; }
+        public string TrangThai {get;set;}
+        public DateTime NgayDatHang { get; set; }
         public string TongTien { get; set; }
-        // public required TAIKHOAN TAIKHOAN { get; set; }
-        // public required List<CHITIETDONHANG> CHITIETDONHANG { get; set; }
+       
     }
 }

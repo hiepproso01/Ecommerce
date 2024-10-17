@@ -90,7 +90,8 @@ async Task CreateAdminAccount(IServiceProvider serviceProvider)
             TenNguoiDung = "Admin",
             Role = "Admin",
             PhoneNumber = "0123456789",
-            Address = "Hồ Chí Minh"
+            Address = "Hồ Chí Minh",
+            IDGioHang="1"
             
         };
 

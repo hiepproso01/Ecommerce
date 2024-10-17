@@ -24,9 +24,12 @@ const Login = ({ setIsLoggedIn, setUserRole }) => {
         localStorage.setItem('token', token); 
         localStorage.setItem('user', JSON.stringify(user.tenNguoiDung));
         localStorage.setItem('role', user.role);
+        localStorage.setItem('id', user.id);
+        localStorage.setItem('idGioHang', user.idGioHang);
+        localStorage.setItem('idDonHang', user.idDonHang);
+       
         setIsLoggedIn(true);
         setUserRole(user.role);  // Set user role in App component state
-        
         console.log("User role:", user.role); // Debugging line
   
         Swal.fire({

@@ -35,6 +35,7 @@ namespace back_end.Migrations
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IDGioHang = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -214,6 +215,47 @@ namespace back_end.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DONHANG",
+                columns: table => new
+                {
+                    IDDonHang = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    IDNguoiDung = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TenNguoiDung = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NgayDatHang = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TongTien = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DONHANG", x => x.IDDonHang);
+                    table.ForeignKey(
+                        name: "FK_DONHANG_AspNetUsers_IDNguoiDung",
+                        column: x => x.IDNguoiDung,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GIOHANG",
+                columns: table => new
+                {
+                    IDGioHang = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IDNguoiDung = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GIOHANG", x => x.IDGioHang);
+                    table.ForeignKey(
+                        name: "FK_GIOHANG_AspNetUsers_IDNguoiDung",
+                        column: x => x.IDNguoiDung,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DANHMUCSANPHAM",
                 columns: table => new
                 {
@@ -233,44 +275,6 @@ namespace back_end.Migrations
                         principalTable: "NHOMDANHMUC",
                         principalColumn: "IDNhomDanhMuc",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DONHANG",
-                columns: table => new
-                {
-                    IDDonHang = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IDTaiKhoan = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NgayDatHang = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TongTien = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DONHANG", x => x.IDDonHang);
-                    table.ForeignKey(
-                        name: "FK_DONHANG_TAIKHOAN_IDTaiKhoan",
-                        column: x => x.IDTaiKhoan,
-                        principalTable: "TAIKHOAN",
-                        principalColumn: "IDTaiKhoan",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GIOHANG",
-                columns: table => new
-                {
-                    IDGioHang = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IDTaiKhoan = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GIOHANG", x => x.IDGioHang);
-                    table.ForeignKey(
-                        name: "FK_GIOHANG_TAIKHOAN_IDTaiKhoan",
-                        column: x => x.IDTaiKhoan,
-                        principalTable: "TAIKHOAN",
-                        principalColumn: "IDTaiKhoan",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -312,21 +316,23 @@ namespace back_end.Migrations
                 columns: table => new
                 {
                     IDChiTietDonHang = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IDDonHang = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
-                    IDSanPham = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IDSanPham = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TenSanPham = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
                     DonGia = table.Column<double>(type: "float", nullable: false),
-                    ThanhTien = table.Column<double>(type: "float", nullable: false)
+                    ThanhTien = table.Column<double>(type: "float", nullable: false),
+                    HinhAnh = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IDDonHang = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DONHANGIDDonHang = table.Column<string>(type: "nvarchar(20)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CHITIETDONHANG", x => x.IDChiTietDonHang);
                     table.ForeignKey(
-                        name: "FK_CHITIETDONHANG_DONHANG_IDDonHang",
-                        column: x => x.IDDonHang,
+                        name: "FK_CHITIETDONHANG_DONHANG_DONHANGIDDonHang",
+                        column: x => x.DONHANGIDDonHang,
                         principalTable: "DONHANG",
-                        principalColumn: "IDDonHang",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IDDonHang");
                     table.ForeignKey(
                         name: "FK_CHITIETDONHANG_SANPHAM_IDSanPham",
                         column: x => x.IDSanPham,
@@ -340,21 +346,26 @@ namespace back_end.Migrations
                 columns: table => new
                 {
                     IDChiTietGioHang = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IDGioHang = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    IDSanPham = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    IDSanPham = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TenSanPham = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
-                    DonGia = table.Column<double>(type: "float", nullable: false),
-                    ThanhTien = table.Column<double>(type: "float", nullable: false)
+                    IDNguoiDung = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TenNguoiDung = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IDGioHang = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GiaBan = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HinhAnh = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GIOHANGIDGioHang = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CHITIETGIOHANG", x => x.IDChiTietGioHang);
                     table.ForeignKey(
-                        name: "FK_CHITIETGIOHANG_GIOHANG_IDGioHang",
-                        column: x => x.IDGioHang,
+                        name: "FK_CHITIETGIOHANG_GIOHANG_GIOHANGIDGioHang",
+                        column: x => x.GIOHANGIDGioHang,
                         principalTable: "GIOHANG",
-                        principalColumn: "IDGioHang",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IDGioHang");
                     table.ForeignKey(
                         name: "FK_CHITIETGIOHANG_SANPHAM_IDSanPham",
                         column: x => x.IDSanPham,
@@ -403,9 +414,9 @@ namespace back_end.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CHITIETDONHANG_IDDonHang",
+                name: "IX_CHITIETDONHANG_DONHANGIDDonHang",
                 table: "CHITIETDONHANG",
-                column: "IDDonHang");
+                column: "DONHANGIDDonHang");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CHITIETDONHANG_IDSanPham",
@@ -413,9 +424,9 @@ namespace back_end.Migrations
                 column: "IDSanPham");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CHITIETGIOHANG_IDGioHang",
+                name: "IX_CHITIETGIOHANG_GIOHANGIDGioHang",
                 table: "CHITIETGIOHANG",
-                column: "IDGioHang");
+                column: "GIOHANGIDGioHang");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CHITIETGIOHANG_IDSanPham",
@@ -428,14 +439,14 @@ namespace back_end.Migrations
                 column: "IDNhomDanhMuc");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DONHANG_IDTaiKhoan",
+                name: "IX_DONHANG_IDNguoiDung",
                 table: "DONHANG",
-                column: "IDTaiKhoan");
+                column: "IDNguoiDung");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GIOHANG_IDTaiKhoan",
+                name: "IX_GIOHANG_IDNguoiDung",
                 table: "GIOHANG",
-                column: "IDTaiKhoan");
+                column: "IDNguoiDung");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SANPHAM_IDDanhMuc",
@@ -473,10 +484,10 @@ namespace back_end.Migrations
                 name: "CHITIETGIOHANG");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "TAIKHOAN");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "DONHANG");
@@ -488,7 +499,7 @@ namespace back_end.Migrations
                 name: "SANPHAM");
 
             migrationBuilder.DropTable(
-                name: "TAIKHOAN");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "DANHMUCSANPHAM");

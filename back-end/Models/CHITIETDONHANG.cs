@@ -8,19 +8,20 @@ namespace back_end.Models
 {
     public class CHITIETDONHANG
     {
-      
+       [Key]
         public string IDChiTietDonHang { get; set; }
-         [StringLength(450)]
-        public string IDDonHang { get; set; }
-         [ForeignKey("IDDonHang")]
-         public virtual DONHANG DonHang { get; set; }
-         [StringLength(450)]
+       
         public string IDSanPham { get; set; }
+        public string TenSanPham { get; set; }
         public int SoLuong { get; set; }
-        public double DonGia { get; set; }
-        public double ThanhTien { get; set; }
-        // public  DONHANG DONHANG { get; set; }
-        // public  SANPHAM SANPHAM { get; set; }
+        public string GiaBan { get; set; }
+        public string ThanhTien { get; set; }
+        public string HinhAnh { get; set; }
+//        [ForeignKey("DONHANG")]
+// public string IDDonHang { get; set; } // Đảm bảo tên này trùng khớp với cột trong bảng DONHANG
+
+// public virtual DONHANG DONHANG { get; set; } // Định nghĩa mối quan hệ
+        
 
        
         

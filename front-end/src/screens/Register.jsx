@@ -26,6 +26,7 @@ const Register = () => {
         phoneNumber: phoneNumber,
         role: "NguoiDung",
         address: address,
+        // idGioHang: idGioHang,
       });
       if (response.status === 200) {
         Swal.fire({

@@ -147,7 +147,7 @@ const CategoryUser = ({ onSelectCategory }) => { // Nhận props onSelectCategor
                   className="category-image"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = '/duong/dan/den/anh/mac-dinh.jpg';
+                    // e.target.src = '/duong/dan/den/anh/mac-dinh.jpg';
                   }}
                 />
               ) : (

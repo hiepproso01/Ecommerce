@@ -11,6 +11,8 @@ const ProductDetail = () => {
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1); // Thêm trạng thái cho số lượng
     const navigate = useNavigate();
+    const [cartId, setCartId] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
     
     useEffect(() => {
         apiClient.get(`api/sanpham/GetById/${idSanPham}`)
@@ -20,53 +22,89 @@ const ProductDetail = () => {
             .catch(error => {
                 console.error("Error fetching product details!", error);
             });
+
+        
+        const cartId = localStorage.getItem('idGioHang');
+        if (cartId) {
+            setCartId(cartId);
+        }
+
+        const userId = localStorage.getItem('id');
+        if (userId) {
+            apiClient.get('api/NGUOIDUNG/GetAll')
+                .then(response => {
+                    const users = response.data;
+                    const currentUser = users.find(user => user.id === userId);
+                    if (currentUser) {
+                        setUserInfo({
+                            tenNguoiDung: currentUser.tenNguoiDung,
+                            address: currentUser.address,
+                            phoneNumber: currentUser.phoneNumber
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching user information!", error);
+                });
+        }
     }, [idSanPham]);
 
     if (!product) {
         return <p>Loading product details...</p>;
     }
-   let currentCartId ;
-    const getCurrentCartId = () => {
-        // Logic để lấy ID giỏ hàng hiện tại
-        return localStorage.getItem('currentCartId'); // Ví dụ sử dụng localStorage
+ 
+
+    
+    const getFullImageUrl = (fileName) => {
+        if (!fileName) return null;
+        return `http://localhost:5222/api/sanpham${fileName}`;
     };
+
     const handleAddToCart = () => {
-        // Giả sử bạn đã có cách lấy ID giỏ hàng hiện tại
-        currentCartId = getCurrentCartId(); // Giả sử hàm này sẽ trả về ID giỏ hàng hiện tại
-    
-        // Kiểm tra nếu ID giỏ hàng không hợp lệ
-        if (!currentCartId) {
+        const cartId = localStorage.getItem('idGioHang');
+        console.log("Thông tin sản phẩm:", {
+            idGioHang: cartId,
+            idNguoiDung: localStorage.getItem('id'),
+            idSanPham: product.idSanPham,
+            tenSanPham: product.tenSanPham,
+            soLuong: quantity,
+            giaBan: product.giaBan,
+            hinhAnh: product.hinhAnh
+        });
+
+        if (!cartId) {
             Swal.fire({
                 icon: 'error',
                 title: 'Lỗi',
-                text: 'ID giỏ hàng không hợp lệ!',
+                text: 'Không tìm thấy giỏ hàng của bạn. Vui lòng đăng nhập lại.',
                 confirmButtonColor: '#d33',
             });
             return;
         }
-    
-        // Giả sử bạn đã có thông tin sản phẩm trong biến `product`
-        if (!product || !product.idSanPham) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi',
-                text: 'ID sản phẩm không hợp lệ!',
-                confirmButtonColor: '#d33',
-            });
-            return;
+        function randomId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let id = '';
+            for (let i = 0; i < 20; i++) {
+                id += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return id;
         }
-    
         const cartItem = {
-            IDSanPham: product.idSanPham, // Đảm bảo rằng giá trị này không phải là null
-            GIOHANGIDGioHang: currentCartId, // ID giỏ hàng hiện tại
-            SoLuong: 1, // Mặc định là 1
-            DonGia: product.giaBan, // Giá bán của sản phẩm
+            idChiTietGioHang: randomId(),
+            idGioHang: cartId,
+            idNguoiDung: localStorage.getItem('id'),
+            idSanPham: product.idSanPham,
+            tenSanPham: product.tenSanPham,
+            soLuong: quantity,
+            giaBan: product.giaBan,
+            hinhAnh: product.hinhAnh,
+            tenNguoiDung: userInfo?.tenNguoiDung,
+            address: userInfo?.address,
+            phoneNumber: userInfo?.phoneNumber
         };
-    
-        // Gọi API để thêm sản phẩm vào giỏ hàng
-        apiClient.post('api/CHITIETGIOHANG/AddToCart', cartItem)
+
+        apiClient.post('api/CHITIETGIOHANG/AddToCart', [cartItem])
             .then(response => {
-                // Hiển thị thông báo thành công
                 Swal.fire({
                     icon: 'success',
                     title: 'Thành công',
@@ -78,9 +116,10 @@ const ProductDetail = () => {
                 console.error("Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng!", error);
                 let errorMessage = 'Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng!';
                 if (error.response && error.response.data) {
-                    errorMessage = error.response.data; // Hoặc xử lý tùy theo yêu cầu
+                    errorMessage = typeof error.response.data === 'string' 
+                        ? error.response.data 
+                        : JSON.stringify(error.response.data, null, 2);
                 }
-                // Hiển thị thông báo lỗi
                 Swal.fire({
                     icon: 'error',
                     title: 'Lỗi',
@@ -88,11 +127,6 @@ const ProductDetail = () => {
                     confirmButtonColor: '#d33',
                 });
             });
-    };
-    
-    const getFullImageUrl = (fileName) => {
-        if (!fileName) return null;
-        return `http://localhost:5222/api/sanpham${fileName}`;
     };
 
     return (
@@ -149,4 +183,3 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-

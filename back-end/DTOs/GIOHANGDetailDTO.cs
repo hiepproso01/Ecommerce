@@ -8,9 +8,13 @@ namespace back_end.DTOs
     public class GIOHANGDetailDTO
     {
         public string IDGioHang { get; set; }
-        public string IDTaiKhoan { get; set; }
-        // public int SoLuongHang { get; set; }
-        // public required TAIKHOAN TAIKHOAN { get; set; }
-        // public required List<CHITIETGIOHANG> CHITIETGIOHANG { get; set; }
+        public string IDNguoiDung { get; set; }
+        public string IDSanPham { get; set; }
+        public string TenSanPham { get; set; }
+        public int SoLuong { get; set; }
+        public double DonGia { get; set; }
+        public double ThanhTien { get; set; }
+        public string GiaBan { get; set; }
+        public string HinhAnh { get; set; }
     }
 }

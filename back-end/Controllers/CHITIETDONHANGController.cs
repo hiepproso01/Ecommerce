@@ -41,12 +41,28 @@ namespace back_end.Controllers
             }
             return orderDetail;
         }
-        [HttpPost("Create")]
-        public async Task<ActionResult<CHITIETDONHANG>> CreateCHITIETDONHANG(CHITIETDONHANG CHITIETDONHANG)
+        [HttpPost("Payment")]
+        public async Task<ActionResult<IEnumerable<CHITIETDONHANG>>> Payment([FromBody] List<CHITIETDONHANG> chiTietDonHangList)
         {
-            _context.CHITIETDONHANG.Add(CHITIETDONHANG);
+            if (chiTietDonHangList == null || !chiTietDonHangList.Any())
+            {
+                return BadRequest("Danh sách chi tiết đơn hàng không được để trống.");
+            }
+
+            foreach (var chiTietDonHang in chiTietDonHangList)
+            {
+                // Tạo ID mới cho mỗi chi tiết đơn hàng nếu chưa có
+                if (string.IsNullOrEmpty(chiTietDonHang.IDChiTietDonHang))
+                {
+                    chiTietDonHang.IDChiTietDonHang = Guid.NewGuid().ToString();
+                }
+                
+                _context.CHITIETDONHANG.Add(chiTietDonHang);
+            }
+
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetCHITIETDONHANG), new { id = CHITIETDONHANG.IDChiTietDonHang }, CHITIETDONHANG);
+
+            return Ok(chiTietDonHangList);
         }
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateCHITIETDONHANG(string id, CHITIETDONHANG CHITIETDONHANG)
@@ -94,6 +110,49 @@ namespace back_end.Controllers
 
         }
 
+        // [HttpPost("Create")]
+        // public async Task<ActionResult<IEnumerable<CHITIETDONHANG>>> CreateCHITIETDONHANG([FromBody] List<CHITIETDONHANG> chiTietDonHangList)
+        // {
+        //     if (chiTietDonHangList == null || !chiTietDonHangList.Any())
+        //     {
+        //         return BadRequest("Danh sách chi tiết đơn hàng không được để trống.");
+        //     }
 
+           
+        //     var newChiTietDonHangList = new List<CHITIETDONHANG>();
+
+        //     foreach (var chiTietDonHang in chiTietDonHangList)
+        //     {
+        //         var newChiTietDonHang = new CHITIETDONHANG
+        //         {
+        //             IDChiTietDonHang =chiTietDonHang.IDChiTietDonHang,
+        //             // IDDonHang = chiTietDonHang.IDDonHang,
+        //             IDSanPham = chiTietDonHang.IDSanPham,
+        //             TenSanPham = chiTietDonHang.TenSanPham,
+        //             SoLuong = chiTietDonHang.SoLuong,
+        //             DonGia = chiTietDonHang.DonGia,
+        //             // Thêm các thuộc tính khác nếu cần
+        //         };
+        //         newChiTietDonHangList.Add(newChiTietDonHang);
+        //         _context.CHITIETDONHANG.Add(newChiTietDonHang);
+        //     }
+
+        //     decimal tongTien = chiTietDonHangList.Sum(ct => 
+        //         ct.SoLuong * decimal.Parse(ct.DonGia.ToString()));
+
+        //     var donHang = new DONHANG
+        //     {
+        //         // IDDonHang = idDonHang,
+        //         IDTaiKhoan = chiTietDonHangList.First().IDNguoiDung,
+        //         NgayDatHang = DateTime.Now,
+        //         TongTien = tongTien,
+        //         CHITIETDONHANG = newChiTietDonHangList
+        //     };
+        //     _context.DONHANG.Add(donHang);
+
+        //     await _context.SaveChangesAsync();
+
+        //     return CreatedAtAction(nameof(GetCHITIETDONHANG), new { id = chiTietDonHangList.First().IDChiTietDonHang }, newChiTietDonHangList);
+        // }
     }
 }

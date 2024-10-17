@@ -12,7 +12,7 @@ namespace back_end.DTOs
         public string TenSanPham { get; set; }
         public string DonViTinh { get; set; }
         public int SoLuongNhap { get; set; }
-        public string SoLuongBan { get; set; }
+        // public string SoLuongBan { get; set; }
         public string MoTa { get; set; }
         public string GiaNhap { get; set; }
         public string GiaBan { get; set; }

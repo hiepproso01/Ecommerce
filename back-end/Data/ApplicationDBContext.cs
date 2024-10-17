@@ -61,15 +61,15 @@ namespace back_end.Data
         .HasKey(c => c.IDChiTietGioHang);
         base.OnModelCreating(modelBuilder);
          modelBuilder.Entity<GIOHANG>()
-                .HasOne<TAIKHOAN>()  // Chỉ định bảng liên kết là TAIKHOAN
+                .HasOne<NGUOIDUNG>()  // Chỉ định bảng liên kết là TAIKHOAN
                 .WithMany()  // Không cần Navigation Property
-                .HasForeignKey(g => g.IDTaiKhoan)  // Chỉ định IDTaiKhoan là khóa ngoại
+                .HasForeignKey(g => g.IDNguoiDung)  // Chỉ định IDTaiKhoan là khóa ngoại
                 .OnDelete(DeleteBehavior.Cascade);  // Xóa GIOHANG khi TAIKHOAN bị xóa
      base.OnModelCreating(modelBuilder);
          modelBuilder.Entity<DONHANG>()
-                .HasOne<TAIKHOAN>()  // Chỉ định bảng liên kết là TAIKHOAN
+                .HasOne<NGUOIDUNG>()  // Chỉ định bảng liên kết là TAIKHOAN
                 .WithMany()  // Không cần Navigation Property
-                .HasForeignKey(g => g.IDTaiKhoan)  // Chỉ định IDTaiKhoan là khóa ngoại
+                .HasForeignKey(g => g.IDNguoiDung)  // Chỉ định IDTaiKhoan là khóa ngoại
                 .OnDelete(DeleteBehavior.Cascade);  // Xóa GIOHANG khi TAIKHOAN bị xóa
          base.OnModelCreating(modelBuilder);
          modelBuilder.Entity<CHITIETDONHANG>()
@@ -77,6 +77,7 @@ namespace back_end.Data
                 .WithMany()  // Không cần Navigation Property
                 .HasForeignKey(g => g.IDSanPham)  // Chỉ định IDTaiKhoan là khóa ngoại
                 .OnDelete(DeleteBehavior.Cascade);  // Xóa GIOHANG khi TAIKHOAN bị xóa
+                 base.OnModelCreating(modelBuilder);
         base.OnModelCreating(modelBuilder);
          modelBuilder.Entity<CHITIETGIOHANG>()
                 .HasOne<SANPHAM>()  // Chỉ định bảng liên kết là TAIKHOAN
@@ -102,7 +103,12 @@ modelBuilder.Entity<DANHMUCSANPHAM>()
     .WithMany()  // Không cần Navigation Property
     .HasForeignKey(g => g.IDNhomDanhMuc)  // Chỉ định IDNhomDanhMuc là khóa ngoại
     .OnDelete(DeleteBehavior.Restrict);  // Không cho phép xóa cascade khi NHOMDANHMUC bị xóa
-
-    }
+// modelBuilder.Entity<CHITIETDONHANG>()
+//     .HasOne(c => c.DONHANG)
+//     .WithMany(d => d.CHITIETDONHANG)
+//     .HasForeignKey(c => c.IDDonHang)
+//     .HasPrincipalKey(d => d.IDDonHang);
+   }
+    
          }
 }

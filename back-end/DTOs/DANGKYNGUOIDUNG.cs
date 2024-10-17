@@ -13,5 +13,6 @@ namespace back_end.DTOs
         public string Address { get; set; }
         public string TenNguoiDung { get; set; }
         public string PhoneNumber { get; set; }
+        
     }
 }
