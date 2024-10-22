@@ -96,8 +96,12 @@ const Cart = () => {
             <Link to="/payment" className="payment-button">
               Thanh Toán
             </Link>
+           
           </>
         )}
+         <Link to="/status" className="status-button">
+          Xem trạng thái đơn hàng
+        </Link>
       </div>
     </div>
   );

@@ -1,6 +1,30 @@
 {
   "Files": [
     {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\hinhAnh\\2777f142-414c-472c-b209-c3d47a993859.jpg",
+      "PackagePath": "staticwebassets\\hinhAnh\\2777f142-414c-472c-b209-c3d47a993859.jpg"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\hinhAnh\\68fe7ce8-7cba-4339-8499-f52d4e9da83d.jpg",
+      "PackagePath": "staticwebassets\\hinhAnh\\68fe7ce8-7cba-4339-8499-f52d4e9da83d.jpg"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\hinhAnh\\bae2a5ea-375e-498d-a14f-29c71ad0b880.jpg",
+      "PackagePath": "staticwebassets\\hinhAnh\\bae2a5ea-375e-498d-a14f-29c71ad0b880.jpg"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\hinhAnh\\c50e73ea-5ece-4a83-9722-1b2fe643438f.jpg",
+      "PackagePath": "staticwebassets\\hinhAnh\\c50e73ea-5ece-4a83-9722-1b2fe643438f.jpg"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\05037437-a1e9-48f1-973a-df8c02345313.jpg",
+      "PackagePath": "staticwebassets\\imageProduct\\05037437-a1e9-48f1-973a-df8c02345313.jpg"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\05452db9-c7cc-440e-a11f-fd03725e7e80.png",
+      "PackagePath": "staticwebassets\\imageProduct\\05452db9-c7cc-440e-a11f-fd03725e7e80.png"
+    },
+    {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\0b3d9249-8e17-481e-9fb6-e2c4377345d5.jpg",
       "PackagePath": "staticwebassets\\imageProduct\\0b3d9249-8e17-481e-9fb6-e2c4377345d5.jpg"
     },
@@ -17,12 +41,24 @@
       "PackagePath": "staticwebassets\\imageProduct\\5afaa106-5f49-449c-89e6-14ac6be633b6.png"
     },
     {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\75ca86ea-d76a-4f81-8c4c-4a468405eb12.jpg",
+      "PackagePath": "staticwebassets\\imageProduct\\75ca86ea-d76a-4f81-8c4c-4a468405eb12.jpg"
+    },
+    {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\7dab710b-0213-41df-ad43-e2765d09c82d.jpg",
       "PackagePath": "staticwebassets\\imageProduct\\7dab710b-0213-41df-ad43-e2765d09c82d.jpg"
     },
     {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\83003a34-7596-4324-8358-73702f816618.jpg",
+      "PackagePath": "staticwebassets\\imageProduct\\83003a34-7596-4324-8358-73702f816618.jpg"
+    },
+    {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\897ac119-c11a-4910-9039-eddbf2200850.jpg",
       "PackagePath": "staticwebassets\\imageProduct\\897ac119-c11a-4910-9039-eddbf2200850.jpg"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\9e1ca7b9-4b33-44ef-b423-d840483dcc76.png",
+      "PackagePath": "staticwebassets\\imageProduct\\9e1ca7b9-4b33-44ef-b423-d840483dcc76.png"
     },
     {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\aa3d2a60-db6b-47a3-8b51-f31dfeb1c358.jpg",
@@ -37,8 +73,24 @@
       "PackagePath": "staticwebassets\\imageProduct\\b546bdb6-261d-4224-a289-0843fbb04ed3.png"
     },
     {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\d451dbbe-6568-47bb-aa85-a1c504070e19.png",
+      "PackagePath": "staticwebassets\\imageProduct\\d451dbbe-6568-47bb-aa85-a1c504070e19.png"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\e617e121-96c7-4011-a7a3-983456dbcc52.jpg",
+      "PackagePath": "staticwebassets\\imageProduct\\e617e121-96c7-4011-a7a3-983456dbcc52.jpg"
+    },
+    {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\f29bd6a6-c684-4f73-be63-3d64e03507e0.webp",
       "PackagePath": "staticwebassets\\imageProduct\\f29bd6a6-c684-4f73-be63-3d64e03507e0.webp"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\ffbeef45-8ed8-4ca1-a74a-2281d006a354.jpg",
+      "PackagePath": "staticwebassets\\imageProduct\\ffbeef45-8ed8-4ca1-a74a-2281d006a354.jpg"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\images\\0526ab10-9e15-4b1d-91c2-1fb70c0d303c.jpg",
+      "PackagePath": "staticwebassets\\images\\0526ab10-9e15-4b1d-91c2-1fb70c0d303c.jpg"
     },
     {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\images\\1dc434a0-f04f-43e8-9920-9c3485dfa544.jpg",
@@ -51,6 +103,10 @@
     {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\images\\2cf34ca5-4eb3-45d4-899b-ed4a87856849.jpg",
       "PackagePath": "staticwebassets\\images\\2cf34ca5-4eb3-45d4-899b-ed4a87856849.jpg"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\images\\31c4d54b-7e67-4e04-a4f6-0f73339af9d2.jpg",
+      "PackagePath": "staticwebassets\\images\\31c4d54b-7e67-4e04-a4f6-0f73339af9d2.jpg"
     },
     {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\images\\37f45f0f-302f-488e-ad85-a2e0c801f302.webp",
@@ -93,6 +149,10 @@
       "PackagePath": "staticwebassets\\images\\8823de79-a0e8-4102-b20f-46d209001363.jpg"
     },
     {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\images\\916fc63a-e77f-4528-b275-01dc64bd5621.jpg",
+      "PackagePath": "staticwebassets\\images\\916fc63a-e77f-4528-b275-01dc64bd5621.jpg"
+    },
+    {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\images\\96f98485-1090-403e-b9ec-c6d6d278ec2a.webp",
       "PackagePath": "staticwebassets\\images\\96f98485-1090-403e-b9ec-c6d6d278ec2a.webp"
     },
@@ -113,6 +173,10 @@
       "PackagePath": "staticwebassets\\images\\a6997063-0c91-4e65-8d3f-59ff6607918d.webp"
     },
     {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\images\\d4260121-66e9-4faa-8017-df5178268954.jpg",
+      "PackagePath": "staticwebassets\\images\\d4260121-66e9-4faa-8017-df5178268954.jpg"
+    },
+    {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\images\\d8281d08-aa2f-48bd-872c-118076606c3c.jpg",
       "PackagePath": "staticwebassets\\images\\d8281d08-aa2f-48bd-872c-118076606c3c.jpg"
     },
@@ -125,12 +189,24 @@
       "PackagePath": "staticwebassets\\images\\e4591b45-76e5-413a-8e54-c70ed8071aa7.webp"
     },
     {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\images\\f7e5fe9c-d69e-4f5c-b59c-45659ee4f7b5.jpg",
+      "PackagePath": "staticwebassets\\images\\f7e5fe9c-d69e-4f5c-b59c-45659ee4f7b5.jpg"
+    },
+    {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\img\\132b86ee-7a2b-4470-9816-2ebbcf4c0879.jpg",
       "PackagePath": "staticwebassets\\img\\132b86ee-7a2b-4470-9816-2ebbcf4c0879.jpg"
     },
     {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\img\\17150dda-a49a-4bee-80a9-04ecab8ae20f.jpg",
       "PackagePath": "staticwebassets\\img\\17150dda-a49a-4bee-80a9-04ecab8ae20f.jpg"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\img\\2ab9c699-9fea-40c1-9910-5166314ba102.png",
+      "PackagePath": "staticwebassets\\img\\2ab9c699-9fea-40c1-9910-5166314ba102.png"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\img\\329a0fae-addc-4517-8650-a96cd087284d.jpg",
+      "PackagePath": "staticwebassets\\img\\329a0fae-addc-4517-8650-a96cd087284d.jpg"
     },
     {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\img\\34c9f88f-4abd-41da-a187-71eb1d8e516a.jpg",
@@ -159,6 +235,10 @@
     {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\img\\5f4afc5a-fa67-4d3d-8b13-a183f0730201.png",
       "PackagePath": "staticwebassets\\img\\5f4afc5a-fa67-4d3d-8b13-a183f0730201.png"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\img\\62d25228-938c-4b1f-8a56-fe4450b0e980.png",
+      "PackagePath": "staticwebassets\\img\\62d25228-938c-4b1f-8a56-fe4450b0e980.png"
     },
     {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\img\\66c667b9-d83b-45fe-a405-b8f8cad2797d.jpg",
@@ -227,6 +307,10 @@
     {
       "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\img\\fc510b58-87ee-4627-97b8-f4e72084e925.jpg",
       "PackagePath": "staticwebassets\\img\\fc510b58-87ee-4627-97b8-f4e72084e925.jpg"
+    },
+    {
+      "Id": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\img\\fd3e8f14-a29d-48da-86e6-6abc2556a0a0.jpg",
+      "PackagePath": "staticwebassets\\img\\fd3e8f14-a29d-48da-86e6-6abc2556a0a0.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.back-end.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.feedback-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Căn từ trên xuống */
+    background-color: #fff;
+    padding-top: 70px; /* Khoảng cách từ trên xuống */
+}
+
+.feedback-content {
+    width: 100%;
+    max-width: 1200px;
+    padding: 40px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.feedback-text {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.feedback-form div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.feedback-form label {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    transition: border-color 0.3s ease;
+}
+
+.feedback-form input:focus,
+.feedback-form textarea:focus {
+    border-color: #5b9bd5;
+    outline: none;
+}
+
+.feedback-form button {
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.feedback-form button:hover {
+    background-color: #218838;
+}
+
+.feedback-form img {
+    margin-top: 20px;
+    max-width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

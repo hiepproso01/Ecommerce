@@ -11,19 +11,16 @@ namespace back_end.Models
        [Key]
         public string IDChiTietDonHang { get; set; }
        
+        // Sử dụng IDDonHang từ bảng DONHANG
+        // public string IDDonHang { get; set; }
         public string IDSanPham { get; set; }
         public string TenSanPham { get; set; }
         public int SoLuong { get; set; }
         public string GiaBan { get; set; }
         public string ThanhTien { get; set; }
         public string HinhAnh { get; set; }
-//        [ForeignKey("DONHANG")]
-// public string IDDonHang { get; set; } // Đảm bảo tên này trùng khớp với cột trong bảng DONHANG
 
-// public virtual DONHANG DONHANG { get; set; } // Định nghĩa mối quan hệ
-        
-
-       
-        
+        // Khóa ngoại tới bảng DONHANG
+        // public virtual DONHANG DONHANG { get; set; }   
     }
 }

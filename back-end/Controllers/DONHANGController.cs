@@ -74,6 +74,47 @@ public async Task<ActionResult<DONHANG>> CreateDONHANG([FromBody] DONHANGRequest
         return StatusCode(500, new { message = "Đã xảy ra lỗi khi tạo DONHANG", error = ex.InnerException?.Message });
     }
 }
+[HttpPut("ChangeStatus/{id}")]
+public async Task<IActionResult> ChangeStatus(string id, DONHANGDetailDTO donhangdetailDTO)
+{
+    // Kiểm tra xem đơn hàng có tồn tại không
+    var donhang = await _context.DONHANG.FindAsync(id);
+    if (donhang == null)
+    {
+        return NotFound();
+    }
+    donhang.IDDonHang = donhangdetailDTO.IDDonHang;
+    donhang.IDNguoiDung = donhangdetailDTO.IDNguoiDung;
+    donhang.TenNguoiDung = donhangdetailDTO.TenNguoiDung;
+    donhang.Address = donhangdetailDTO.Address;
+    donhang.PhoneNumber = donhangdetailDTO.PhoneNumber;
+    donhang.NgayDatHang= donhangdetailDTO.NgayDatHang;
+    donhang.TongTien = donhangdetailDTO.TongTien;
+    // Cập nhật trạng thái
+    donhang.TrangThai = donhangdetailDTO.TrangThai; 
+
+    // Đánh dấu thực thể đã được sửa đổi
+    _context.Entry(donhang).State = EntityState.Modified;
+
+    try
+    {
+        // Lưu thay đổi vào cơ sở dữ liệu
+        await _context.SaveChangesAsync();
+    }
+    catch (DbUpdateConcurrencyException)
+    {
+        if (!DONHANGExists(id))
+        {
+            return NotFound();
+        }
+        else
+        {
+            throw;
+        }
+    }
+
+    return NoContent(); // Trả về phản hồi thành công
+}
 
 
      [HttpPut("Update/{id}")]
@@ -101,6 +142,8 @@ public async Task<ActionResult<DONHANG>> CreateDONHANG([FromBody] DONHANGRequest
         }
         return NoContent();
     }
+
+
      [HttpDelete("Delete/{id}")]
     public async Task<IActionResult> DeleteDONHANG(string id)
     {
@@ -118,36 +161,7 @@ public async Task<ActionResult<DONHANG>> CreateDONHANG([FromBody] DONHANGRequest
         return _context.DONHANG.Any(e => e.IDDonHang == id);
     }
 
-    [HttpPut("UpdateStatus/{id}")]
-    public async Task<IActionResult> UpdateStatus(string id, [FromBody] string trangThai)
-    {
-        // Kiểm tra xem đơn hàng có tồn tại không
-        var donhang = await _context.DONHANG.FindAsync(id);
-        if (donhang == null)
-        {
-            return NotFound();
-        }
+ 
 
-        // Cập nhật trạng thái
-        donhang.TrangThai = trangThai; // Giả sử bạn có thuộc tính TrangThai trong mô hình DONHANG
-
-        try
-        {
-            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!DONHANGExists(id))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
-
-        return NoContent(); // Trả về 204 No Content nếu cập nhật thành công
-    }
     }
 }

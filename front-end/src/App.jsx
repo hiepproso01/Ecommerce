@@ -18,10 +18,11 @@ import ProductsUser from './components/UserComponents/ProductsUser.jsx';
 import CategogyGroupPage from './components/CategoryProducts/CategogyGroupPage.jsx';
 import Cart from './components/UserComponents/Cart.jsx';
 import ProductFilter from './components/UserComponents/ProductFilter.jsx';
-// import { ProductProvider } from './Context/ProductContext';
 import ProductDetail from './components/UserComponents/ProductDetail.jsx';
 import PaymentPage from './components/UserComponents/PaymentPage.jsx';
 import OrderPage from './components/UserComponents/OrderPage.jsx';
+import StatusPage from './components/UserComponents/StatusPage.jsx';
+import FeedbackPage from './components/UserComponents/Feedback.jsx';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -117,7 +118,8 @@ function App() {
             <Route path="/productfilter" element={<ProductFilter />} />
             <Route path="*" element={<Navigate to="/homepage" replace />} />
             <Route path="/payment" element={<PaymentPage />} />
-          
+            <Route path="/status" element={<StatusPage />} />
+            <Route path="/feedback" element={<FeedbackPage />} />
           </>
         )}
       </Routes>

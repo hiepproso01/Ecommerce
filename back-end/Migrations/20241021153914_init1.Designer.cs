@@ -12,8 +12,8 @@ using back_end.Data;
 namespace back_end.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20241017042004_init20")]
-    partial class init20
+    [Migration("20241021153914_init1")]
+    partial class init1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -462,6 +462,41 @@ namespace back_end.Migrations
                     b.ToTable("NHOMDANHMUC");
                 });
 
+            modelBuilder.Entity("back_end.Models.PHANHOI", b =>
+                {
+                    b.Property<string>("IDPhanHoi")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HinhAnhPhanHoi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IDNguoiDung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("NgayPhanHoi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NoiDung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TenNguoiDung")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IDPhanHoi");
+
+                    b.HasIndex("IDNguoiDung");
+
+                    b.ToTable("PHANHOI");
+                });
+
             modelBuilder.Entity("back_end.Models.SANPHAM", b =>
                 {
                     b.Property<string>("IDSanPham")
@@ -681,6 +716,15 @@ namespace back_end.Migrations
                 });
 
             modelBuilder.Entity("back_end.Models.GIOHANG", b =>
+                {
+                    b.HasOne("back_end.Models.NGUOIDUNG", null)
+                        .WithMany()
+                        .HasForeignKey("IDNguoiDung")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("back_end.Models.PHANHOI", b =>
                 {
                     b.HasOne("back_end.Models.NGUOIDUNG", null)
                         .WithMany()

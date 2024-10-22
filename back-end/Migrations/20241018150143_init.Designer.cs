@@ -12,7 +12,7 @@ using back_end.Data;
 namespace back_end.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20241016162823_init")]
+    [Migration("20241018150143_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -166,14 +166,11 @@ namespace back_end.Migrations
                     b.Property<string>("DONHANGIDDonHang")
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<double>("DonGia")
-                        .HasColumnType("float");
-
-                    b.Property<string>("HinhAnh")
+                    b.Property<string>("GiaBan")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IDDonHang")
+                    b.Property<string>("HinhAnh")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -188,8 +185,9 @@ namespace back_end.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ThanhTien")
-                        .HasColumnType("float");
+                    b.Property<string>("ThanhTien")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IDChiTietDonHang");
 
@@ -314,6 +312,10 @@ namespace back_end.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TongTien")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrangThai")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

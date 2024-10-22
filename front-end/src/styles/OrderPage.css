@@ -34,7 +34,9 @@ body {
   .table{
     border:none;
   }
+ 
 .btn-watch button, .btn-close button {
+  margin-right: 5px;
     background-color: #28a745;
     color: white;
     border: none;

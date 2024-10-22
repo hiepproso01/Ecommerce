@@ -1,0 +1,9 @@
+.cancelled-button {
+    background-color: gray; /* Màu nền xám */
+    color: white; /* Màu chữ trắng */
+    cursor: not-allowed; /* Hiển thị con trỏ không cho phép */
+    border: none; /* Bỏ viền */
+    padding: 8px 16px; /* Thêm khoảng cách cho nút */
+    border-radius: 4px; /* Bo góc cho nút */
+    opacity: 0.6; /* Giảm độ mờ cho nút */
+  }

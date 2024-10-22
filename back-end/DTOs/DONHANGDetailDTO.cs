@@ -20,7 +20,7 @@ namespace back_end.DTOs
         public DateTime NgayDatHang { get; set; }
           public string TrangThai {get;set;}
         public string TongTien { get; set; }
-        public string HinhAnh { get; set; }
+        // public string HinhAnh { get; set; }
        
     }
 }

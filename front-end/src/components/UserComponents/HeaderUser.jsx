@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify,BsCart2 } from 'react-icons/bs';
+import { RiFeedbackLine } from "react-icons/ri";
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../styles/HeaderUser.css'; 
@@ -57,7 +58,9 @@ const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-
+ const handleFeedbackClick = () =>{
+  navigate('/feedback');
+ }
   return (
     <div className='header0'>
     <header className={`header1 ${openSidebarToggle ? 'shifted' : ''}`}>
@@ -77,6 +80,9 @@ const HeaderUser = ({ OpenSidebar, openSidebarToggle }) => {
           </button>
         </form>
       <div className='user-profile'>
+      <div style={{marginRight:15}}>
+     <RiFeedbackLine onClick={handleFeedbackClick} style={{ cursor: 'pointer' }}/>
+     </div>
      <div style={{marginRight:15}}>
      <BsCart2   onClick={handleCartClick} style={{ cursor: 'pointer' }}/>
      </div>

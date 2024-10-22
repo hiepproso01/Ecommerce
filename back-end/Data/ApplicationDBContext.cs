@@ -27,6 +27,7 @@ namespace back_end.Data
         public DbSet<GIOHANG> GIOHANG { get; set; }
         public DbSet<NHOMDANHMUC> NHOMDANHMUC { get; set; }
         public DbSet<CHITIETGIOHANG> CHITIETGIOHANG { get; set; }
+        public DbSet<PHANHOI> PHANHOI {get;set;}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // modelBuilder.Entity<DANHMUCSANPHAM>().HasNoKey();
@@ -36,6 +37,8 @@ namespace back_end.Data
         modelBuilder.Entity<NHACUNGCAP>()
         .HasKey(n => n.IDNhaCungCap);
          base.OnModelCreating(modelBuilder);
+          modelBuilder.Entity<PHANHOI>()
+        .HasKey(d => d.IDPhanHoi);
         modelBuilder.Entity<NHOMDANHMUC>()
         .HasKey(n => n.IDNhomDanhMuc);
         base.OnModelCreating(modelBuilder);
@@ -59,55 +62,56 @@ namespace back_end.Data
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<CHITIETGIOHANG>()
         .HasKey(c => c.IDChiTietGioHang);
+        
         base.OnModelCreating(modelBuilder);
          modelBuilder.Entity<GIOHANG>()
-                .HasOne<NGUOIDUNG>()  // Chỉ định bảng liên kết là TAIKHOAN
+                .HasOne<NGUOIDUNG>()  // Chỉ định bảng liên kết là NGUOIDUNG
                 .WithMany()  // Không cần Navigation Property
-                .HasForeignKey(g => g.IDNguoiDung)  // Chỉ định IDTaiKhoan là khóa ngoại
-                .OnDelete(DeleteBehavior.Cascade);  // Xóa GIOHANG khi TAIKHOAN bị xóa
+                .HasForeignKey(g => g.IDNguoiDung)  // Chỉ định IDNguoiDung là khóa ngoại
+                .OnDelete(DeleteBehavior.Cascade);  // Xóa GIOHANG khi NGUOIDUNG bị xóa
      base.OnModelCreating(modelBuilder);
          modelBuilder.Entity<DONHANG>()
-                .HasOne<NGUOIDUNG>()  // Chỉ định bảng liên kết là TAIKHOAN
-                .WithMany()  // Không cần Navigation Property
-                .HasForeignKey(g => g.IDNguoiDung)  // Chỉ định IDTaiKhoan là khóa ngoại
-                .OnDelete(DeleteBehavior.Cascade);  // Xóa GIOHANG khi TAIKHOAN bị xóa
+                .HasOne<NGUOIDUNG>()  
+                .WithMany()  
+                .HasForeignKey(g => g.IDNguoiDung) 
+                .OnDelete(DeleteBehavior.Cascade); 
          base.OnModelCreating(modelBuilder);
          modelBuilder.Entity<CHITIETDONHANG>()
-                .HasOne<SANPHAM>()  // Chỉ định bảng liên kết là TAIKHOAN
-                .WithMany()  // Không cần Navigation Property
-                .HasForeignKey(g => g.IDSanPham)  // Chỉ định IDTaiKhoan là khóa ngoại
-                .OnDelete(DeleteBehavior.Cascade);  // Xóa GIOHANG khi TAIKHOAN bị xóa
-                 base.OnModelCreating(modelBuilder);
+                .HasOne<SANPHAM>()  
+                .WithMany() 
+                .HasForeignKey(g => g.IDSanPham)  
+                .OnDelete(DeleteBehavior.Cascade);  
+                  base.OnModelCreating(modelBuilder);
+         modelBuilder.Entity<PHANHOI>()
+                .HasOne<NGUOIDUNG>()  
+                .WithMany()  
+                .HasForeignKey(g => g.IDNguoiDung) 
+                .OnDelete(DeleteBehavior.Cascade); 
         base.OnModelCreating(modelBuilder);
          modelBuilder.Entity<CHITIETGIOHANG>()
-                .HasOne<SANPHAM>()  // Chỉ định bảng liên kết là TAIKHOAN
-                .WithMany()  // Không cần Navigation Property
-                .HasForeignKey(g => g.IDSanPham)  // Chỉ định IDTaiKhoan là khóa ngoại
-                .OnDelete(DeleteBehavior.Cascade);  // Xóa GIOHANG khi TAIKHOAN bị xóa
+                .HasOne<SANPHAM>()  
+                .WithMany()  
+                .HasForeignKey(g => g.IDSanPham)  
+                .OnDelete(DeleteBehavior.Cascade);  
         base.OnModelCreating(modelBuilder);
          modelBuilder.Entity<SANPHAM>()
-                .HasOne<DANHMUCSANPHAM>()  // Chỉ định bảng liên kết là TAIKHOAN
-                .WithMany()  // Không cần Navigation Property
-                .HasForeignKey(g => g.IDDanhMuc)  // Chỉ định IDTaiKhoan là khóa ngoại
-                .OnDelete(DeleteBehavior.Cascade);  // Xóa GIOHANG khi TAIKHOAN bị xóa
+                .HasOne<DANHMUCSANPHAM>()  
+                .WithMany()  
+                .HasForeignKey(g => g.IDDanhMuc) 
+                .OnDelete(DeleteBehavior.Cascade); 
         base.OnModelCreating(modelBuilder);
          modelBuilder.Entity<SANPHAM>()
-                .HasOne<NHACUNGCAP>()  // Chỉ định bảng liên kết là TAIKHOAN
-                .WithMany()  // Không cần Navigation Property
-                .HasForeignKey(g => g.IDNhaCungCap)  // Chỉ định IDTaiKhoan là khóa ngoại
-                .OnDelete(DeleteBehavior.Cascade);  // Xóa GIOHANG khi TAIKHOAN bị xóa
-
+                .HasOne<NHACUNGCAP>() 
+                .WithMany() 
+                .HasForeignKey(g => g.IDNhaCungCap)  
+                .OnDelete(DeleteBehavior.Cascade);  
       base.OnModelCreating(modelBuilder);
 modelBuilder.Entity<DANHMUCSANPHAM>()
-    .HasOne<NHOMDANHMUC>()  // Chỉ định bảng liên kết là NHOMDANHMUC
-    .WithMany()  // Không cần Navigation Property
-    .HasForeignKey(g => g.IDNhomDanhMuc)  // Chỉ định IDNhomDanhMuc là khóa ngoại
-    .OnDelete(DeleteBehavior.Restrict);  // Không cho phép xóa cascade khi NHOMDANHMUC bị xóa
-// modelBuilder.Entity<CHITIETDONHANG>()
-//     .HasOne(c => c.DONHANG)
-//     .WithMany(d => d.CHITIETDONHANG)
-//     .HasForeignKey(c => c.IDDonHang)
-//     .HasPrincipalKey(d => d.IDDonHang);
+    .HasOne<NHOMDANHMUC>() 
+    .WithMany() 
+    .HasForeignKey(g => g.IDNhomDanhMuc)  
+    .OnDelete(DeleteBehavior.Restrict); 
+  
    }
     
          }

@@ -224,7 +224,8 @@ namespace back_end.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NgayDatHang = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TongTien = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TongTien = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TrangThai = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -319,10 +320,9 @@ namespace back_end.Migrations
                     IDSanPham = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TenSanPham = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SoLuong = table.Column<int>(type: "int", nullable: false),
-                    DonGia = table.Column<double>(type: "float", nullable: false),
-                    ThanhTien = table.Column<double>(type: "float", nullable: false),
+                    GiaBan = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ThanhTien = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HinhAnh = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IDDonHang = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DONHANGIDDonHang = table.Column<string>(type: "nvarchar(20)", nullable: true)
                 },
                 constraints: table =>

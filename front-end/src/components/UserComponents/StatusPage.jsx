@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import apiClient from '../../services/api';
-import '../../styles/OrderPage.css'; // Make sure to import your CSS file here
+import '../../styles/StatusPage.css'; // Make sure to import your CSS file here
 import Swal from 'sweetalert2';
+import HeaderUser from './HeaderUser';
 
-const OrderPage = ({ idDonHang, onUpdate }) => {
+const StatusPage = ({ idDonHang, onUpdate }) => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -13,12 +14,18 @@ const OrderPage = ({ idDonHang, onUpdate }) => {
   
   useEffect(() => {
     const fetchOrders = async () => {
+        const userId = localStorage.getItem('id'); // Lấy idNguoiDung từ localStorage
+        console.log("idNguoiDung",userId)
       try {
         const response = await apiClient.get('/api/donhang/GetAll');
-        setOrders(response.data);
+        const allOrders = response.data;
+
+        // Lọc đơn hàng theo idNguoiDung
+        const filteredOrders = allOrders.filter(order => order.idNguoiDung === userId);
+        setOrders(filteredOrders);
 
         // Khởi tạo trạng thái của tất cả đơn hàng
-        const initialStatus = response.data.reduce((acc, order) => {
+        const initialStatus = filteredOrders.reduce((acc, order) => {
           acc[order.idDonHang] = order.trangThai;
           return acc;
         }, {});
@@ -96,15 +103,82 @@ const OrderPage = ({ idDonHang, onUpdate }) => {
     }
   };
 
-  const handleStatusChange = (orderId, newStatus) => {
-    setStatusByOrder((prevStatus) => ({
-      ...prevStatus,
-      [orderId]: newStatus, // Cập nhật trạng thái cho đơn hàng theo ID
-    }));
+  const handleCancelOrder = async (order) => {
+    try {
+      await apiClient.put(`api/DONHANG/ChangeStatus/${order.idDonHang}`, {
+        trangThai: 'Đã hủy', // Cập nhật trạng thái thành "Đã hủy"
+        idDonHang: order.idDonHang,
+        address: order.address, // Gán thêm địa chỉ từ order
+        hinhAnh: order.hinhAnh, // Gán hình ảnh từ order
+        tongTien: order.tongTien, // Gán tổng tiền từ order
+        idNguoiDung: order.idNguoiDung, // Gán ID người dùng từ order
+        phoneNumber: order.phoneNumber, // Gán số điện thoại người dùng từ order
+        tenNguoiDung: order.tenNguoiDung, // Gán tên người dùng từ order
+      });
+      // Cập nhật trạng thái trong state
+      setStatusByOrder((prevStatus) => ({
+        ...prevStatus,
+        [order.idDonHang]: 'Đã hủy',
+      }));
+      Swal.fire({
+        icon: 'success',
+        title: 'Hủy đơn hàng thành công',
+        text: 'Trạng thái đơn hàng đã được cập nhật thành "Đã hủy".',
+        confirmButtonColor: '#3085d6',
+      }).then(() => {
+        window.location.reload(); // Reload lại trang sau khi hiển thị thông báo
+      });
+    } catch (error) {
+      console.error("There was an error canceling the order!", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: 'Có lỗi xảy ra khi hủy đơn hàng!',
+        confirmButtonColor: '#d33',
+      });
+    }
+  };
+
+  const handleResetOrder = async (order) => {
+    try {
+      await apiClient.put(`api/DONHANG/ChangeStatus/${order.idDonHang}`, {
+        trangThai: 'Đang giao', // Cập nhật trạng thái thành "Đang giao"
+        idDonHang: order.idDonHang,
+        address: order.address, // Gán thêm địa chỉ từ order
+        hinhAnh: order.hinhAnh, // Gán hình ảnh từ order
+        tongTien: order.tongTien, // Gán tổng tiền từ order
+        idNguoiDung: order.idNguoiDung, // Gán ID người dùng từ order
+        phoneNumber: order.phoneNumber, // Gán số điện thoại người dùng từ order
+        tenNguoiDung: order.tenNguoiDung, // Gán tên người dùng từ order
+      });
+      // Cập nhật trạng thái trong state
+      setStatusByOrder((prevStatus) => ({
+        ...prevStatus,
+        [order.idDonHang]: 'Đang giao',
+      }));
+      Swal.fire({
+        icon: 'success',
+        title: 'Đặt lại đơn hàng thành công',
+        text: 'Trạng thái đơn hàng đã được cập nhật thành "Đang giao".',
+        confirmButtonColor: '#3085d6',
+      }).then(() => {
+        window.location.reload(); // Reload lại trang sau khi hiển thị thông báo
+      });
+    } catch (error) {
+      console.error("There was an error resetting the order!", error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Lỗi',
+        text: 'Có lỗi xảy ra khi đặt lại đơn hàng!',
+        confirmButtonColor: '#d33',
+      });
+    }
   };
 
   return (
     <div>
+        <HeaderUser/>
+        <div className="cart-container">
       <h1>Danh sách đơn hàng</h1>
       {loading ? (
         <p>Đang tải...</p>
@@ -130,21 +204,18 @@ const OrderPage = ({ idDonHang, onUpdate }) => {
                   <td>{order.tenNguoiDung}</td>
                   <td>{formatDate(order.ngayDatHang)}</td>
                   <td>{order.tongTien}</td>
-                  <td>
-                    <select
-                      value={statusByOrder[order.idDonHang] || order.trangThai}
-                      onChange={(e) => handleStatusChange(order.idDonHang, e.target.value)}
-                    >
-                      <option value="Đang xử lý">Đang xử lý</option>
-                      <option value="Đang giao">Đang giao</option>
-                      <option value="Đã giao">Đã giao</option>
-                      <option value="Đã hủy">Đã hủy</option>
-                    </select>
-                  </td>
+                  <td>{order.trangThai}</td>
                   <td>
                     <div className='btn-watch'>
                       <button onClick={() => handleViewDetails(order)}>Xem</button>
-                      <button onClick={() => handleUpdateStatus(order)}>Cập nhật trạng thái</button>
+                      {statusByOrder[order.idDonHang] === 'Đã hủy' || statusByOrder[order.idDonHang] === 'Đã giao' ? (
+                        <button onClick={() => handleResetOrder(order)}>Đặt lại</button> // Nút đặt lại khi đã hủy hoặc đã giao
+                      ) : (
+                        <button className={statusByOrder[order.idDonHang] === 'Đang giao' ? 'cancelled-button' : ''} onClick={() => handleCancelOrder(order)}>
+                          Hủy hàng
+                        </button> // Nút hủy hàng, tô màu xám khi đang giao
+                      )}
+                      
                     </div>
                   </td>
                   
@@ -199,8 +270,9 @@ const OrderPage = ({ idDonHang, onUpdate }) => {
           </div>
         </>
       )}
+      </div>
     </div>
   );
 };
 
-export default OrderPage;
+export default StatusPage;
