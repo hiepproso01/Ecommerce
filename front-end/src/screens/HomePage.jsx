@@ -1,28 +1,3 @@
-// import React from 'react';
-// import HeaderUser from '../components/UserComponents/HeaderUser';
-// import CategoryUser from '../components/UserComponents/CategoryUser';
-// import ProductsUser from '../components/UserComponents/ProductsUser';
-// import '../styles/HomePage.css'; 
-
-// const HomePage = () => {
-//   return (
-//     <div className="home-page" style={{backgroundColor: 'rgb(245, 245, 245)'}}>
-//       <HeaderUser />
-//       <div className="main-content">
-//         <div className="sidebar1">
-//           <CategoryUser />
-//         </div>
-//         <div className="content-container">
-//           <ProductsUser />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default HomePage;
-
-
 import React, { useState } from 'react';
 import HeaderUser from '../components/UserComponents/HeaderUser';
 import CategoryUser from '../components/UserComponents/CategoryUser';
@@ -41,10 +16,13 @@ const HomePage = () => {
   return (
     <div className="home-page" style={{ backgroundColor: 'rgb(245, 245, 245)' }}>
       <HeaderUser />
+      <div className="img1234">
+      </div>
       <div className="main-content">
         <div className="sidebar1">
-          <CategoryUser onSelectCategory={handleCategorySelect} /> {/* Truyền hàm onSelectCategory vào */}
+          <CategoryUser onSelectCategory={handleCategorySelect} /> 
         </div>
+         {/* <CategoryUser onSelectCategory={handleCategorySelect} />  */}
         <div className="content-container">
           {/* Hiển thị ProductFilter nếu có selectedCategory, ngược lại hiển thị ProductsUser */}
           {selectedCategory ? (

@@ -159,7 +159,7 @@ const StatusPage = ({ idDonHang, onUpdate }) => {
       Swal.fire({
         icon: 'success',
         title: 'Đặt lại đơn hàng thành công',
-        text: 'Trạng thái đơn hàng đã được cập nhật thành "Đang giao".',
+        text: 'Trạng thái đơn hàng đã được cập nhật thành "Đang xử lý".',
         confirmButtonColor: '#3085d6',
       }).then(() => {
         window.location.reload(); // Reload lại trang sau khi hiển thị thông báo
@@ -211,7 +211,7 @@ const StatusPage = ({ idDonHang, onUpdate }) => {
                       {statusByOrder[order.idDonHang] === 'Đã hủy' || statusByOrder[order.idDonHang] === 'Đã giao' ? (
                         <button onClick={() => handleResetOrder(order)}>Đặt lại</button> // Nút đặt lại khi đã hủy hoặc đã giao
                       ) : (
-                        <button className={statusByOrder[order.idDonHang] === 'Đang giao' ? 'cancelled-button' : ''} onClick={() => handleCancelOrder(order)}>
+                        <button className={statusByOrder[order.idDonHang] === 'Đang xử lý' ? 'cancelled-button' : ''} onClick={() => handleCancelOrder(order)}>
                           Hủy hàng
                         </button> // Nút hủy hàng, tô màu xám khi đang giao
                       )}

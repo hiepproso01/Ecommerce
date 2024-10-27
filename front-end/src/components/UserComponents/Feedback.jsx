@@ -55,6 +55,9 @@ const Feedback = () => {
                 hinhAnhPhanHoi: hinhAnhPhanHoi
             });
             Swal.fire('Thành công!', 'Phản hồi của bạn đã được gửi.', 'success');
+            setNoiDung("");
+            setHinhAnhPhanHoi("");
+            setImagePreview("");
         } catch (e) {
             console.log("Error fetching", e);
             Swal.fire('Lỗi!', 'Đã có lỗi xảy ra khi gửi phản hồi.', 'error');

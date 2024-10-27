@@ -23,6 +23,7 @@ import PaymentPage from './components/UserComponents/PaymentPage.jsx';
 import OrderPage from './components/UserComponents/OrderPage.jsx';
 import StatusPage from './components/UserComponents/StatusPage.jsx';
 import FeedbackPage from './components/UserComponents/Feedback.jsx';
+import FeedbackAdmin from './components/FeebackPage.jsx';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -103,6 +104,7 @@ function App() {
                   <Route path="/customer" element={<Customer />} />
                   <Route path="/categorygroup" element={<CategogyGroupPage />} />
                   <Route path="/order" element={<OrderPage />} />
+                  <Route path ="feedbackadmin" element={<FeedbackAdmin />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </AuthenticatedLayout>

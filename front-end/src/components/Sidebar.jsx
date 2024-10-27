@@ -44,15 +44,15 @@ const Sidebar = ({ openSidebarToggle }) => {
           </Link>
         </li>
         <li className='sidebar-item'>
-          <Link to="" className='flex-center1'>
-            <BsMenuButtonWideFill className='icon' /> Quản lý báo cáo
+          <Link to="/feedbackadmin" className='flex-center1'>
+            <BsMenuButtonWideFill className='icon' /> Quản lý phản hồi
           </Link>
         </li>
-        <li className='sidebar-item'>
+        {/* <li className='sidebar-item'>
           <Link to="" className='flex-center1'>
             <BsFillGearFill className='icon' /> Cài đặt
           </Link>
-        </li>
+        </li> */}
       </ul>
     </aside>
   );

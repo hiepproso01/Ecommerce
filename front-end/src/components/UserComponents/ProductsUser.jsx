@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import apiClient from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import "../../styles/ProductsUser.css";
@@ -15,36 +15,36 @@ const ProductsUser = () => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [selectedProducts, setSelectedProduct] = useState("");
     const navigate = useNavigate();
-    useEffect(() =>{
+    useEffect(() => {
         console.log('Current cookies:', document.cookie);
-        console.log(document.cookie); 
+        console.log(document.cookie);
         apiClient.get('api/sanpham/GetAll')
-        .then(response => {
-          setProducts(response.data);
-          setFilteredProducts(response.data);
-        })
-        .catch(error => {
-          console.error("There was an error fetching the products!", error);
-        });
-    },[]);
+            .then(response => {
+                setProducts(response.data);
+                setFilteredProducts(response.data);
+            })
+            .catch(error => {
+                console.error("There was an error fetching the products!", error);
+            });
+    }, []);
     const handleProductClick = (idSanPham) => {
         console.log("idSanPham:", idSanPham); // Kiểm tra xem có lấy đúng idSanPham
         navigate(`/product/${idSanPham}`); // Điều hướng đến trang chi tiết sản phẩm
         // Gọi API khác sử dụng idSanPham
         apiClient.get(`api/sanpham/GetById/${idSanPham}`)
-        .then(response => {
-            console.log(response.data); // Kiểm tra phản hồi từ API
-            setSelectedProduct(response.data); // Lưu trữ chi tiết sản phẩm
-        })
-        .catch(error => {
-            console.error("There was an error fetching the product details!", error);
-        });
+            .then(response => {
+                console.log(response.data); // Kiểm tra phản hồi từ API
+                setSelectedProduct(response.data); // Lưu trữ chi tiết sản phẩm
+            })
+            .catch(error => {
+                console.error("There was an error fetching the product details!", error);
+            });
     };
     const getFullImageUrl = (fileName) => {
         if (!fileName) return null;
         return `http://localhost:5222/api/sanpham${fileName}`;
-      };
-      const settings = {
+    };
+    const settings = {
         dots: false,
         infinite: true,
         speed: 500,
@@ -53,12 +53,12 @@ const ProductsUser = () => {
         autoplay: true,
         autoplaySpeed: 2000,
         arrows: true,
-      
-      };
+
+    };
     return (
-     <div style={{display:'flex',justifyContent:'center',padding:0,margin:0,flexDirection:'column',alignItems:'center'}}>
-        <div className='img123'>
-            <div className='slider-container'>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: 0, margin: 0, flexDirection: 'column', alignItems: 'center' }}>
+            {/* <div className='img123'> */}
+            {/* <div className='slider-container'>
                 <Slider {...settings}>
                     <div className="slider-slide">
                         <img src={img1} alt="Slide 1" className="slider-image" />
@@ -77,21 +77,25 @@ const ProductsUser = () => {
                         <div className="slider-caption">Caption for Slide 3</div>
                     </div>
                 </Slider>
+            </div> */}
+            {/* </div> */}
+            <div className="products-container">
+                {products.length > 0 ? (
+                    products.map(product => (
+                        <div key={product.idSanPham} className="product-card" onClick={() => handleProductClick(product.idSanPham)}>
+                            <img src={getFullImageUrl(product.hinhAnh)} alt={product.tenSanPham} className="product-image" />
+                            <div className="product-info">
+                             <div className='product-infor1'>
+                             <h3 className="product-name">{product.tenSanPham}</h3><br/>
+                             <p className="product-price">{parseInt(product.giaBan).toLocaleString('vi-VN')} VND</p>
+                            </div>  
+                            </div>
+                        </div>
+                    ))
+                ) : (
+                    <p>Không có sản phẩm nào.</p>
+                )}
             </div>
-        </div>
-        <div className="products-container">
-            {products.length > 0 ? (
-                products.map(product => (
-                    <div key={product.idSanPham} className="product-card" onClick={() => handleProductClick(product.idSanPham)}>
-                        <img src={getFullImageUrl(product.hinhAnh)} alt={product.tenSanPham} className="product-image" />
-                        <h3 className="product-name">{product.tenSanPham}</h3>
-                        <p className="product-price">{parseInt(product.giaBan).toLocaleString('vi-VN')} VND</p>
-                    </div>
-                ))
-            ) : (
-                <p>Không có sản phẩm nào.</p>
-            )}
-        </div>
         </div>
     );
 }

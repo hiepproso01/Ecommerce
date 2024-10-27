@@ -162,12 +162,12 @@ const ProductDetail = () => {
                             className="border rounded p-2 w-20 mb-4"
                         />
                         <div className="flex space-x-4 mb-6">
-                            <button
+                            {/* <button
                                 // onClick={handleBuyNow}
                                 className="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors"
                             >
                                 Mua ngay
-                            </button>
+                            </button> */}
                             <button
                                 onClick={handleAddToCart}
                                 className="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors"
