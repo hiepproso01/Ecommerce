@@ -14,6 +14,7 @@ namespace back_end.DTOs
         public string IDDonHang { get; set; }
 
         public string IDNguoiDung { get; set; }
+        public string Email { get; set; }
         public string TenNguoiDung { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }

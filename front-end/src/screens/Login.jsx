@@ -26,7 +26,7 @@ const Login = ({ setIsLoggedIn, setUserRole }) => {
         localStorage.setItem('role', user.role);
         localStorage.setItem('id', user.id);
         localStorage.setItem('idGioHang', user.idGioHang);
-        localStorage.setItem('idDonHang', user.idDonHang);
+        localStorage.setItem('email', user.email);
        
         setIsLoggedIn(true);
         setUserRole(user.role);  // Set user role in App component state

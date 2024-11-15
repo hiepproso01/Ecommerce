@@ -293,6 +293,10 @@ namespace back_end.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("IDNguoiDung")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");

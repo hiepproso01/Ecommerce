@@ -92,6 +92,7 @@ public async Task<IActionResult> ChangeStatus(string id, DONHANGDetailDTO donhan
     donhang.TongTien = donhangdetailDTO.TongTien;
     // Cập nhật trạng thái
     donhang.TrangThai = donhangdetailDTO.TrangThai; 
+    donhang.Email = donhangdetailDTO.Email;
 
     // Đánh dấu thực thể đã được sửa đổi
     _context.Entry(donhang).State = EntityState.Modified;

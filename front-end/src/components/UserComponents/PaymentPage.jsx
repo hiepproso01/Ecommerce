@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import HeaderUser from './HeaderUser.jsx'
 import { Link } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'
@@ -7,16 +7,20 @@ import apiClient from '../../services/api.js'
 import momo from '../../img/MoMo_Logo.png'
 import visa from '../../img/visa.webp'
 import mastercard from '../../img/Mastercard-logo.svg.png'
+import zalopay from "../../img/images.png"
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
+import emailjs from '@emailjs/browser';
+import axios from 'axios';
 const PaymentPage = () => {
     const navigate = useNavigate();
     const [cart, setCart] = useState([]);
     const [userInfo, setUserInfo] = useState(null);
     const [discountCode, setDiscountCode] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('momo');
-
+    const [amount, setAmount] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const form = useRef();
     const formatCurrency = (amount) => {
         return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
     };
@@ -24,9 +28,11 @@ const PaymentPage = () => {
     useEffect(() => {
         const idGioHang = localStorage.getItem('idGioHang');
         const id = localStorage.getItem('id');
+        const email = localStorage.getItem('email');
         console.log("idGioHang:", idGioHang);
         console.log("id:", id);
-
+        console.log("email:", email);
+     
         if (idGioHang && id) {
           apiClient.get(`api/CHITIETGIOHANG/GetAll`)
             .then(response => {
@@ -42,26 +48,26 @@ const PaymentPage = () => {
                 setUserInfo({
                   tenNguoiDung: firstItem.tenNguoiDung,
                   address: firstItem.address,
-                  phoneNumber: firstItem.phoneNumber
+                  phoneNumber: firstItem.phoneNumber,
+                  email: email,
                 });
               }
             })
             .catch(error => {
               console.error("There was an error fetching the cart!", error);
             });
-        }
-    }, []);
+        } setAmount(calculateTotal());
+    },  [cart]);
     const handlePaymentMethodChange = (e) => {
         setPaymentMethod(e.target.value);
     };
-
     const getFullImageUrl = (fileName) => {
         if (!fileName) return null;
         return `http://localhost:5222/api/sanpham${fileName}`;
     };
 
     const calculateTotal = () => {
-        return formatCurrency(cart.reduce((total, item) => total + (item.soLuong * parseFloat(item.giaBan)), 0));
+        return cart.reduce((total, item) => total + (item.soLuong * parseFloat(item.giaBan)), 0);
     };
 
     const handleApplyDiscount = () => {
@@ -85,11 +91,14 @@ const PaymentPage = () => {
         return id;
     }
 
+
     const handlePaymentConfirmation = async () => {
         try {
+            setLoading(true);
+    
+            // Tạo chi tiết đơn hàng
             const orderDetails = cart.map(item => ({
                 idChiTietDonHang: randomId(),
-                // idDonHang: randomId(),
                 idSanPham: item.idSanPham,
                 tenSanPham: item.tenSanPham,
                 soLuong: item.soLuong,
@@ -97,49 +106,88 @@ const PaymentPage = () => {
                 tenNguoiDung: userInfo?.tenNguoiDung || '',
                 address: userInfo?.address || '',
                 phoneNumber: userInfo?.phoneNumber || '',
-                // idGioHang: localStorage.getItem('idGioHang'),
                 giaBan: item.giaBan,
                 hinhAnh: item.hinhAnh,
-                thanhTien:calculateTotal(),
- }));
-
-          
-           
+                thanhTien: (item.soLuong * parseFloat(item.giaBan)).toString(),
+            }));
+            const productListHtml = cart.map(item => `
+                            <tr>
+                                <td>${item.tenSanPham}</td>
+                              <td>${item.soLuong}</td>
+                              <td>${formatCurrency(item.giaBan)}</td>
+                          </tr>
+                       `).join('');
+                
+            // Kiểm tra và đảm bảo donHang không thiếu
             const orderData = {
-                donHang:{
+                donHang: {
                     idDonHang: randomId1(),
                     idNguoiDung: localStorage.getItem('id'),
                     tenNguoiDung: userInfo?.tenNguoiDung || '',
+                    email: userInfo?.email || '',
                     address: userInfo?.address || '',
                     ngayDatHang: new Date().toISOString(),
                     phoneNumber: userInfo?.phoneNumber || '',
-                    tongTien: calculateTotal(),
+                    tongTien: calculateTotal().toString(),  // Chuyển thành chuỗi
                     trangThai: "Đang xử lý",
                     chitietdonhang: orderDetails
                 }
-                
             };
-            console.log("Order data being sent:", orderData);
-            const response = await apiClient.post('api/DONHANG/Create', orderData);
-            // const response = await apiClient.post('api/CHITIETDONHANG/Payment', orderDetails);
+    //  Chuẩn bị dữ liệu để gửi qua emailjs
+        const emailData = {
+            to_name: userInfo?.tenNguoiDung || '',
+            to_email: userInfo?.email || '',
+            user_address: userInfo?.address || '',
+            user_phone: userInfo?.phoneNumber || '',
+            order_total: calculateTotal(),
+            product_list: productListHtml,
+        };
+        // Gửi email với thông tin đơn hàng qua EmailJS
+        await emailjs.send('service_z73zgjf', 'template_05fy2ik',
+        //      {
+        //     to_name: userInfo?.tenNguoiDung || '',
+        //     to_email: userInfo?.email || '',
+        //     message: JSON.stringify(orderData, null, 2),
+        // }, 
+        emailData,
+        'jjWxV1Q6jxT17zNHm');
+
+        console.log("Email đã được gửi thành công");
+
+            // Kiểm tra xem donHang đã được tạo đầy đủ chưa
+            if (!orderData.donHang) {
+                throw new Error("Trường donHang bị thiếu!");
+            }
+            const userId = localStorage.getItem('id');
+            // Gửi yêu cầu POST để lưu đơn hàng
+            await apiClient.post('/api/donhang/create', orderData);
+           
+            await apiClient.delete(`api/CHITIETGIOHANG/DeleteAllForUser/${userId}`);
+           
+            // Chuyển hướng đến trang /home
+            // navigate('/home');
+            // Hiển thị thông báo thành công
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: 'Thành công',
+            //     text: 'Đơn hàng của bạn đã được tạo thành công!',
+            //     confirmButtonColor: '#3085d6',
+            // });
+            let response;
+            const amount = calculateTotal();
             
-            if (response.status === 201 || response.status === 200) {
-                console.log("Chi tiết đơn hàng đã được lưu thành công");
+            if (paymentMethod === 'zalopay') {
+                // Gọi API thanh toán ZaloPay
+                response = await axios.post('http://localhost:3000/payment', { amount });
+                const { order_url } = response.data;
+                window.location.href = order_url;
 
-                // Delete all items from the cart for the current user
-                const userId = localStorage.getItem('id');
-                await apiClient.delete(`api/CHITIETGIOHANG/DeleteAllForUser/${userId}`);
-
-                setCart([]);
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Thanh toán thành công!',
-                    text: 'Cảm ơn bạn đã mua hàng.',
-                    confirmButtonColor: '#3085d6',
-                });
-                navigate('/homepage'); // Redirect to homepage or order confirmation page
-            } else {
-                console.error("Có lỗi xảy ra khi lưu chi tiết đơn hàng");
+            } else if (paymentMethod === 'momo') {
+                // Gọi API thanh toán MoMo
+                response = await axios.post('http://localhost:3001/payment', {amount});
+                const {payUrl} = response.data;
+                window.location.href = payUrl;
+               
             }
         } catch (error) {
             let errorMessage = 'Có lỗi xảy ra khi tạo đơn hàng!';
@@ -150,17 +198,24 @@ const PaymentPage = () => {
                     errorMessage = JSON.stringify(error.response.data, null, 2);
                 }
             }
-            
-            console.error("Lỗi khi gửi yêu cầu lưu chi tiết đơn hàng:", errorMessage);
+    
+            // In chi tiết lỗi
+            console.error('Lỗi khi thực hiện lưu đơn hàng:', error);
+            console.log(errorMessage);  // Hiển thị chi tiết lỗi trên console
+    
+            // Hiển thị thông báo lỗi
             Swal.fire({
                 icon: 'error',
                 title: 'Lỗi',
                 text: errorMessage,
                 confirmButtonColor: '#d33',
-              });
-          
+            });
+        } finally {
+            setLoading(false);
         }
     };
+    
+
     const handleBack = () => {
         navigate(-1);
     };
@@ -190,13 +245,13 @@ const PaymentPage = () => {
                                         <img src={getFullImageUrl(item.hinhAnh)} alt={item.tenSanPham} />
                                         <span>{item.tenSanPham}</span>
                                         <span>{item.soLuong}</span>
-                                        <span>{formatCurrency(parseFloat(item.giaBan))}</span>
+                                        <span>{formatCurrency((item.giaBan))}</span>
                                     </div>
                                 ))}
                             </div>
                         </div>
                         <div className="order-total">
-                            <p>Tổng cộng: {calculateTotal()}</p>
+                            <p>Tổng cộng: {formatCurrency(calculateTotal())}</p>
                         </div>
                         <div className="discount-code">
                             <input 
@@ -208,17 +263,20 @@ const PaymentPage = () => {
                             <button onClick={handleApplyDiscount}>Áp dụng</button>
                         </div>
                     </div>
-                    <div className="payment-info">
+                    <div className="payment-info" >
+                        <form ref={form}>
                         <h2>Thông tin thanh toán</h2>
-                        <input type="text" placeholder="Tên" value={userInfo?.tenNguoiDung || ''} readOnly />
+                        <input type="text" placeholder="Tên" value={userInfo?.tenNguoiDung || ''} readOnly name="to_name" />
                         <input type="text" placeholder="Địa chỉ" value={userInfo?.address || ''} readOnly />
                         <input type="text" placeholder="Số điện thoại" value={userInfo?.phoneNumber || ''} readOnly />
+                        <input type="text" placeholder="Email" value={userInfo?.email || ''} readOnly name="to_email" />
+                        </form>
                         <div className="payment-method">
                             <div className='payment-option'>
                             <input 
                                 type="radio" 
                                 id="momo" 
-                                name="paymentMethod" 
+                               
                                 value="momo"
                                 checked={paymentMethod === 'momo'}
                                 onChange={handlePaymentMethodChange}
@@ -228,13 +286,13 @@ const PaymentPage = () => {
                             <div className='payment-option'>
                             <input 
                                 type="radio" 
-                                id="visa" 
-                                name="paymentMethod" 
-                                value="visa"
-                                checked={paymentMethod === 'visa'}
+                                id="zalopay" 
+                               
+                                value="zalopay"
+                                checked={paymentMethod === 'zalopay'}
                                 onChange={handlePaymentMethodChange}
                             />
-                            <img src={visa} alt="Visa" className="payment-icon" />
+                            <img src={zalopay} alt="Zalopay" className="payment-icon" />
                             </div>
                             <div className='payment-option'>
                             <input 
@@ -252,6 +310,7 @@ const PaymentPage = () => {
                         <button className="confirm-payment" onClick={handlePaymentConfirmation}>
                             Xác nhận thanh toán
                         </button>
+                        <br/>
                     </div>
                 </div>
             </div>

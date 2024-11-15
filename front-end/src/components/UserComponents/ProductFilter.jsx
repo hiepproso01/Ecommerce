@@ -48,34 +48,35 @@ const ProductFilter = ({ selectedDanhMuc }) => {
   };
   return (
     <div className="product-list">
-      {/* <h3 className="product-title">Sản Phẩm</h3> */}
       <ul className="product-grid">
         {products.length > 0 ? (
           products.map((product) => (
-            <li key={product.idSanPham} className="product-item">
-              <div className="product-content"onClick={() => handleProductClick(product.idSanPham)} >
-              {product.hinhAnh ? ( // Kiểm tra xem sản phẩm có hình ảnh không
-                <img 
-                  src={getFullImageUrl(product.hinhAnh)} // Hiển thị hình ảnh
-                  alt={product.tenSanPham}
-                  className="product-image"
-                  onError={(e) => {
-                    e.target.onerror = null;
+            // <li key={product.idSanPham} className="product-item">
+              <div className="product-card" onClick={() => handleProductClick(product.idSanPham)}>
+                {product.hinhAnh ? (
+                  <img 
+                    src={getFullImageUrl(product.hinhAnh)} 
+                    alt={product.tenSanPham}
+                    className="product-image"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                    }}
                     
-                  }}
-                />
-              ) : (
-                <div className="no-image">Không có hình ảnh</div> // Hiển thị khi không có hình ảnh
-              )}
-                <div className="product-content">
-    <span className="product-name">{product.tenSanPham}</span>
-                <span className="product-price">{parseInt(product.giaBan).toLocaleString('vi-VN')} VND</span>
+                  />
+                ) : (
+                  <div className="no-image">Không có hình ảnh</div>
+                )}
+                <div className="product-info">
+                  <div className='product-info1'>
+                    <span className="product-name">{product.tenSanPham}</span><br/>
+                    <span className="product-price">{parseInt(product.giaBan).toLocaleString('vi-VN')} VND</span>
+                  </div>
+                </div>
               </div>
-              </div>
-            </li>
+            // </li>
           ))
         ) : (
-          <li className="product-item">Không có sản phẩm nào trong danh mục này.</li> // Thông báo nếu không có sản phẩm
+          <li className="product-item">Không có sản phẩm nào trong danh mục này.</li>
         )}
       </ul>
     </div>

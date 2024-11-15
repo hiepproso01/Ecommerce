@@ -142,7 +142,7 @@ const StatusPage = ({ idDonHang, onUpdate }) => {
   const handleResetOrder = async (order) => {
     try {
       await apiClient.put(`api/DONHANG/ChangeStatus/${order.idDonHang}`, {
-        trangThai: 'Đang giao', // Cập nhật trạng thái thành "Đang giao"
+        trangThai: 'Đang xử lý', // Cập nhật trạng thái thành "Đang giao"
         idDonHang: order.idDonHang,
         address: order.address, // Gán thêm địa chỉ từ order
         hinhAnh: order.hinhAnh, // Gán hình ảnh từ order
@@ -154,7 +154,7 @@ const StatusPage = ({ idDonHang, onUpdate }) => {
       // Cập nhật trạng thái trong state
       setStatusByOrder((prevStatus) => ({
         ...prevStatus,
-        [order.idDonHang]: 'Đang giao',
+        [order.idDonHang]: 'Đang xử lý',
       }));
       Swal.fire({
         icon: 'success',
@@ -211,7 +211,7 @@ const StatusPage = ({ idDonHang, onUpdate }) => {
                       {statusByOrder[order.idDonHang] === 'Đã hủy' || statusByOrder[order.idDonHang] === 'Đã giao' ? (
                         <button onClick={() => handleResetOrder(order)}>Đặt lại</button> // Nút đặt lại khi đã hủy hoặc đã giao
                       ) : (
-                        <button className={statusByOrder[order.idDonHang] === 'Đang xử lý' ? 'cancelled-button' : ''} onClick={() => handleCancelOrder(order)}>
+                        <button className={statusByOrder[order.idDonHang] === 'Đang giao' ? 'cancelled-button' : ''} onClick={() => handleCancelOrder(order)}>
                           Hủy hàng
                         </button> // Nút hủy hàng, tô màu xám khi đang giao
                       )}

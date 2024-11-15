@@ -19,19 +19,13 @@
 }
 
 .product-item {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding: 0;
-    border-radius: .5rem;
-    height: auto;
-    background-color: rgb(47, 46, 46);
-    border: 1px solid #ddd;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
     position: relative;
     overflow: hidden;
+    border-radius: 8px;
+    background-color: rgb(47, 46, 46);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
 }
 
 .product-item::before {
@@ -64,14 +58,35 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.product-image {
-    border-radius: .5rem .5rem 0 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    margin: 0;
+.product-image img {
+    width: 100%; /* Giữ nguyên để chiếm toàn bộ chiều rộng */
+    height: 100%; /* Đặt chiều cao là 100% để chiếm toàn bộ chiều cao */
+    object-fit: cover; /* Đảm bảo hình ảnh không bị méo */
+    transition: transform 0.3s; /* Giữ nguyên hiệu ứng chuyển tiếp */
 }
 
+.product-info {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    transition: bottom 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-item:hover .product-image {
+    transform: scale(1.1);
+}
+
+.product-item:hover .product-info {
+    bottom: -20px;
+}
 
 .product-content {
     padding: 1rem;
@@ -121,4 +136,20 @@
     .product-grid {
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
+}
+
+/* Thêm các lớp CSS từ ProductsUser.css */
+.product-card {
+    cursor: pointer; /* Thêm hiệu ứng con trỏ */
+    border-radius: 8px; /* Thêm bo góc */
+    overflow: hidden; /* Thêm để ẩn phần thừa */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Thêm bóng cho thẻ */
+    transition: transform 0.3s, box-shadow 0.3s; /* Thêm hiệu ứng chuyển tiếp */
+}
+
+.product-info {
+    padding: 1rem; /* Thêm padding */
+    text-align: center; /* Căn giữa văn bản */
+    background: rgba(0, 0, 0, 0.8); /* Thêm nền */
+    color: white; /* Thay đổi màu chữ */
 }

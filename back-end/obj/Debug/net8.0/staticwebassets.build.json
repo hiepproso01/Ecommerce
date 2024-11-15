@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JIKtDR9REuMgv6WRcUgEM83TwtCJgZ2XEL0SbZTzgc4=",
+  "Hash": "VEVJUprG4QRhqV4R4WH3kUhHgq/SNMOgzJgT7Is5CfM=",
   "Source": "back-end",
   "BasePath": "_content/back-end",
   "Mode": "Default",
@@ -16,6 +16,25 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\hinhAnh\\0811f9d6-0dd6-4b02-b81f-cd98450a8a49.jpg",
+      "SourceId": "back-end",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\",
+      "BasePath": "_content/back-end",
+      "RelativePath": "hinhAnh/0811f9d6-0dd6-4b02-b81f-cd98450a8a49.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\hinhAnh\\0811f9d6-0dd6-4b02-b81f-cd98450a8a49.jpg"
+    },
     {
       "Identity": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\hinhAnh\\2777f142-414c-472c-b209-c3d47a993859.jpg",
       "SourceId": "back-end",
@@ -188,6 +207,25 @@
       "OriginalItemSpec": "wwwroot\\imageProduct\\05452db9-c7cc-440e-a11f-fd03725e7e80.png"
     },
     {
+      "Identity": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\0716a925-58a9-44a4-84f2-c0b5d8b932d1.jpg",
+      "SourceId": "back-end",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\",
+      "BasePath": "_content/back-end",
+      "RelativePath": "imageProduct/0716a925-58a9-44a4-84f2-c0b5d8b932d1.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\imageProduct\\0716a925-58a9-44a4-84f2-c0b5d8b932d1.jpg"
+    },
+    {
       "Identity": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\0b3d9249-8e17-481e-9fb6-e2c4377345d5.jpg",
       "SourceId": "back-end",
       "SourceType": "Discovered",
@@ -243,6 +281,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\imageProduct\\48fef79e-59f9-4712-a4ab-32b552ccdd80.jpg"
+    },
+    {
+      "Identity": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\58b5f7cb-a72f-4c57-8a94-225503639e8c.jpg",
+      "SourceId": "back-end",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\",
+      "BasePath": "_content/back-end",
+      "RelativePath": "imageProduct/58b5f7cb-a72f-4c57-8a94-225503639e8c.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\imageProduct\\58b5f7cb-a72f-4c57-8a94-225503639e8c.jpg"
     },
     {
       "Identity": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\5afaa106-5f49-449c-89e6-14ac6be633b6.png",
@@ -378,6 +435,25 @@
       "OriginalItemSpec": "wwwroot\\imageProduct\\aa3d2a60-db6b-47a3-8b51-f31dfeb1c358.jpg"
     },
     {
+      "Identity": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\ac5cfdd2-5714-4529-9999-0daf0f6fa165.jpg",
+      "SourceId": "back-end",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\",
+      "BasePath": "_content/back-end",
+      "RelativePath": "imageProduct/ac5cfdd2-5714-4529-9999-0daf0f6fa165.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\imageProduct\\ac5cfdd2-5714-4529-9999-0daf0f6fa165.jpg"
+    },
+    {
       "Identity": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\b41a2a9b-7b7c-48d0-baf1-5ef65573b12c.webp",
       "SourceId": "back-end",
       "SourceType": "Discovered",
@@ -433,6 +509,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\imageProduct\\d451dbbe-6568-47bb-aa85-a1c504070e19.png"
+    },
+    {
+      "Identity": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\d49084ed-efdc-4dc3-8dbb-5826c946f3b6.png",
+      "SourceId": "back-end",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\",
+      "BasePath": "_content/back-end",
+      "RelativePath": "imageProduct/d49084ed-efdc-4dc3-8dbb-5826c946f3b6.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\imageProduct\\d49084ed-efdc-4dc3-8dbb-5826c946f3b6.png"
     },
     {
       "Identity": "D:\\Visual Studio Code\\Ecommerce\\back-end\\wwwroot\\imageProduct\\e617e121-96c7-4011-a7a3-983456dbcc52.jpg",
